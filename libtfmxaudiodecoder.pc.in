@@ -1,0 +1,14 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+datarootdir=@datarootdir@
+data_dir=@datadir@
+
+version=@PACKAGE_VERSION@
+include_dir=@includedir@
+lib_dir=@libdir@
+
+Name: libtfmxaudiodecoder
+Description: C wrapper library for TFMX & FC music decoding
+Version: @PACKAGE_VERSION@
+Libs: -L${lib_dir} -ltfmxaudiodecoder
+Cflags: -I${include_dir}

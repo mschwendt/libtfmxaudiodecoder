@@ -133,7 +133,6 @@ class TFMXDecoder : public Decoder {
         uword outputPeriod, outputVolume;
     
         ubyte voiceNum;  // 0 = first
-        bool trigger;
         sbyte effectsMode;
         
         sbyte volume;

@@ -393,5 +393,5 @@ void TFMXDecoder::randomize() {
     // object code such as TFMX Professional. Usually it retrieves
     // the vertical raster position from DFF006/VHPOSR and modifies
     // it in varying ways.
-    admin.randomWord = (admin.randomWord ^ random()) + 0x57294335;
+    admin.randomWord = (admin.randomWord ^ rand()) + 0x57294335;
 }

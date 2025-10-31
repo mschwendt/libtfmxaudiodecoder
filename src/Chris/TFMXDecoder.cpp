@@ -43,7 +43,7 @@ TFMXDecoder::TFMXDecoder() {
     }
 
     loopMode = false;
-    srandom( (int)((long int)this&0xffff) );
+    srand( reinterpret_cast<uintptr_t>(this)&0xffff );
 }
 
 TFMXDecoder::~TFMXDecoder() {

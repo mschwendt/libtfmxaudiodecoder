@@ -2,6 +2,9 @@ EXTRA_DIST = Config.h.in
 
 DISTCLEANFILES = Config.h
 
+tfmxdecincludedir = $(includedir)
+tfmxdecinclude_HEADERS = tfmxaudiodecoder.h
+
 SUBDIRS = Chris Jochen
 
 SOURCES = \

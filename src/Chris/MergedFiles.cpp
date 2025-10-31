@@ -35,7 +35,7 @@
 // defeats the purpose of this file format.
 
 #include "MyEndian.h"
-#include "Debug.h"
+//#include "Debug.h"
 
 #include <string>
 #include <cstring>
@@ -56,7 +56,9 @@ bool TFMXDecoder::isMerged() {
         memcpy(probeStr,input.buf,tfmxPakParseSize);
         probeStr[tfmxPakParseSize] = 0;
 
+#if defined(DEBUG)
         cout << probeStr << endl;
+#endif
         int r = sscanf(probeStr,"TFMXPAK %u %u >>>",&input.mdatSize,&input.smplSize);
         char* s = strstr(probeStr,">>>");
         if (r!=2 || s==NULL || input.mdatSize==0 || input.smplSize==0) {
@@ -74,7 +76,9 @@ bool TFMXDecoder::isMerged() {
         if ( readBEuword(pBuf,4) !=0 ) {
             return false;
         }
+#if defined(DEBUG)
         cout << TAG_TFHD << endl;
+#endif
         offsets.header = readBEudword(pBuf,4);
        
         char probeStr[tfmxTFHDParseSize+1];
@@ -86,7 +90,9 @@ bool TFMXDecoder::isMerged() {
         // Only few TFHD files specify the version.
         input.versionHint = pBuf[8];
         if (input.versionHint != 0) {
+#if defined(DEBUG)
             cout << "TFHD version=" << input.versionHint << "  for  " << input.path << endl;
+#endif
         }
         
         //ubyte version = pBuf[9];  // 0 as the only header version so far
@@ -111,7 +117,9 @@ bool TFMXDecoder::isMerged() {
         memcpy(probeStr,input.buf,tfmxMODParseSize);
         probeStr[tfmxMODParseSize] = 0;
 
+#if defined(DEBUG)
         cout << TAG_TFMXMOD << endl;
+#endif
         offsets.sampleData = makeDword(pBuf[11],pBuf[10],pBuf[9],pBuf[8]);
         offsets.header = 8+12;
         input.mdatSize = offsets.sampleData-offsets.header;
@@ -167,9 +175,11 @@ bool TFMXDecoder::isMerged() {
             };
         }
         while (offs < input.len);
+#if defined(DEBUG)
         //cout << "MOD " << title << endl;
         //cout << "MOD " << game << endl;
         //cout << "MOD " << author << endl;
+#endif
         input.startSongHint = startSong;
         return true;
     }

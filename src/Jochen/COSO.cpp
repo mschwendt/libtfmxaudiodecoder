@@ -21,7 +21,7 @@
 
 #include "HippelDecoder.h"
 #include "MyEndian.h"
-#include "Debug.h"
+//#include "Debug.h"
 #include "Dump.h"
 
 const std::string HippelDecoder::COSO_FORMAT_NAME = "Compressed TFMX/Hippel (AMIGA)";

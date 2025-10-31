@@ -18,7 +18,7 @@
 #include <algorithm>
 
 #include "Analyze.h"
-#include "Debug.h"
+//#include "Debug.h"
 
 void Analyze::clear() {
     vibratoAmplSet.clear();
@@ -32,6 +32,7 @@ void Analyze::clear() {
 }
 
 void Analyze::dump() {
+#if defined(DEBUG)
     cout << "Sound sequence commands used:" << endl;
     for ( SeqTraitsMap::iterator it = sndSeqCmdMap.begin();
           it != sndSeqCmdMap.end(); it++ ) {
@@ -84,6 +85,7 @@ void Analyze::dump() {
         });
         cout << endl;
     }
+#endif  // DEBUG
 }
 
 void Analyze::gatherVibrato(HippelDecoder::VoiceVars& voiceX) {

@@ -155,7 +155,9 @@ void HippelDecoder::setPaulaVoice(ubyte v, PaulaVoice* p) {
 }
 
 bool HippelDecoder::init(void *data, udword length, int songNumber) {
+#if defined(DEBUG)
     cout << "HippelDecoder::init()" << endl;
+#endif
     udword newLen;
     
     if (data==0 || length==0 ) {  // re-init mode
@@ -468,6 +470,7 @@ void HippelDecoder::replacePattern(int n, const ubyte (&pattNew)[PATTERN_LENGTH]
 // --------------------------------------------------------------------------
 
 void HippelDecoder::dumpModule() {
+#if defined(DEBUG)
     cout << getFormatName() << endl;
     cout << "Header at 0x" << hex << offsets.header << endl;
     cout << "Sample headers at 0x" << hex << offsets.sampleHeaders << endl;
@@ -530,6 +533,7 @@ void HippelDecoder::dumpModule() {
             << hex << setw(4) << setfill('0') << samples[sam].repLen << " "
             << endl;
     }
+#endif  // DEBUG
 }
 
 // --------------------------------------------------------------------------
@@ -537,7 +541,9 @@ void HippelDecoder::dumpModule() {
 // pInitFunc at the right init method.
 
 bool HippelDecoder::detect(void* data, udword len) {
+#if defined(DEBUG)
     cout << "HippelDecoder::detect()" << endl;
+#endif
     ubyte *d = static_cast<ubyte*>(data);
     offsets.header = 0xffffffff;
     // Check for Future Composer.

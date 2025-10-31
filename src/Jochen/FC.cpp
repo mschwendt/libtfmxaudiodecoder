@@ -19,13 +19,15 @@
 
 #include "HippelDecoder.h"
 #include "MyEndian.h"
-#include "Debug.h"
+//#include "Debug.h"
 
 const std::string HippelDecoder::FC14_FORMAT_NAME = "Future Composer 1.4 (AMIGA)";
 const std::string HippelDecoder::FC14_TAG = "FC14";
 
 bool HippelDecoder::FC_init(int songNumber) {
+#if defined(DEBUG)
     cout << "FC_init()" << endl;
+#endif
     admin.startSong = 0;  // format doesn't feature a (sub-)song table
     
     setRate(50<<8);
@@ -203,7 +205,9 @@ bool HippelDecoder::FC_init(int songNumber) {
 }
 
 void HippelDecoder::FC_startSong() {
+#if defined(DEBUG)
     cout << "FC_startSong()" << endl;
+#endif
     firstStep = lastStep = -1;  // by default play full track table
     
     // (BUG-FIX) Some FC players here read the speed from the first step.

@@ -21,7 +21,7 @@
 
 #include "HippelDecoder.h"
 #include "MyEndian.h"
-#include "Debug.h"
+//#include "Debug.h"
 
 const std::string HippelDecoder::TFMX_FORMAT_NAME = "TFMX/Hippel (AMIGA)";
 const std::string HippelDecoder::TFMX_TAG = "TFMX";

@@ -88,7 +88,9 @@ void TFMXDecoder::reset() {
         voice.keyUp = true;
         voice.vibrato.time = voice.vibrato.delta = 0;
         voice.waitOnDMAPrevLoops = 0;
-        voice.addBeginCount = 0;
+
+        voice.addBeginCount = voice.addBeginArg = 0;
+        voice.addBeginOffset = 0;
 
         voice.period = voice.outputPeriod = 0;
         voice.volume = voice.outputVolume = 0;

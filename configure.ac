@@ -1,5 +1,5 @@
 AC_INIT([libtfmxaudiodecoder], [1.0.0])
-AC_CONFIG_SRCDIR([src/Player.cpp])
+AC_CONFIG_SRCDIR([src/Decoder.cpp])
 AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_HEADERS([src/Config.h])
 AC_CONFIG_MACRO_DIR([m4])

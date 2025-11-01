@@ -1,7 +1,7 @@
 ### Faulty/damaged files
 
-Music data file is one byte too short and thus is corrupting the last
-sound macro offset. As a result, an instrument is not played. Only obvious,
+Music data file (size 7875) is one byte too short and thus is corrupting the
+last sound macro offset. As a result, an instrument is not played. Only obvious,
 if you know these ingame tunes from ``Quik & Silva``:
 
 ```
@@ -10,6 +10,9 @@ if you know these ingame tunes from ``Quik & Silva``:
 
  efe7ca7a7598aa80c5fc5342c8f16908  Quik And Silva - Ingame.tfx
  a7e3a6836311bdc97428672c2ca8222a  Quik And Silva - Ingame.sam
+
+ efe7ca7a7598aa80c5fc5342c8f16908  mdat.Quik_And_Silva-Ingame
+ a7e3a6836311bdc97428672c2ca8222a  smpl.Quik_And_Silva-Ingame
 ```
 
 

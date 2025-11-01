@@ -145,6 +145,11 @@ void TFMXDecoder::setPath(std::string path) {
 // ----------------------------------------------------------------------
 
 bool TFMXDecoder::init(void *data, udword length, int songNumber) {
+    title.clear();
+    author.clear();
+    game.clear();
+    duration = 0;
+
     if (data==0 || length==0 ) {  // re-init mode
         if (!admin.initialized) {
             return false;
@@ -155,10 +160,6 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     else {  // invalidate what has been found out before
         input.smplLoaded = false;
         input.mdatSize = input.smplSize = 0;
-        title.clear();
-        author.clear();
-        game.clear();
-        duration = 0;
 
         // If we still have a sufficiently large buffer, reuse it.
         udword newLen = length;

@@ -36,7 +36,7 @@ bool HippelDecoder::TFMX_init(int songNumber) {
     trackStepLen = TFMX_TRACKTAB_STEP_SIZE;
     traits.sampleStructSize = TFMX_SAMPLE_STRUCT_SIZE;
     
-    pStartSongFunc = &HippelDecoder::TFMX_7V_startSong;
+    pStartSongFunc = &HippelDecoder::TFMX_startSong;
     pNextNoteFunc = &HippelDecoder::TFMX_nextNote;
     pSoundFunc = &HippelDecoder::TFMX_soundModulation;
     pVibratoFunc = &HippelDecoder::TFMX_vibrato;

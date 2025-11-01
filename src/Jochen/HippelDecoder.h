@@ -162,7 +162,6 @@ class HippelDecoder : public Decoder {
         int songs;
     } stats;
 
-    bool loopMode;
     uword randomWord;
         
     std::vector<ubyte> vSongNumbers;

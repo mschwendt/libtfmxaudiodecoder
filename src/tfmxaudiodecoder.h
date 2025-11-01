@@ -54,6 +54,10 @@ extern "C" {
     void tfmxdec_mixer_init(void* decoder, int frequency, int precision,
                             int channels, int zero, int panning);
 
+    /* If planning to ignore a song's end as to loop to the beginning,
+       call this with 1 = true. */
+    void tfmxdec_set_loop_mode(void* decoder, int loop);
+
     /* Return 1 (true) if song end has been reached, else 0 (false). */
     int tfmxdec_song_end(void* decoder);
 

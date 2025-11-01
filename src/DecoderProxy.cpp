@@ -47,6 +47,10 @@ void DecoderProxy::endShorts(int flag, int maxSecs) {
     endShortsDuration = maxSecs*1000;
 }
 
+void DecoderProxy::setLoopMode(int flag) {
+    pDecoder->setLoopMode(flag==1);
+}
+
 const char* DecoderProxy::getFormatID() {
     return formatID.c_str();
 }

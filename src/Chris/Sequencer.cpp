@@ -21,7 +21,7 @@
 // number of commands to affect either the track or song progression.
 
 #include "MyEndian.h"
-#include "Debug.h"
+//#include "Debug.h"
 
 bool TFMXDecoder::getTrackMute(ubyte t) {
     return (0==readBEuword(pBuf,offsets.header+0x1c0+(t<<1)));
@@ -99,6 +99,9 @@ void TFMXDecoder::trackCmd_Stop(udword stepOffset) {
     cout << "Track Cmd Stop" << endl;
 #endif
     songEnd = true;
+    if (loopMode) {
+        restart();
+    }
 }
 
 void TFMXDecoder::trackCmd_Loop(udword stepOffset) {
@@ -118,6 +121,9 @@ void TFMXDecoder::trackCmd_Loop(udword stepOffset) {
              // Starting a loop with a negative count would be infinite.
              (sequencer.stepSeenBefore[sequencer.step.current] && sequencer.loops < 0) ) {
             songEnd = true;
+            if (loopMode) {
+                restart();
+            }
             return;
         }
         // Limit number of loops. Only "Ramses" title sets 0xf00 and

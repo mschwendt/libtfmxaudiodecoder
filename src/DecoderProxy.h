@@ -54,6 +54,7 @@ class DecoderProxy {
     bool getSongEndFlag(); // whether song end has been reached
     int getSongs();  // return number of (sub-)songs found
     void endShorts(int,int);
+    void setLoopMode(int);
 
     const char* getFormatID();
     const char* getFormatName();

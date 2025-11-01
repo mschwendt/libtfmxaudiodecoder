@@ -93,7 +93,12 @@ void TFMXDecoder::pattCmd_End(Track& tr) {
     if (sequencer.step.current == sequencer.step.last) {
         sequencer.step.current = sequencer.step.first;
         songEnd = true;
-        return;
+        if (loopMode) {
+            restart();
+        }
+        else {
+            return;
+        }
     }
     else {
         sequencer.step.current++;

@@ -393,9 +393,12 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
 
     // Determine duration with a dry-run till song-end.
     duration = 0;
+    bool loopModeBak = loopMode;
+    loopMode = false;
     do {
         duration += run();
     } while ( !songEnd && (duration<1000*60*59));
+    loopMode = loopModeBak;
 
     adjustTraitsPost();
     dumpModule();
@@ -602,12 +605,23 @@ int TFMXDecoder::run() {
                 // This is a state where track sequencer cannot advance.
                 if ( !sequencer.step.next && countInactive == sequencer.tracks) {
                     songEnd = true;
+                    if (loopMode) {
+                        restart();
+                        break;
+                    }
                 }
                 if ( !sequencer.step.next && (countInactive+countInfinite) == sequencer.tracks) {
                     songEnd = true;
+                    if (loopMode) {
+                        restart();
+                        break;
+                    }
                 }
             } while (sequencer.step.next);
         }
+    }
+    if (songEnd && loopMode) {
+        setSongEndFlag(songEnd = false);
     }
     
     tickFPadd += tickFP;

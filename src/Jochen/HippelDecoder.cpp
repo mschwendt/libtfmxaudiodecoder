@@ -1,7 +1,7 @@
 #include "HippelDecoder.h"
 #include "MyEndian.h"
 #include "Analyze.h"
-#include "Debug.h"
+//#include "Debug.h"
 
 #include <cstring>
 
@@ -233,10 +233,13 @@ bool HippelDecoder::init(void *data, udword length, int songNumber) {
     
     // Determine duration with a dry-run till song-end.
     duration = 0;
+    bool loopModeBak = loopMode;
+    loopMode = false;
     do {
         duration += run();
         songEnd = getSongEndFlag();
     } while ( !songEnd && (duration<1000*60*59));
+    loopMode = loopModeBak;
     
     if (analyze->usesE7setDiffWave(this) ) {
         TFMX_sndModFuncs[7] = &HippelDecoder::TFMX_sndSeq_E7_setDiffWave;
@@ -385,6 +388,10 @@ int HippelDecoder::run() {
             voiceVars[v].ch->paula.volume = 0;
         }
     }
+    if (songEnd && loopMode) {
+        setSongEndFlag(songEnd = false);
+    }
+
     // If all modules ran at 50 Hz, we could simply return 20 ms,
     // but the rate for some modules is different. 
     tickFPadd += tickFP;

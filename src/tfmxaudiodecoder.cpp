@@ -102,6 +102,11 @@ void tfmxdec_end_shorts(void* ptr, int flag, int secs) {
     p->dec.endShorts(flag,secs);
 }
 
+void tfmxdec_set_loop_mode(void* ptr, int flag) {
+    TFMX_DECLARE_DECODER;
+    p->dec.setLoopMode(flag);
+}
+
 int tfmxdec_voices(void* ptr) {
     TFMX_DECLARE_DECODER;
     return p->dec.getVoices();

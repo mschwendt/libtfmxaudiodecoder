@@ -22,6 +22,7 @@ Decoder::Decoder() {
     formatID = formatName = UNKNOWN_FORMAT_ID;
     duration = 0;
     songEnd = true;
+    loopMode = false;
     rate = 50<<8;
 }
 

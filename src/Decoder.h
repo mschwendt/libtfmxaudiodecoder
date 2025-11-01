@@ -45,6 +45,7 @@ public:
     const char* getInfoString(const std::string which);
     udword getDuration() { return duration; }
     bool getSongEndFlag() { return songEnd; }
+    void setLoopMode(bool x) { loopMode = x; }
     void setSongEndFlag(bool x) { songEnd = x; }
     udword getRate() { return rate; }
 
@@ -60,7 +61,7 @@ protected:
 
     std::string path;
 
-    bool songEnd;
+    bool songEnd, loopMode;
     udword duration;
     udword rate;
     udword tickFP, tickFPadd;

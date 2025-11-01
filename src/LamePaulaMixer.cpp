@@ -43,7 +43,7 @@ LamePaulaMixer::LamePaulaMixer()
         muted[v] = false;
         voiceVol[v] = 0;
         //panningPos[v] = (v&1) ? LEFT : RIGHT;  // not used
-        //initVoice(v);
+        initVoice(v);
     }
     init(44100,16,2,0,panning);
 }
@@ -114,7 +114,7 @@ void LamePaulaMixer::init(Decoder *decoder) {
         for (ubyte v=0; v<voices; v++) {
             pVoice[v] = new LamePaulaVoice;
             decoder->setPaulaVoice(v,pVoice[v]);
-            //initVoice(v);
+            initVoice(v);
         }
     }
 }

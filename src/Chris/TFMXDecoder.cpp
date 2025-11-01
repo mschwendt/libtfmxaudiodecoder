@@ -87,12 +87,14 @@ void TFMXDecoder::reset() {
         voice.portamento.speed = 0;
         voice.keyUp = true;
         voice.vibrato.time = voice.vibrato.delta = 0;
+        voice.waitOnDMACount = -1;
         voice.waitOnDMAPrevLoops = 0;
 
         voice.addBeginCount = voice.addBeginArg = 0;
         voice.addBeginOffset = 0;
 
         voice.period = voice.outputPeriod = 0;
+        voice.detune = 0;
         voice.volume = voice.outputVolume = 0;
 
         voice.note = voice.notePrevious = 0;
@@ -556,13 +558,15 @@ int TFMXDecoder::run() {
         if ( !songEnd || loopMode ) {
             VoiceVars& voice = voiceVars[v];
 
-            uword x = voice.ch->getLoopCount();
-            if (x > 0) {
-                while (x-- > voice.waitOnDMAPrevLoops) {
-                    voice.waitOnDMACount--;
-                    if (voice.waitOnDMACount < 0) {
-                        voice.macro.skip = false;
-                        break;
+            if (voice.waitOnDMACount >= 0) {
+                uword x = voice.ch->getLoopCount();
+                if ( x>0 ) {
+                    while (x-- > voice.waitOnDMAPrevLoops) {
+                        voice.waitOnDMACount--;
+                        if (voice.waitOnDMACount < 0) {
+                            voice.macro.skip = false;
+                            break;
+                        }
                     }
                 }
                 voice.waitOnDMAPrevLoops = voice.ch->getLoopCount();
@@ -701,6 +705,9 @@ uword TFMXDecoder::noteToPeriod(int note) {
 // ----------------------------------------------------------------------
 
 bool TFMXDecoder::detect(void* data, udword len) {
+#if defined(DEBUG)
+    cout << "TFMXlDecoder::detect()" << endl;
+#endif
     ubyte *d = static_cast<ubyte*>(data);
     bool maybe = false;
     if ( (len >= 5) && !memcmp(d,TAG.c_str(),4) && d[4]==0x20 ) {

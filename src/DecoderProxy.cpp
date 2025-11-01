@@ -92,12 +92,14 @@ bool DecoderProxy::maybeOurs(void *data, udword length) {
         goto foundSomething;
     }
 
+    delete pd;
     pd = new HippelDecoder;  // For Hippel's TFMX and derivatives like FC.
     maybe = pd->detect(data,length);
     if (maybe) {
         goto foundSomething;
     }
 
+    delete pd;
     pd = new Decoder;  // dummy
  foundSomething:
     formatID = pd->getFormatID().c_str();

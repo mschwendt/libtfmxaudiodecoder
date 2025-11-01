@@ -238,7 +238,6 @@ bool HippelDecoder::init(void *data, udword length, int songNumber) {
     loopMode = false;
     do {
         duration += run();
-        songEnd = getSongEndFlag();
     } while ( !songEnd && (duration<1000*60*59));
     loopMode = loopModeBak;
     

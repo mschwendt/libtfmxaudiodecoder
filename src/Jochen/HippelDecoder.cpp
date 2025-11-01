@@ -161,8 +161,6 @@ bool HippelDecoder::init(void *data, udword length, int songNumber) {
     udword newLen;
     
     if (data==0 || length==0 ) {  // re-init mode
-        if (!admin.initialized)
-            return false;
         goto mainInit;
     }
 
@@ -230,6 +228,9 @@ bool HippelDecoder::init(void *data, udword length, int songNumber) {
 
  mainInit:
     admin.initialized = (this->*pInitFunc)(songNumber);
+    if (!admin.initialized) {
+        return false;
+    }
     
     // Determine duration with a dry-run till song-end.
     duration = 0;

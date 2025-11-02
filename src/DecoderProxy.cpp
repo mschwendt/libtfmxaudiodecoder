@@ -82,7 +82,6 @@ int DecoderProxy::run() {
 // --------------------------------------------------------------------------
 
 bool DecoderProxy::maybeOurs(void *data, udword length) {
-    ubyte *d = static_cast<ubyte*>(data);
     Decoder *pd;  // we use a separate decoder instance within here
     bool maybe = false;
 

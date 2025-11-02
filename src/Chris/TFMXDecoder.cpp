@@ -263,7 +263,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     sequencer.tracks = 8;
     sequencer.step.size = 16;
 
-    for (int v=0; v<sizeof(channelToVoiceMap); v++) {
+    for (size_t v=0; v<sizeof(channelToVoiceMap); v++) {
         channelToVoiceMap[v] = v&3;
     }
 
@@ -388,7 +388,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     }
     
     admin.startSong = (songNumber < 0) ? 0 : songNumber;
-    if (admin.startSong > (vSongs.size()-1)) {
+    if (admin.startSong > static_cast<int>(vSongs.size()-1)) {
         admin.startSong = 0;
     }
     restart();

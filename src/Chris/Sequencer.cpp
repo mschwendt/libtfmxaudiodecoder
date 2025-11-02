@@ -173,7 +173,7 @@ void TFMXDecoder::trackCmd_7V(udword stepOffset) {
     dumpBytes(pBuf,stepOffset,4);
     cout << endl;
 #endif
-    sword arg1 = (sword)readBEuword(pBuf,stepOffset);
+    //sword arg1 = (sword)readBEuword(pBuf,stepOffset);
     sword arg2 = (sword)readBEuword(pBuf,stepOffset+2);
     if (arg2 >= 0) {
         sbyte x = (sbyte)pBuf[stepOffset+3];

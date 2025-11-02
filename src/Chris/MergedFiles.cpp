@@ -128,7 +128,7 @@ bool TFMXDecoder::isMerged() {
         input.smplSize = offs-input.mdatSize;
         
         int startSong = -1;
-        int flag = 0;
+        //int flag = 0;
         do {
             ubyte what = pBuf[offs++];
             uword len = makeWord(pBuf[offs+1],pBuf[offs]);
@@ -166,7 +166,7 @@ bool TFMXDecoder::isMerged() {
                 offs += (len*4);  // one dword
                 break;
             case 5:
-                flag = pBuf[offs];  // documentation missing!
+                //flag = pBuf[offs];  // documentation missing!
                 offs += len;
                 break;
             default:

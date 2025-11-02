@@ -342,17 +342,17 @@ void TFMXDecoder::macroFunc_AddBegin(VoiceVars& voice) {
     sdword offset = (sword)makeWord(cmd.cd,cmd.ee);
     voice.addBeginOffset = offset;
 
-    offset += voice.sample.start;
-    if (offset < offsets.sampleData) {
-        offset = offsets.sampleData;
+    udword begin = voice.sample.start + offset;
+    if (begin < offsets.sampleData) {
+        begin = offsets.sampleData;
     }
         
     if (voice.sid.targetLength == 0) {
-        macroFunc_SetBegin_sub( voice, offset );
+        macroFunc_SetBegin_sub( voice, begin );
     }
     else {
-        voice.sample.start = offset;
-        voice.sid.sourceOffset = offset;
+        voice.sample.start = begin;
+        voice.sid.sourceOffset = begin;
 
         voice.macro.step++;
         macroEvalAgain = true;

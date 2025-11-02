@@ -558,18 +558,26 @@ int TFMXDecoder::run() {
         if ( !songEnd || loopMode ) {
             VoiceVars& voice = voiceVars[v];
 
-            if (voice.waitOnDMACount >= 0) {
+            // Pretend we have an interrupt handler that has evaluated
+            // Paula "audio channel 0-3 block finished" interrupts meanwhile.
+            if (voice.waitOnDMACount >= 0) {  // 0 = wait once
                 uword x = voice.ch->getLoopCount();
-                if ( x>0 ) {
-                    while (x-- > voice.waitOnDMAPrevLoops) {
-                        voice.waitOnDMACount--;
-                        if (voice.waitOnDMACount < 0) {
-                            voice.macro.skip = false;
-                            break;
-                        }
-                    }
+                uword y = voice.waitOnDMAPrevLoops;
+                int d;
+                if (x >= y) {
+                    d = x-y;
                 }
-                voice.waitOnDMAPrevLoops = voice.ch->getLoopCount();
+                else {
+                    d = x+(0x10000-y);
+                }
+                if ( d > voice.waitOnDMACount ) {
+                    voice.macro.skip = false;
+                    voice.waitOnDMACount = -1;
+                }
+                else {
+                    voice.waitOnDMACount -= d;
+                    voice.waitOnDMAPrevLoops = voice.ch->getLoopCount();
+                }
             }
 
             processMacroMain( voice );

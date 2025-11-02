@@ -45,6 +45,7 @@ void LamePaulaVoice::on() {
 
 void LamePaulaVoice::takeNextBuf() {
     if (!isOn) {
+        loopCount = 0;
         // If channel is off, take sample START parameters.
         start = paula.start;
         length = paula.length;

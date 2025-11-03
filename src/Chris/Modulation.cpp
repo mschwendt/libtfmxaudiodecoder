@@ -46,8 +46,7 @@ void TFMXDecoder::addBegin(VoiceVars& voice) {
         voice.sid.sourceOffset = voice.sample.start;
     }
     else {
-        voice.ch->paula.start = makeSamplePtr( voice.sample.start );
-        takeNextBufChecked(voice);
+        toPaulaStart(voice,voice.sample.start);
     }
     if (--voice.addBeginCount == 0) {
         voice.addBeginCount = voice.addBeginArg;

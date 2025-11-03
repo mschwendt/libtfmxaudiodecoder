@@ -618,23 +618,17 @@ int TFMXDecoder::run() {
                 // This is a state where track sequencer cannot advance.
                 if ( !sequencer.step.next && countInactive == sequencer.tracks) {
                     songEnd = true;
-                    if (loopMode) {
-                        triggerRestart = true;
-                        break;
-                    }
+                    triggerRestart = true;
                 }
                 if ( !sequencer.step.next && (countInactive+countInfinite) == sequencer.tracks) {
                     songEnd = true;
-                    if (loopMode) {
-                        triggerRestart = true;
-                        break;
-                    }
+                    triggerRestart = true;
                 }
             } while (sequencer.step.next);
         }
     }
     if (songEnd && loopMode) {
-        setSongEndFlag(songEnd = false);
+        songEnd = false;
         if (triggerRestart) {
             restart();
             triggerRestart = false;

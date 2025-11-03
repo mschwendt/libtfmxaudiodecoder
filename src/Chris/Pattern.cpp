@@ -16,7 +16,7 @@
 #include "TFMXDecoder.h"
 
 #include "MyEndian.h"
-#include "Debug.h"
+//#include "Debug.h"
 
 udword TFMXDecoder::getPattOffset(ubyte pt) {
     // With this TFMX format it's always an array of offsets to patterns.
@@ -91,9 +91,7 @@ void TFMXDecoder::pattCmd_End(Track& tr) {
     tr.PT = 0xff;
     if (sequencer.step.current == sequencer.step.last) {
         songEnd = true;
-        if (loopMode) {
-            triggerRestart = true;
-        }
+        triggerRestart = true;
         return;
     }
     else {

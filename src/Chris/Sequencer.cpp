@@ -98,9 +98,7 @@ void TFMXDecoder::trackCmd_Stop(udword stepOffset) {
     cout << "Track Cmd Stop" << endl;
 #endif
     songEnd = true;
-    if (loopMode) {
-        triggerRestart = true;
-    }
+    triggerRestart = true;
 }
 
 void TFMXDecoder::trackCmd_Loop(udword stepOffset) {
@@ -116,14 +114,13 @@ void TFMXDecoder::trackCmd_Loop(udword stepOffset) {
         sequencer.loops = (sword)readBEuword(pBuf,stepOffset+2) -1;
         
         if ( (sequencer.step.current > (TRACK_STEPS_MAX-1)) ||  // fubar then
-             (sequencer.step.current > sequencer.step.last) ||  // bad loop
-             // Starting a loop with a negative count would be infinite.
-             (sequencer.stepSeenBefore[sequencer.step.current] && sequencer.loops < 0) ) {
+             (sequencer.step.current > sequencer.step.last) ) {  // bad loop
             songEnd = true;
-            if (loopMode) {
-                triggerRestart = true;
-            }
-            return;
+            triggerRestart = true;
+        }
+        // Starting a loop with a negative count would be infinite.
+        else if (sequencer.stepSeenBefore[sequencer.step.current] && sequencer.loops < 0) {
+            songEnd = true;
         }
         // Limit number of loops. Only "Ramses" title sets 0xf00 and
         // seems to be the only file to set >5 loops.

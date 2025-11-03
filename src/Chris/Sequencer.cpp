@@ -99,8 +99,7 @@ void TFMXDecoder::trackCmd_Stop(udword stepOffset) {
 #endif
     songEnd = true;
     if (loopMode) {
-        restartLooped();
-        sequencer.evalNext = true;
+        triggerRestart = true;
     }
 }
 
@@ -122,7 +121,7 @@ void TFMXDecoder::trackCmd_Loop(udword stepOffset) {
              (sequencer.stepSeenBefore[sequencer.step.current] && sequencer.loops < 0) ) {
             songEnd = true;
             if (loopMode) {
-                restartLooped();
+                triggerRestart = true;
             }
             return;
         }

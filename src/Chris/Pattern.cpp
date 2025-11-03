@@ -90,11 +90,9 @@ void TFMXDecoder::pattCmd_End(Track& tr) {
 #endif
     tr.PT = 0xff;
     if (sequencer.step.current == sequencer.step.last) {
-        sequencer.step.current = sequencer.step.first;
         songEnd = true;
         if (loopMode) {
-            restartLooped();
-            sequencer.step.next = true;
+            triggerRestart = true;
         }
         return;
     }

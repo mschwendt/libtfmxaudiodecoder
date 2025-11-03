@@ -56,6 +56,7 @@ void TFMXDecoder::reset() {
     songEnd = false;
     songPosCurrent = 0;
     tickFPadd = 0;
+    triggerRestart = false;
 
     sequencer.step.next = false;
     sequencer.loops = -1;
@@ -430,12 +431,6 @@ void TFMXDecoder::restart() {
     processTrackStep();
 }
 
-void TFMXDecoder::restartLooped() {
-    sword countBak = admin.count;
-    restart();
-    admin.count = countBak;
-}
-
 void TFMXDecoder::setTFMXv1() {
     formatName = FORMAT_NAME;
     variant.vibratoUnscaled = true;
@@ -624,14 +619,14 @@ int TFMXDecoder::run() {
                 if ( !sequencer.step.next && countInactive == sequencer.tracks) {
                     songEnd = true;
                     if (loopMode) {
-                        restartLooped();
+                        triggerRestart = true;
                         break;
                     }
                 }
                 if ( !sequencer.step.next && (countInactive+countInfinite) == sequencer.tracks) {
                     songEnd = true;
                     if (loopMode) {
-                        restartLooped();
+                        triggerRestart = true;
                         break;
                     }
                 }
@@ -640,6 +635,10 @@ int TFMXDecoder::run() {
     }
     if (songEnd && loopMode) {
         setSongEndFlag(songEnd = false);
+        if (triggerRestart) {
+            restart();
+            triggerRestart = false;
+        }
     }
     
     tickFPadd += tickFP;

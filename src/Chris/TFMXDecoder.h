@@ -45,7 +45,6 @@ class TFMXDecoder : public Decoder {
     void adjustTraitsPost();
     void dumpMacros();
     void dumpModule();
-    void restartLooped();
     
     static const std::string FORMAT_NAME;
     static const std::string FORMAT_NAME_PRO;
@@ -68,7 +67,7 @@ class TFMXDecoder : public Decoder {
     std::vector<ubyte> vSongs;
     udword songPosCurrent;
     int voices;
-    bool loopMode;
+    bool loopMode, triggerRestart;
 
     struct ModuleOffsets {
         udword header;

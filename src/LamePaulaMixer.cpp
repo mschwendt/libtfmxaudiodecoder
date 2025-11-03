@@ -120,11 +120,11 @@ void LamePaulaMixer::init(Decoder *decoder) {
 
 void LamePaulaMixer::initVoice(ubyte v) {
     LamePaulaVoice* pv = pVoice[v];
-    pv->start = &emptySample;
+    pv->start = pv->paula.start = &emptySample;
     pv->end = &emptySample+1;
     pv->repeatStart = &emptySample;
     pv->repeatEnd = &emptySample+1;
-    pv->length = 1;
+    pv->length = pv->paula.length = 1;
     pv->curPeriod = 0;
     pv->stepSpeed = 0;
     pv->stepSpeedPnt = 0;

@@ -112,6 +112,9 @@ void TFMXDecoder::reset() {
         voice.sid.op1.interDelta = 0;
         
         voice.rnd.flag = 0;
+
+        voice.paulaOrig.offset = 0;
+        voice.paulaOrig.length = 0;
         
         voice.ch->off();
         voice.ch->paula.start = pBuf.tellBegin()+offsets.silence;
@@ -506,18 +509,32 @@ void TFMXDecoder::dumpModule() {
 
 // ----------------------------------------------------------------------
 
-// TODO: Gather data about files with out of bounds sample parameters.
-void TFMXDecoder::takeNextBufChecked(VoiceVars& voiceX) {
-    if (voiceX.ch->paula.start >= pBuf.tellBegin()+input.len) {
-        voiceX.ch->paula.start = pBuf.tellBegin() + offsets.silence;
-        voiceX.ch->paula.length = 1;
-        voiceX.ch->takeNextBuf();
-        return;
+// Cache the original pair of Paula start+length parameters,
+// so it can be checked and adjusted in case of out of bounds
+// access to sample data area.
+void TFMXDecoder::toPaulaStart(VoiceVars& v, udword offset) {
+    v.paulaOrig.offset = offset;
+    v.ch->paula.start = makeSamplePtr( offset );
+    takeNextBufChecked(v);
+}
+
+void TFMXDecoder::toPaulaLength(VoiceVars& v, uword length) {
+    v.paulaOrig.length = length;
+    v.ch->paula.length = length;
+    takeNextBufChecked(v);
+}
+
+void TFMXDecoder::takeNextBufChecked(VoiceVars& v) {
+    if (v.paulaOrig.offset >= input.len) {  // start outside sample data space
+        v.ch->paula.start = makeSamplePtr( offsets.silence );
+        v.ch->paula.length = 1;
     }
-    if ( (voiceX.ch->paula.start+voiceX.ch->paula.length) > pBuf.tellBegin()+input.len ) {
-        voiceX.ch->paula.length = (pBuf.tellBegin()+input.len)-voiceX.ch->paula.start;
+    // end outside sample data space
+    else if ( (v.paulaOrig.offset+(v.paulaOrig.length<<1)) > input.len ) {
+        v.ch->paula.length = (input.len - v.paulaOrig.offset)>>1;
+        v.ch->paula.start = makeSamplePtr( v.paulaOrig.offset );
     }
-    voiceX.ch->takeNextBuf();
+    v.ch->takeNextBuf();
 }
 
 ubyte* TFMXDecoder::makeSamplePtr(udword offset) {

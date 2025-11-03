@@ -180,6 +180,11 @@ class TFMXDecoder : public Decoder {
         } sample;
 
         struct {
+            udword offset;
+            uword length;
+        } paulaOrig;
+
+        struct {
             udword sourceOffset;
             uword sourceLength;
             udword targetOffset;
@@ -224,6 +229,8 @@ class TFMXDecoder : public Decoder {
     void findSongs();
 
     ubyte* makeSamplePtr(udword offset);
+    void toPaulaStart(VoiceVars&,udword);
+    void toPaulaLength(VoiceVars&,uword);
     void takeNextBufChecked(VoiceVars&);
     void noteCmd();
     uword noteToPeriod(int);

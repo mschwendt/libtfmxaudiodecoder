@@ -165,8 +165,7 @@ void TFMXDecoder::macroFunc_SetBegin(VoiceVars& voice) {
 
 void TFMXDecoder::macroFunc_SetBegin_sub(VoiceVars& voice, udword start) {
     voice.sample.start = start;
-    voice.ch->paula.start = makeSamplePtr( start );
-    takeNextBufChecked(voice);
+    toPaulaStart(voice,start);
     voice.macro.step++;
     macroEvalAgain = true;
 }
@@ -174,8 +173,7 @@ void TFMXDecoder::macroFunc_SetBegin_sub(VoiceVars& voice, udword start) {
 void TFMXDecoder::macroFunc_SetLen(VoiceVars& voice) {
     uword len = makeWord(cmd.cd,cmd.ee);
     voice.sample.length = len;
-    voice.ch->paula.length = len;
-    takeNextBufChecked(voice);
+    toPaulaLength(voice,len);
     voice.macro.step++;
     macroEvalAgain = true;
 }
@@ -365,8 +363,7 @@ void TFMXDecoder::macroFunc_AddLen(VoiceVars& voice) {
     sword len = (sword)makeWord(cmd.cd,cmd.ee);
     voice.sample.length += len;
     if (voice.sid.targetLength == 0) {
-        voice.ch->paula.length = voice.sample.length;
-        takeNextBufChecked(voice);
+        toPaulaLength(voice,voice.sample.length);
     }
     else {
         voice.sid.sourceLength = len;
@@ -448,9 +445,8 @@ void TFMXDecoder::macroFunc_SampleLoop(VoiceVars& voice) {
     voice.sample.start += offset;
     voice.sample.length -= (offset>>1);
     
-    voice.ch->paula.start = makeSamplePtr( voice.sample.start );
-    voice.ch->paula.length = voice.sample.length;
-    takeNextBufChecked(voice);
+    toPaulaStart(voice,voice.sample.start);
+    toPaulaLength(voice,voice.sample.length);
     
     voice.macro.step++;
     macroEvalAgain = true;
@@ -461,9 +457,8 @@ void TFMXDecoder::macroFunc_OneShot(VoiceVars& voice) {
     voice.sample.start = offsets.sampleData;
     voice.sample.length = 1;
     
-    voice.ch->paula.start = makeSamplePtr( voice.sample.start );
-    voice.ch->paula.length = 1;
-    takeNextBufChecked(voice);
+    toPaulaStart(voice,voice.sample.start);
+    toPaulaLength(voice,voice.sample.length);
     
     voice.macro.step++;
     macroEvalAgain = true;
@@ -534,8 +529,7 @@ void TFMXDecoder::macroFunc_22(VoiceVars& voice) {  // SID setbeg
     voice.sid.sourceOffset = offsets.sampleData + makeDword(0,cmd.bb,cmd.cd,cmd.ee);
     voice.sample.start = voice.sid.sourceOffset;
 
-    voice.ch->paula.start = makeSamplePtr( offsets.sampleData + voice.sid.targetOffset );
-    takeNextBufChecked(voice);
+    toPaulaStart(voice, offsets.sampleData + voice.sid.targetOffset);
     
     voice.macro.step++;
     macroEvalAgain = true;
@@ -546,8 +540,7 @@ void TFMXDecoder::macroFunc_23(VoiceVars& voice) {  // SID setlen
     if (len == 0) {
         len = 0x100;
     }
-    voice.ch->paula.length = len>>1;
-    takeNextBufChecked(voice);
+    toPaulaLength(voice,len>>1);
     voice.sid.targetLength = (len-1) & 0xff;
     
     uword len2 = makeWord(cmd.cd,cmd.ee);

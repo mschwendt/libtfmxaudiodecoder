@@ -430,6 +430,12 @@ void TFMXDecoder::restart() {
     processTrackStep();
 }
 
+void TFMXDecoder::restartLooped() {
+    sword countBak = admin.count;
+    restart();
+    admin.count = countBak;
+}
+
 void TFMXDecoder::setTFMXv1() {
     formatName = FORMAT_NAME;
     variant.vibratoUnscaled = true;
@@ -618,14 +624,14 @@ int TFMXDecoder::run() {
                 if ( !sequencer.step.next && countInactive == sequencer.tracks) {
                     songEnd = true;
                     if (loopMode) {
-                        restart();
+                        restartLooped();
                         break;
                     }
                 }
                 if ( !sequencer.step.next && (countInactive+countInfinite) == sequencer.tracks) {
                     songEnd = true;
                     if (loopMode) {
-                        restart();
+                        restartLooped();
                         break;
                     }
                 }

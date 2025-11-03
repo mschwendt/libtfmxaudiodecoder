@@ -45,6 +45,7 @@ class TFMXDecoder : public Decoder {
     void adjustTraitsPost();
     void dumpMacros();
     void dumpModule();
+    void restartLooped();
     
     static const std::string FORMAT_NAME;
     static const std::string FORMAT_NAME_PRO;

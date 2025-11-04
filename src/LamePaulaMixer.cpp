@@ -23,6 +23,7 @@
 LamePaulaMixer::LamePaulaMixer()
     : AMIGA_CLOCK(AMIGA_CLOCK_PAL)
 {
+    emptySample[0] = emptySample[1] = emptySample[2] = emptySample[3] = 0;
     panning = 50+25;
 
     // Fill clipping table needed for the four virtual voices.
@@ -120,10 +121,10 @@ void LamePaulaMixer::init(Decoder *decoder) {
 
 void LamePaulaMixer::initVoice(ubyte v) {
     LamePaulaVoice* pv = pVoice[v];
-    pv->start = pv->paula.start = &emptySample;
-    pv->end = &emptySample+1;
-    pv->repeatStart = &emptySample;
-    pv->repeatEnd = &emptySample+1;
+    pv->start = pv->paula.start = &emptySample[0];
+    pv->end = &emptySample[1];
+    pv->repeatStart = &emptySample[0];
+    pv->repeatEnd = &emptySample[1];
     pv->length = pv->paula.length = 1;
     pv->curPeriod = 0;
     pv->stepSpeed = 0;

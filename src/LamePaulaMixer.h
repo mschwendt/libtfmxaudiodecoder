@@ -100,7 +100,7 @@ class LamePaulaMixer
 
     udword toFill;
     
-    ubyte emptySample;
+    ubyte emptySample[4];
 
     float basePeriod;
 };

@@ -20,7 +20,17 @@
 // number of commands to affect either the track or song progression.
 
 #include "MyEndian.h"
-//#include "Debug.h"
+#if defined(DEBUG_RUN)
+#include "Dump.h"
+#endif
+
+const std::string TFMXDecoder::TrackCmdInfo[TRACK_CMD_MAX+1] = {
+    "Track Cmd STOP    ",
+    "Track Cmd LOOP    ",
+    "Track Cmd SPEED   ",
+    "Track Cmd 7VOICE  ",
+    "Track Cmd FADE    "
+};
 
 bool TFMXDecoder::getTrackMute(ubyte t) {
     return (0==readBEuword(pBuf,offsets.header+0x1c0+(t<<1)));
@@ -47,14 +57,20 @@ void TFMXDecoder::processTrackStep() {
 #if defined(DEBUG_RUN)
             cout << "  ";
             dumpBytes(pBuf,stepOffset,2);
-            cout << "  ";
+            cout << " ";
 #endif
             stepOffset += 2;
             if (command > TRACK_CMD_MAX) {  // fubar then
                 command = 0;  // choose command "Stop" as override
             }
             trackCmdUsed[command] = true;
+#if defined(DEBUG_RUN)
+            cout << TrackCmdInfo[command];
+#endif
             (this->*TrackCmdFuncs[command])(stepOffset);
+#if defined(DEBUG_RUN)
+            cout << endl;
+#endif
         }
         else {
 #if defined(DEBUG_RUN)
@@ -85,25 +101,14 @@ void TFMXDecoder::processTrackStep() {
     while ( sequencer.evalNext && --evalMaxLoops>0 );
 }
 
-void TFMXDecoder::trackCmd_NOP(udword stepOffset) {
-#if defined(DEBUG_RUN)
-    cout << "Track Cmd NOP" << endl;
-#endif
-    sequencer.step.current++;
-    sequencer.evalNext = true;
-}
-
 void TFMXDecoder::trackCmd_Stop(udword stepOffset) {
-#if defined(DEBUG_RUN)
-    cout << "Track Cmd Stop" << endl;
-#endif
     songEnd = true;
     triggerRestart = true;
 }
 
 void TFMXDecoder::trackCmd_Loop(udword stepOffset) {
 #if defined(DEBUG_RUN)
-    cout << "Track Cmd Loop  at 0x" << (int)stepOffset << endl;
+    dumpBytes(pBuf,stepOffset,4);
 #endif
     if (sequencer.loops == 0) {  // end of loop
         sequencer.loops = -1;    // unlock
@@ -137,7 +142,7 @@ void TFMXDecoder::trackCmd_Loop(udword stepOffset) {
 
 void TFMXDecoder::trackCmd_Speed(udword stepOffset) {
 #if defined(DEBUG_RUN)
-    cout << "Track Cmd Speed" << endl;
+    dumpBytes(pBuf,stepOffset,4);
 #endif
     admin.speed = admin.count = readBEuword(pBuf,stepOffset);
     // Ignore negative values like 0xff00.
@@ -154,9 +159,7 @@ void TFMXDecoder::trackCmd_Speed(udword stepOffset) {
 
 void TFMXDecoder::trackCmd_Fade(udword stepOffset) {
 #if defined(DEBUG_RUN)
-    cout << "Track Cmd Fade  ";
     dumpBytes(pBuf,stepOffset,4);
-    cout << endl;
 #endif
     fadeInit(pBuf[stepOffset+3],pBuf[stepOffset+1]);
     sequencer.step.current++;
@@ -165,9 +168,7 @@ void TFMXDecoder::trackCmd_Fade(udword stepOffset) {
 
 void TFMXDecoder::trackCmd_7V(udword stepOffset) {
 #if defined(DEBUG_RUN)
-    cout << "Track Cmd 7Voice  ";
     dumpBytes(pBuf,stepOffset,4);
-    cout << endl;
 #endif
     //sword arg1 = (sword)readBEuword(pBuf,stepOffset);
     sword arg2 = (sword)readBEuword(pBuf,stepOffset+2);

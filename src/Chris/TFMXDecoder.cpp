@@ -294,7 +294,6 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     PattCmdFuncs[14] = &TFMXDecoder::pattCmd_Stop;
     PattCmdFuncs[15] = &TFMXDecoder::pattCmd_NOP;
 
-    trackCmdMax = TRACK_CMD_MAX;
     TrackCmdFuncs[0] = &TFMXDecoder::trackCmd_Stop;
     TrackCmdFuncs[1] = &TFMXDecoder::trackCmd_Loop;
     TrackCmdFuncs[2] = &TFMXDecoder::trackCmd_Speed;

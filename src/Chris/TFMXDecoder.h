@@ -268,7 +268,6 @@ class TFMXDecoder : public Decoder {
     
     bool getTrackMute(ubyte);
     void processTrackStep();
-    void trackCmd_NOP(udword);
     void trackCmd_Stop(udword);
     void trackCmd_Loop(udword);
     void trackCmd_Speed(udword);
@@ -278,7 +277,7 @@ class TFMXDecoder : public Decoder {
     static const int TRACK_CMD_MAX = 4;
     typedef void (TFMXDecoder::*TrackCmdFuncPtr)(udword);
     TrackCmdFuncPtr TrackCmdFuncs[TRACK_CMD_MAX+1] = { };
-    ubyte trackCmdMax = TRACK_CMD_MAX;
+    static const std::string TrackCmdInfo[TRACK_CMD_MAX+1];
     
     udword getMacroOffset(ubyte);
     void processMacroMain(VoiceVars&);

@@ -113,13 +113,9 @@ void TFMXDecoder::reset() {
         
         voice.rnd.flag = 0;
 
-        voice.paulaOrig.offset = 0;
-        voice.paulaOrig.length = 0;
-        
         voice.ch->off();
-        voice.ch->paula.start = pBuf.tellBegin()+offsets.silence;
-        voice.ch->paula.length = 1;
-        voice.ch->takeNextBuf();
+        toPaulaLength(voice,1);
+        toPaulaStart(voice,offsets.silence);
         voice.ch->paula.volume = 0;
         voice.ch->paula.period = 0;
     }

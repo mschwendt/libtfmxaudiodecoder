@@ -66,6 +66,9 @@ void TFMXDecoder::processPattern(Track& tr) {
             else {
                 tr.pattern.step++;
             }
+#if defined(DEBUG_RUN)
+            cout << endl;
+#endif
         }
         else {  // cmd.aa >= 0xf0   pattern state command
             ubyte command = cmd.aa & 0xf;

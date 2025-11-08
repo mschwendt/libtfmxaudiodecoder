@@ -68,6 +68,11 @@ The library backend itself inspects the actual input data while it tries to
 determine the underlying file format. Yet if it's a pair of files, it
 tries to find the second file based on guessing its file name extension.
 
+The TFMX-editor also used a third file starting with ``info.`` to store
+stuff like names for patterns and macros. As those files are entirely optional,
+they have not been published and have not been preserved in module
+collections either.
+
 ## Players & Plugins
 
 * [Audacious](https://audacious-media-player.org/) with [this input plugin](https://github.com/mschwendt/audacious-plugins-fc)

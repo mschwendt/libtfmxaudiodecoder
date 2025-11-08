@@ -5,6 +5,8 @@
 
 #include "PaulaVoice.h"
 
+namespace tfmxaudiodecoder {
+
 void PaulaVoice::off() {
     // intentionally left blank
 }
@@ -21,3 +23,5 @@ uword PaulaVoice::getLoopCount() {
     // intentionally left blank
     return 0;
 }
+
+}  // namespace

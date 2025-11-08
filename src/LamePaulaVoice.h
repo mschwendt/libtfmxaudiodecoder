@@ -10,6 +10,8 @@
 
 #include "PaulaVoice.h"
 
+namespace tfmxaudiodecoder {
+
 class LamePaulaMixer;
 
 class LamePaulaVoice : public PaulaVoice
@@ -51,5 +53,7 @@ class LamePaulaVoice : public PaulaVoice
     bool smoothUp;
     int smoothCount;
 };
+
+}  // namespace
 
 #endif  // LAMEPAULAVOICE_H

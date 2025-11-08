@@ -20,6 +20,8 @@
 #include "MyEndian.h"
 //#include "Debug.h"
 
+namespace tfmxaudiodecoder {
+
 const std::string HippelDecoder::FC14_FORMAT_NAME = "Future Composer 1.4 (AMIGA)";
 const std::string HippelDecoder::FC14_TAG = "FC14";
 
@@ -358,3 +360,5 @@ void HippelDecoder::FC_nextNote(VoiceVars& voiceX) {
     // Advance to next pattern entry.
     voiceX.pattPos += 2;
 }
+
+}  // namespace

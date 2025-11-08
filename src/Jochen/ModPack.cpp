@@ -29,6 +29,8 @@
 // header fields like number of songs within the individual modules may
 // be wrong, too. What a mess!
 
+namespace tfmxaudiodecoder {
+
 bool HippelDecoder::COSO_isModPack(std::vector<udword>& vHeaders, bool& reject) {
     udword h = offsets.header;
     udword nextHeader;
@@ -106,3 +108,5 @@ bool HippelDecoder::COSO_isModPack(std::vector<udword>& vHeaders, bool& reject) 
     
     return foundLink;
 }
+
+}  // namespace

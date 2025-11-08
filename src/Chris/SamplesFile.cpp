@@ -21,7 +21,7 @@
 #include <fstream>
 using namespace std;
 
-bool TFMXDecoder::loadSamplesFile() {
+bool tfmxaudiodecoder::TFMXDecoder::loadSamplesFile() {
     // Got both the MDAT and SMPL file?
     if ( input.smplLoaded ) {  // if loaded before, reuse it
         input.mdatSize = input.mdatSizeCurrent;

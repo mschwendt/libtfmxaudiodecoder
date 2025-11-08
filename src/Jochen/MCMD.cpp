@@ -38,6 +38,8 @@
 //  - a E6 command that is a NOP
 //  - via note arg1 bit 7, note arg2 can set the sound sequence number
 
+namespace tfmxaudiodecoder {
+
 const std::string HippelDecoder::MCMD_FORMAT_NAME = "MCMD (AMIGA)";
 const std::string HippelDecoder::MCMD_TAG = "MCMD";
 
@@ -132,3 +134,5 @@ void HippelDecoder::MCMD_startSong() {
     setTrackRange();
     reset();
 }
+
+}  // namespace

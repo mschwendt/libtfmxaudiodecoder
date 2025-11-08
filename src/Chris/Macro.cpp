@@ -18,6 +18,8 @@
 #include "MyEndian.h"
 //#include "Debug.h"
 
+namespace tfmxaudiodecoder {
+
 udword TFMXDecoder::getMacroOffset(ubyte macro) {
     return offsets.header + readBEudword(pBuf,offsets.macros+((macro&0x7f)<<2));
 }
@@ -603,3 +605,5 @@ void TFMXDecoder::macroFunc_29(VoiceVars& voice) {  // SID stop
     }
     macroEvalAgain = true;
 }
+
+}  // namespace

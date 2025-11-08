@@ -17,6 +17,8 @@
 #include "LamePaulaVoice.h"
 #include "Decoder.h"
 
+namespace tfmxaudiodecoder {
+
 // Simple AMIGA Paula Audio channel mixer with a few enhancements like
 // mono output, customizable stereo panning and TFMX "7 Voices" mode.
 
@@ -500,3 +502,5 @@ void* LamePaulaMixer::fill16bitStereoPanning( void *buffer, udword numberOfSampl
     }
     return(buffer16bit);
 }
+
+}  // namespace

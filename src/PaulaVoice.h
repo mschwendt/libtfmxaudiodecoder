@@ -8,6 +8,8 @@
 
 #include "MyTypes.h"
 
+namespace tfmxaudiodecoder {
+
 class PaulaVoice {
  public:
     // to simulate basic access to Paula registers
@@ -26,5 +28,7 @@ class PaulaVoice {
     virtual void takeNextBuf();   // take parameters from paula.* (or just to repeat.*)
     virtual uword getLoopCount();
 };
+
+}  // namespace
 
 #endif  // PAULAVOICE_H

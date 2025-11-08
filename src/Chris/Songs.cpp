@@ -25,11 +25,11 @@
 // false speed. It may be necessary to add some sort of blacklist based
 // on checksum. Possibly MD5 then and not CRC.
 
-int TFMXDecoder::getSongs() {
+int tfmxaudiodecoder::TFMXDecoder::getSongs() {
     return vSongs.size();
 }
 
-void TFMXDecoder::findSongs() {     
+void tfmxaudiodecoder::TFMXDecoder::findSongs() {
     typedef std::tuple<int,int,int> SongArgs;
     typedef std::set<SongArgs> SongArgsSet;
     SongArgsSet setSongArgs;

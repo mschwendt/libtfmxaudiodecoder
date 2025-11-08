@@ -23,6 +23,8 @@
 #include <string>
 #include <vector>
 
+namespace tfmxaudiodecoder {
+
 class TFMXDecoder : public Decoder {
  public:
     TFMXDecoder();
@@ -553,5 +555,7 @@ class TFMXDecoder : public Decoder {
         int startSongHint;  // from TFMX-MOD struct
     } input;
 };
+
+}  // namespace
 
 #endif  // TFMXDECODER_H

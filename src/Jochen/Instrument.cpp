@@ -21,6 +21,8 @@
 #include "MyEndian.h"
 #include "Analyze.h"
 
+namespace tfmxaudiodecoder {
+
 // Activate the specified instrument, i.e. set the volume modulation
 // sequence and sound modulation sequence.
 // Compatible with all players.
@@ -566,3 +568,5 @@ void HippelDecoder::FC_sndSeq_EA_pitchbend(VoiceVars& voiceX) {  // FC modificat
     else if (traits.sndSeqGoto)
         vModFunc.push_back( &HippelDecoder::TFMX_processSndModSeq );
 }
+
+}  // namespace

@@ -6,6 +6,9 @@
 // (at your option) any later version.
 
 #include "LamePaulaVoice.h"
+#include "Debug.h"
+
+namespace tfmxaudiodecoder {
 
 LamePaulaVoice::LamePaulaVoice() {
     looping = true;
@@ -118,3 +121,5 @@ void LamePaulaVoice::drain() {
         on();
     }
 }
+
+}  // namespace

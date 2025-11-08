@@ -21,7 +21,7 @@
 #include "Analyze.h"
 #include "CRCLight.h"
 
-void HippelDecoder::traitsByChecksum() {
+void tfmxaudiodecoder::HippelDecoder::traitsByChecksum() {
     CRCLight crc;
     smartPtr<const ubyte> sBuf(fcBuf.tellBegin(),fcBuf.tellLength());
     const ubyte* pEnd;

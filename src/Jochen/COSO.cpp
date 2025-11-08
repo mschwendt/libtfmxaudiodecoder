@@ -23,6 +23,8 @@
 //#include "Debug.h"
 #include "Dump.h"
 
+namespace tfmxaudiodecoder {
+
 const std::string HippelDecoder::COSO_FORMAT_NAME = "Compressed TFMX/Hippel (AMIGA)";
 const std::string HippelDecoder::COSO_TAG = "COSO";
 
@@ -292,3 +294,5 @@ void HippelDecoder::COSO_processPattern(VoiceVars& voiceX) {
     cout << flush;
 #endif
 }
+
+}  // namespace

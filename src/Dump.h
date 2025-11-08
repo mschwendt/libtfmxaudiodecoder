@@ -9,10 +9,14 @@
 #include "MyTypes.h"
 #include "SmartPtr.h"
 
+namespace tfmxaudiodecoder {
+
 void dumpBlocks(smartPtr<ubyte>& fcBuf, udword startOffset, sdword length, int blockLen);
 void dumpLines(smartPtr<ubyte>& fcBuf, udword startOffset, sdword length, int blockLen, int index=-1);
 void dumpBytes(smartPtr<ubyte>& fcBuf, udword startOffset, int n);
 void dumpByte(int b);
 void dumpTimestamp(udword ms);
+
+}  // namespace
 
 #endif  // DUMP_H

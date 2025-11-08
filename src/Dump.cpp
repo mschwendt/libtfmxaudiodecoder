@@ -9,6 +9,8 @@
 #include <iomanip>
 using namespace std;
 
+namespace tfmxaudiodecoder {
+
 void dumpLines(smartPtr<ubyte>& fcBuf, udword startOffset, sdword length, int blockLen, int index) {
     int num = 0;
     while (length > 0) {
@@ -76,3 +78,5 @@ void dumpTimestamp(udword ms) {
     cout << dec << setw(2) << setfill('0') << mins << ':'
          << setw(2) << setfill('0') << secs;
 }
+
+}  // namespace tfmxaudiodecoder

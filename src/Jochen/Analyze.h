@@ -18,7 +18,7 @@
 #include "HippelDecoder.h"
 #include "SmartPtr.h"
 
-class Analyze {
+class tfmxaudiodecoder::Analyze {
 public:
     void clear();
     void dump();

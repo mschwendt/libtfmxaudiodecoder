@@ -18,6 +18,8 @@
 #include "MyEndian.h"
 //#include "Debug.h"
 
+namespace tfmxaudiodecoder {
+
 udword TFMXDecoder::getPattOffset(ubyte pt) {
     // With this TFMX format it's always an array of offsets to patterns.
     return offsets.header + readBEudword(pBuf,offsets.patterns+(pt<<2));
@@ -189,3 +191,5 @@ void TFMXDecoder::pattCmd_Fade(Track& tr) {
     tr.pattern.step++;
     tr.pattern.evalNext = true;
 }
+
+}  // namespace

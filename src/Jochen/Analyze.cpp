@@ -19,6 +19,8 @@
 #include "Analyze.h"
 //#include "Debug.h"
 
+namespace tfmxaudiodecoder {
+
 void Analyze::clear() {
     vibratoAmplSet.clear();
     vibratoSpeedSet.clear();
@@ -160,3 +162,5 @@ void Analyze::gatherSeqTrans(ubyte seq, ubyte tr) {
     seqTransMap[seq].valuesUsed.insert(tr);
     //seqTransMap[seq].valuesCounted[tr]++;
 }
+
+}  // namespace

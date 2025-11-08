@@ -21,8 +21,8 @@
     tfmxdec *p = (tfmxdec*)ptr
 
 struct tfmxdec {
-    DecoderProxy dec;
-    LamePaulaMixer mixer;
+    tfmxaudiodecoder::DecoderProxy dec;
+    tfmxaudiodecoder::LamePaulaMixer mixer;
 };
 
 void* tfmxdec_new() {

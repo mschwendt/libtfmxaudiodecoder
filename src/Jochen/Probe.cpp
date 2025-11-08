@@ -20,6 +20,8 @@
 #include "HippelDecoder.h"
 #include "MyEndian.h"
 
+namespace tfmxaudiodecoder {
+
 // In ideal circumstances, we are provided with a buffer containing
 // the complete file contents. Else, if we only can examine a file's
 // beginning, maybe that is where a machine code player is located,
@@ -434,3 +436,5 @@ bool HippelDecoder::MCMD_detect(ubyte* d,udword len) {
     }
     return false;
 }
+
+}  // namespace

@@ -20,6 +20,8 @@
 
 #include "MyTypes.h"
 
+namespace tfmxaudiodecoder {
+
 class PaulaVoice;
 
 class Decoder {
@@ -65,5 +67,7 @@ protected:
     udword rate;
     udword tickFP, tickFPadd;
 };
+
+}  // namespace
 
 #endif  // DECODER_H

@@ -10,6 +10,8 @@
 #include "MyTypes.h"
 #include "SmartPtr.h"
 
+namespace tfmxaudiodecoder {
+
 inline udword readBEudword(smartPtr<ubyte> ptr, udword offset) {
 	return ( (((udword)ptr[offset])<<24) + (((udword)ptr[offset+1])<<16)
 			+ (((udword)ptr[offset+2])<<8) + ((udword)ptr[offset+3]) );
@@ -49,5 +51,7 @@ inline uword makeWord(ubyte hi, ubyte lo) {
 inline udword makeDword(ubyte hihi, ubyte hilo, ubyte hi, ubyte lo) {
     return (makeWord(hihi,hilo)<<16)|makeWord(hi,lo);
 }
+
+}  // namespace
 
 #endif  // MYENDIAN_H

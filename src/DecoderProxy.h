@@ -22,6 +22,8 @@
 #include "PaulaVoice.h"
 #include "LamePaulaMixer.h"
 
+namespace tfmxaudiodecoder {
+
 class Decoder;
 
 class DecoderProxy {
@@ -78,5 +80,7 @@ class DecoderProxy {
     std::string path, ext;
     std::string formatName, formatID;
 };
+
+}  // namespace
 
 #endif  // DECODERPROXY_H

@@ -9,6 +9,9 @@
 #define LAMEPAULAMIXER_H
 
 #include "PaulaVoice.h"
+
+namespace tfmxaudiodecoder {
+
 class LamePaulaVoice;
 class Decoder;
 
@@ -104,5 +107,7 @@ class LamePaulaMixer
 
     float basePeriod;
 };
+
+}  // namespace
 
 #endif  // LAMEPAULAMIXER_H

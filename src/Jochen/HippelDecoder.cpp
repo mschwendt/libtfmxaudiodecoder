@@ -5,6 +5,8 @@
 
 #include <cstring>
 
+namespace tfmxaudiodecoder {
+
 HippelDecoder::HippelDecoder() {
     analyze = new Analyze;
     
@@ -635,3 +637,5 @@ const uword HippelDecoder::periods[0x80] = {
     // +0x80 (*2 = byte-offset), everything from here on is unreachable
     // due to 0x7f AND.
 };
+
+}  // namespace

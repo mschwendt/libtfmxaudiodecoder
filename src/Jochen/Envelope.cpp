@@ -17,6 +17,8 @@
 #include "HippelDecoder.h"
 #include "Analyze.h"
 
+namespace tfmxaudiodecoder {
+
 uword HippelDecoder::TFMX_envelope(VoiceVars& voiceX) {
     bool repeatVolSeq;  // JUMP/GOTO - WHILE conversion
     int jumpCount = 0;
@@ -153,3 +155,5 @@ void HippelDecoder::FC_volSlide(VoiceVars& voiceX) {
         }
     }
 }
+
+}  // namespace

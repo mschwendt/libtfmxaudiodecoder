@@ -15,6 +15,8 @@
 
 #include "Decoder.h"
 
+namespace tfmxaudiodecoder {
+
 const std::string Decoder::UNKNOWN_FORMAT_ID = "???";
 
 Decoder::Decoder() {
@@ -60,3 +62,5 @@ void Decoder::setRate(udword r) {  // in [Hz]*256
 void Decoder::setBPM(uword bpm) {
     setRate( ((bpm<<8)*2)/5 );
 }
+
+}  // namespace

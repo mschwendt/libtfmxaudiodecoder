@@ -24,6 +24,8 @@
 #include "Dump.h"
 #endif
 
+namespace tfmxaudiodecoder {
+
 const std::string TFMXDecoder::TrackCmdInfo[TRACK_CMD_MAX+1] = {
     "Track Cmd STOP    ",
     "Track Cmd LOOP    ",
@@ -182,3 +184,5 @@ void TFMXDecoder::trackCmd_7V(udword stepOffset) {
     sequencer.step.current++;
     sequencer.evalNext = true;
 }
+
+}  // namespace

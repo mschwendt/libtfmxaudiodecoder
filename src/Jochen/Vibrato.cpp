@@ -16,6 +16,8 @@
 
 #include "HippelDecoder.h"
 
+namespace tfmxaudiodecoder {
+
 // (NOTE) This is compatible with Future Composer, which had copied its
 // vibrato implementation from a TFMX player release including a bug
 // that resulted in disabling half speed mode always.
@@ -134,3 +136,5 @@ uword HippelDecoder::COSO_vibrato(VoiceVars& voiceX, uword period, ubyte note) {
     period += offs;
     return period;
 }
+
+}  // namespace

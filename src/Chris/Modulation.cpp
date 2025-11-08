@@ -18,6 +18,8 @@
 #include "MyEndian.h"
 //#include "Debug.h"
 
+namespace tfmxaudiodecoder {
+
 void TFMXDecoder::processModulation(VoiceVars& voice) {
     if (voice.effectsMode > 0) { 
         addBegin(voice);
@@ -393,3 +395,5 @@ void TFMXDecoder::randomize() {
     // it in varying ways.
     admin.randomWord = (admin.randomWord ^ rand()) + 0x57294335;
 }
+
+}  // namespace

@@ -19,6 +19,8 @@
 #include "HippelDecoder.h"
 #include "MyEndian.h"
 
+namespace tfmxaudiodecoder {
+
 const std::string HippelDecoder::TFMX_7V_FORMAT_NAME = "TFMX 7V/Hippel (AMIGA)";
 const std::string HippelDecoder::TFMX_7V_ID = "TFMX7V";
 
@@ -99,3 +101,5 @@ void HippelDecoder::TFMX_7V_trackTabCmd(VoiceVars& voiceX, udword trackOffs) {
         songEnd = true;
     }
 }
+
+}  // namespace

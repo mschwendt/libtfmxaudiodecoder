@@ -22,6 +22,8 @@
 #include "MyEndian.h"
 //#include "Debug.h"
 
+namespace tfmxaudiodecoder {
+
 const std::string HippelDecoder::TFMX_FORMAT_NAME = "TFMX/Hippel (AMIGA)";
 const std::string HippelDecoder::TFMX_TAG = "TFMX";
 
@@ -233,3 +235,5 @@ void HippelDecoder::TFMX_processPattern(VoiceVars& voiceX) {
     // Advance to next pattern entry.
     voiceX.pattPos += 2;
 }
+
+}  // namespace

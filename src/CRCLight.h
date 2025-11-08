@@ -17,6 +17,8 @@
 #include "MyTypes.h"
 #include "SmartPtr.h"
 
+namespace tfmxaudiodecoder {
+
 class CRCLight {
 public:
     udword get(smartPtr<const ubyte> ptr, udword offset, udword len);
@@ -24,5 +26,7 @@ public:
 private:
     static const udword crc32tab[];
 };
+
+}  // namespace
 
 #endif  // CRCLIGHT_H

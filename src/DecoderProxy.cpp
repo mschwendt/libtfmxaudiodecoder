@@ -16,6 +16,9 @@
 #include "DecoderProxy.h"
 #include "Chris/TFMXDecoder.h"
 #include "Jochen/HippelDecoder.h"
+
+namespace tfmxaudiodecoder {
+
 class PaulaMixer;
 
 DecoderProxy::DecoderProxy() {
@@ -186,3 +189,5 @@ bool DecoderProxy::seek(sdword ms) {
     }
     return true;
 }
+
+}  // namespace

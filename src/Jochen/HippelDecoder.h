@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 
+namespace tfmxaudiodecoder {
+
 class Analyze;
 
 class HippelDecoder : public Decoder {
@@ -402,5 +404,7 @@ class HippelDecoder : public Decoder {
     uword (HippelDecoder::*pVibratoFunc)(VoiceVars&, uword, ubyte);
     uword (HippelDecoder::*pPortamentoFunc)(VoiceVars&, uword);
 };
+
+}  // namespace
 
 #endif  // HIPPELDECODER_H

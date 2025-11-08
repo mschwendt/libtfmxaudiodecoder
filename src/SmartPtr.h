@@ -10,6 +10,8 @@
 
 typedef unsigned long int ulong;
 
+namespace tfmxaudiodecoder {
+
 template <class T> class smartPtrBase {
  public:
     smartPtrBase(T* buffer, ulong bufferLen, bool bufOwner = false) : dummy(0) {
@@ -176,5 +178,7 @@ template <class T> class smartPtr : public smartPtrBase<T> {
         }
     }
 };
+
+}  // namespace
 
 #endif  // SMARTPTR_H

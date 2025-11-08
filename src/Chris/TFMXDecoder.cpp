@@ -20,6 +20,8 @@
 
 #include <cstring>
 
+namespace tfmxaudiodecoder {
+
 class PaulaVoice;
 
 const std::string TFMXDecoder::FORMAT_NAME = "TFMX/Huelsbeck (AMIGA)";
@@ -780,3 +782,5 @@ const uword TFMXDecoder::periods[0xd+0x40] = {
     // +0x3c
     0x00d6, 0x00ca, 0x00bf, 0x00b4
 };
+
+}  // namespace

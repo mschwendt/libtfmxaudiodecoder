@@ -39,11 +39,13 @@
 #include <string>
 #include <cstring>
 
-const std::string TFMXDecoder::TAG_TFMXPAK = "TFMXPAK ";
-const std::string TFMXDecoder::TAG_TFHD = "TFHD";
-const std::string TFMXDecoder::TAG_TFMXMOD = "TFMX-MOD";
+namespace tfmxaudiodecoder {
+    const std::string TFMXDecoder::TAG_TFMXPAK = "TFMXPAK ";
+    const std::string TFMXDecoder::TAG_TFHD = "TFHD";
+    const std::string TFMXDecoder::TAG_TFMXMOD = "TFMX-MOD";
+}
 
-bool TFMXDecoder::isMerged() {
+bool tfmxaudiodecoder::TFMXDecoder::isMerged() {
     input.versionHint = 0;
     input.startSongHint = -1;
 

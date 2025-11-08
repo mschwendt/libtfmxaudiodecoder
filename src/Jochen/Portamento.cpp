@@ -16,6 +16,8 @@
 
 #include "HippelDecoder.h"
 
+namespace tfmxaudiodecoder {
+
 uword HippelDecoder::TFMX_portamento(VoiceVars& voiceX, uword period) {
     if ( (!traits.portaIsBit6 && (voiceX.pattVal2 & 0x20) != 0) ||  // TFMX
          (traits.portaIsBit6 && (voiceX.pattVal2 & 0x40) != 0) ) {  // MCMD
@@ -96,3 +98,5 @@ uword HippelDecoder::FC_portamento_pitchbend(VoiceVars& voiceX, uword period) {
     period += voiceX.portaOffs;
     return period;
 }
+
+}  // namespace

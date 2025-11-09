@@ -107,9 +107,6 @@ class HippelDecoder : public Decoder {
     // With this size we can skip all prepended machine code players.
     static const uword PROBE_SIZE = TFMX_PROBE_SIZE;
 
-    //std::string formatID;
-    //std::string formatName;
-
     static const int VOICES_MAX = 8;
     PaulaVoice dummyVoices[VOICES_MAX];  // TODO use ptrs?
     

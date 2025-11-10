@@ -473,6 +473,7 @@ void TFMXDecoder::dumpModule() {
     cout << "Header at 0x" << hex << offsets.header << endl;
     cout << "Macro offsets at 0x" << hex << offsets.macros << endl;
     cout << "Pattern offsets at 0x" << hex << offsets.patterns << endl;
+    cout << "Track table (sequencer) at 0x" << hex << offsets.trackTable << endl;
     cout << "Sample data at 0x" << hex << offsets.sampleData << endl;
     cout << "Songs: " << dec << getSongs() << endl;
     dumpMacros();

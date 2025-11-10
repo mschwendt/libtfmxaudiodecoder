@@ -539,6 +539,7 @@ class TFMXDecoder : public Decoder {
         bool portaUnscaled;
         bool portaOverride;
         bool noNoteDetune;
+        bool bpmSpeed5;
     } variant;
 
     struct {

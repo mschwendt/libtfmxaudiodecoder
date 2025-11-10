@@ -274,6 +274,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     variant.portaUnscaled = false;
     variant.portaOverride = false;
     variant.noNoteDetune = false;
+    variant.bpmSpeed5 = false;
     
     PattCmdFuncs[0] = &TFMXDecoder::pattCmd_End;
     PattCmdFuncs[1] = &TFMXDecoder::pattCmd_Loop;
@@ -420,6 +421,9 @@ void TFMXDecoder::restart() {
     if ((admin.speed = readBEuword(pBuf,offsets.header+0x180+so)) >= 0x10) {
         setBPM(admin.speed);
         admin.speed = 0;
+        if (variant.bpmSpeed5) {
+            admin.speed = 5;
+        }
     }
     admin.startSpeed = admin.speed;
     admin.count = 0;  // quick start

@@ -21,4 +21,9 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
         variant.noNoteDetune = true;
         variant.portaUnscaled = false;
     }
+    // Ooops Up by Peter Thierolf. First two sub-songs specify a BPM customization
+    // that isn't compatible with the speed count value of default TFMX.
+    else if (crc1 == 0x76f8aa6e) {
+        variant.bpmSpeed5 = true;
+    }
 }

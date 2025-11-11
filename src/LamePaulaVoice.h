@@ -20,11 +20,11 @@ class LamePaulaVoice : public PaulaVoice
     LamePaulaVoice();
     ~LamePaulaVoice();
 
-    void on();
-    void off();
-    void takeNextBuf();    // take parameters from paula.* (or just to repeat.*)
+    void on() override;
+    void off() override;
+    void takeNextBuf() override;    // take parameters from paula.* (or just to repeat.*)
     ubyte getSample();
-    uword getLoopCount();
+    uword getLoopCount() override;
 
     void drain();
     

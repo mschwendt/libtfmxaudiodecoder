@@ -28,6 +28,8 @@ extern "C" {
     /* Delete decoder object. */
     void tfmxdec_delete(void* decoder);
 
+    /* Set the path to the local input file.
+       If not providing this, the library cannot load multi-file formats. */
     void tfmxdec_set_path(void* decoder, const char*);
     
     /* Initialize decoder with input data from a memory buffer.

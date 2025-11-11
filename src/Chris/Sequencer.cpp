@@ -20,6 +20,7 @@
 // number of commands to affect either the track or song progression.
 
 #include "MyEndian.h"
+//#include "Debug.h"
 #if defined(DEBUG_RUN)
 #include "Dump.h"
 #endif
@@ -129,9 +130,9 @@ void TFMXDecoder::trackCmd_Loop(udword stepOffset) {
         else if (sequencer.stepSeenBefore[sequencer.step.current] && sequencer.loops < 0) {
             songEnd = true;
         }
-        // Limit number of loops. Only "Ramses" title sets 0xf00 and
-        // seems to be the only file to set >5 loops.
-        if (sequencer.loops == 0xeff) {
+        // Limit number of loops. Only "Ramses" title sets 0xf00, and "mdat.cyberzerk-ingame" subsongs
+        // set a number of 0x2e00 loops.
+        if (sequencer.loops == 0xeff || sequencer.loops > 0x100) {
             sequencer.loops = 0;
         }
     }

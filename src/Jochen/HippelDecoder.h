@@ -1,6 +1,19 @@
 // Decoder implementation for TFMX (Hippel)
 // and formats derived from it, Future Composer and MCMD
 
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, see <https://www.gnu.org/licenses/>.
+
 #ifndef HIPPELDECODER_H
 #define HIPPELDECODER_H
 
@@ -290,10 +303,6 @@ class HippelDecoder : public Decoder {
     void setWave(VoiceVars&, ubyte num);
     ubyte* makeSamplePtr(udword offset);
     void killChannel(VoiceVars&);
-
-    //void traitsByChecksum_pre();
-    //void traitsByChecksum_post();
-    //void processPattern(Track&);
 
     udword getPattOffs(VoiceVars&);
     udword getVolSeq(ubyte seq);  // offset to volume modulation sequence

@@ -29,7 +29,7 @@ public:
     Decoder();
     virtual ~Decoder() { };
 
-    virtual void setPath(std::string pathArg) { path = pathArg; }
+    virtual void setPath(std::string pathArg);
 
     virtual bool init(void*, udword, int) { return false; }
     virtual bool detect(void*, udword) { return false; }
@@ -58,7 +58,7 @@ protected:
         
     std::string formatID;
     std::string formatName;
-    std::string author, title, game;
+    std::string author, title, game, name;
 
     std::string path;
 

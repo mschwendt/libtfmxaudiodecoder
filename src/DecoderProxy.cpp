@@ -16,6 +16,7 @@
 #include "DecoderProxy.h"
 #include "Chris/TFMXDecoder.h"
 #include "Jochen/HippelDecoder.h"
+#include <fstream>
 
 namespace tfmxaudiodecoder {
 
@@ -188,6 +189,26 @@ bool DecoderProxy::seek(sdword ms) {
         pMixer->drain();
     }
     return true;
+}
+
+bool DecoderProxy::load(const char *path, int songNum) {
+    bool good = false;
+    setPath(path);
+    std::ifstream fIn( path, std::ios::in|std::ios::binary|std::ios::ate );
+    if ( fIn.is_open() ) {
+        uint32_t fLen = fIn.tellg();
+        fIn.seekg(0,std::ios::beg);
+        char* buf = new char[fLen];
+        fIn.read(buf,fLen);
+        if (fIn.bad()) {
+            delete[] buf;
+            return false;
+        }
+        fIn.close();
+        good = init(buf,fLen,songNum);
+        delete []buf;
+    }
+    return good;
 }
 
 }  // namespace

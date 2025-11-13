@@ -111,6 +111,11 @@ int tfmxdec_voices(void* ptr) {
     return p->dec.getVoices();
 }
 
+const char* tfmxdec_get_name(void* ptr) {
+    TFMX_DECLARE_DECODER;
+    return p->dec.getInfoString("name");
+}
+
 const char* tfmxdec_get_artist(void* ptr) {
     TFMX_DECLARE_DECODER;
     return p->dec.getInfoString("artist");
@@ -139,4 +144,9 @@ uint16_t tfmxdec_get_voice_volume(void* ptr, unsigned int voice) {
     else {
         return 0;
     }
+}
+
+int tfmxdec_load(void* ptr, const char* path, int songNumber) {
+    TFMX_DECLARE_DECODER;
+    return p->dec.load( path, songNumber );
 }

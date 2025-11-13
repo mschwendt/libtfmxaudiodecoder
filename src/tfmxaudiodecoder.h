@@ -94,6 +94,13 @@ extern "C" {
        later, if taking a closer look.
        Returns: boolean integer 1 = recognized data, 0 = unknown data */
     int tfmxdec_detect(void* decoder, void* buffer, uint32_t length);
+
+    /* Like _init but with local file. */
+    int tfmxdec_load(void* decoder, const char* path, int songNumber);
+
+    /* Since most modules in these formats don't store a title/name internally,
+       this helper function contructs a name from the filename. */
+    const char* tfmxdec_get_name(void* decoder);
     
     /* Not that useful, but some TFMX-MOD files provide content for them. */
     const char* tfmxdec_get_artist(void* decoder);

@@ -45,6 +45,8 @@ class DecoderProxy {
 
     bool seek(sdword ms);
 
+    bool load(const char* path, int songNum);
+
     // Optional, quick but shallow! Just a brief look at header tags.
     // A later init call may reject the same buffer contents (e.g. due
     // due finding errors or running into problems) and may change the

@@ -15,7 +15,6 @@
 // with this program; if not, see <https://www.gnu.org/licenses/>.
 
 #include "HippelDecoder.h"
-#include "MyEndian.h"
 
 // Some .HIPC files contain multiple COSO modules, abusing one of the
 // offsets within each COSO header to point at the next header. The last

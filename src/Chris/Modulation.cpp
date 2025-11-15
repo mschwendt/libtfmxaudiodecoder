@@ -15,9 +15,6 @@
 
 #include "TFMXDecoder.h"
 
-#include "MyEndian.h"
-//#include "Debug.h"
-
 namespace tfmxaudiodecoder {
 
 void TFMXDecoder::processModulation(VoiceVars& voice) {

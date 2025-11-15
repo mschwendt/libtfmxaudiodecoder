@@ -14,8 +14,6 @@
 // with this program; if not, see <https://www.gnu.org/licenses/>.
 
 #include "TFMXDecoder.h"
-#include "MyEndian.h"
-#include "Debug.h"
 
 #include <algorithm>
 #include <set>

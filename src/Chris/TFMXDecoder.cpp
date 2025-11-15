@@ -14,9 +14,6 @@
 // with this program; if not, see <https://www.gnu.org/licenses/>.
 
 #include "TFMXDecoder.h"
-#include "MyEndian.h"
-//#include "Debug.h"
-#include "Dump.h"
 
 #include <cstring>
 
@@ -491,11 +488,11 @@ void TFMXDecoder::adjustTraitsPost() {
 void TFMXDecoder::dumpModule() {
 #if defined(DEBUG)
     cout << getFormatName() << endl;
-    cout << "Header at 0x" << hex << offsets.header << endl;
-    cout << "Macro offsets at 0x" << hex << offsets.macros << endl;
-    cout << "Pattern offsets at 0x" << hex << offsets.patterns << endl;
-    cout << "Track table (sequencer) at 0x" << hex << offsets.trackTable << endl;
-    cout << "Sample data at 0x" << hex << offsets.sampleData << endl;
+    cout << "Header at 0x" << tohex(offsets.header) << endl;
+    cout << "Macro offsets at 0x" << tohex(offsets.macros) << endl;
+    cout << "Pattern offsets at 0x" << tohex(offsets.patterns) << endl;
+    cout << "Track table (sequencer) at 0x" << tohex(offsets.trackTable) << endl;
+    cout << "Sample data at 0x" << tohex(offsets.sampleData) << endl;
     cout << "Songs: " << dec << getSongs() << endl;
     dumpMacros();
 

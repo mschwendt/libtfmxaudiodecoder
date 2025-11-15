@@ -17,7 +17,6 @@
 #include <algorithm>
 
 #include "Analyze.h"
-//#include "Debug.h"
 
 namespace tfmxaudiodecoder {
 
@@ -37,10 +36,10 @@ void Analyze::dump() {
     cout << "Sound sequence commands used:" << endl;
     for ( SeqTraitsMap::iterator it = sndSeqCmdMap.begin();
           it != sndSeqCmdMap.end(); it++ ) {
-        cout << hex << setw(2) << setfill('0') << (unsigned int)it->first << " : "; 
+        cout << hexB(it->first) << " : ";
         SeqTraits p = it->second;
         std::for_each(p.valuesUsed.begin(), p.valuesUsed.end(), [](ubyte c) {
-            cout << hex << (int)c << ' ';
+            cout << hexB(c) << ' ';
         });
         cout << endl;
     }
@@ -49,10 +48,10 @@ void Analyze::dump() {
     cout << "Volume sequence commands used:" << endl;
     for ( SeqTraitsMap::iterator it = volSeqCmdMap.begin();
           it != volSeqCmdMap.end(); it++ ) {
-        cout << hex << setw(2) << setfill('0') << (unsigned int)it->first << " : "; 
+        cout << hexB(it->first) << " : ";
         SeqTraits p = it->second;
         std::for_each(p.valuesUsed.begin(), p.valuesUsed.end(), [](ubyte c) {
-            cout << hex << (int)c << ' ';
+            cout << hexB(c) << ' ';
         });
         cout << endl;
     }
@@ -65,12 +64,12 @@ void Analyze::dump() {
 
     cout << "Vibrato amplitudes: ";
     std::for_each(vibratoAmplSet.begin(), vibratoAmplSet.end(), [](ubyte c) {
-        cout << hex << (int)c << ' ';
+        cout << hexB(c) << ' ';
     });
     cout << endl;
     cout << "Vibrato speeds: ";
     std::for_each(vibratoSpeedSet.begin(), vibratoSpeedSet.end(), [](ubyte c) {
-        cout << hex << (int)c << ' ';
+        cout << hexB(c) << ' ';
     });
     cout << endl;
 
@@ -79,10 +78,10 @@ void Analyze::dump() {
     cout << "Sound sequence transpose/pitch values used:" << endl;
     for ( SeqTraitsMap::iterator it = seqTransMap.begin();
           it != seqTransMap.end(); it++ ) {
-        cout << hex << setw(2) << setfill('0') << (unsigned int)it->first << " : "; 
+        cout << hexB(it->first) << " : ";
         SeqTraits p = it->second;
         std::for_each(p.valuesUsed.begin(), p.valuesUsed.end(), [](ubyte c) {
-            cout << hex << (int)c << ' ';
+            cout << hexB(c) << ' ';
         });
         cout << endl;
     }

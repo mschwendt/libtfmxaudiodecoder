@@ -19,9 +19,6 @@
 #include <vector>
 
 #include "HippelDecoder.h"
-#include "MyEndian.h"
-//#include "Debug.h"
-#include "Dump.h"
 
 namespace tfmxaudiodecoder {
 
@@ -203,11 +200,11 @@ void HippelDecoder::COSO_nextNote(VoiceVars& voiceX) {
         if (voiceX.voiceNum==0) {
             cout << endl;
             dumpTimestamp(songPosCurrent);
-            cout << "  Step = " << hex << setw(4) << setfill('0') << (trackOffs-offsets.trackTable)/trackStepLen << endl;
+            cout << "  Step = " << hexW((trackOffs-offsets.trackTable)/trackStepLen) << endl;
             udword tmp = trackOffs;
             for (ubyte v = 0; v<stats.voices; ++v) {
                 for (int t = 0; t < trackColumnSize; ++t) {
-                    cout << hex << setw(2) << setfill('0') << (int)fcBuf[tmp++] << ' ';
+                    cout << hexB(fcBuf[tmp++]) << ' ';
                 }
                 if (v < (stats.voices-1))
                     cout << "| ";
@@ -291,7 +288,7 @@ void HippelDecoder::COSO_processPattern(VoiceVars& voiceX) {
     }
 #if defined(DEBUG_RUN)
     cout << "| ";
-    cout << flush;
+    cout << std::flush;
 #endif
 }
 

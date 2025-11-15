@@ -17,7 +17,6 @@
 // with this program; if not, see <https://www.gnu.org/licenses/>.
 
 #include "HippelDecoder.h"
-#include "MyEndian.h"
 
 namespace tfmxaudiodecoder {
 

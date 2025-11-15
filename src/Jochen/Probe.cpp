@@ -18,7 +18,6 @@
 #include <cstring>
 
 #include "HippelDecoder.h"
-#include "MyEndian.h"
 
 namespace tfmxaudiodecoder {
 

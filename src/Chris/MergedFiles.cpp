@@ -33,9 +33,6 @@
 // The player could still select other songs found within the module data, but that
 // defeats the purpose of this file format.
 
-#include "MyEndian.h"
-//#include "Debug.h"
-
 #include <string>
 #include <cstring>
 

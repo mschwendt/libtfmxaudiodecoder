@@ -15,9 +15,6 @@
 
 #include "TFMXDecoder.h"
 
-#include "MyEndian.h"
-//#include "Debug.h"
-
 namespace tfmxaudiodecoder {
 
 udword TFMXDecoder::getPattOffset(ubyte pt) {
@@ -27,13 +24,13 @@ udword TFMXDecoder::getPattOffset(ubyte pt) {
 
 void TFMXDecoder::processPattern(Track& tr) {
 #if defined(DEBUG_RUN)
-    cout << "  processPattern() at 0x" << hex << (int)tr.pattern.offset << endl;
+    cout << "  processPattern() at 0x" << tohex(tr.pattern.offset) << endl;
 #endif
     int evalMaxLoops = RECURSE_LIMIT;  // NB! Around 8 would suffice.
     do {
         tr.pattern.evalNext = false;
 #if defined(DEBUG_RUN)
-        cout << "  " << hex << setw(4) << (int)tr.pattern.step << ":";
+        cout << "  " << hexW(tr.pattern.step) << ":";
 #endif
         // Offset to current step position within pattern.
         udword p = tr.pattern.offset+(tr.pattern.step<<2);
@@ -43,10 +40,7 @@ void TFMXDecoder::processPattern(Track& tr) {
         cmd.cd = pBuf[p+2];
         cmd.ee = pBuf[p+3];
 #if defined(DEBUG_RUN)
-        cout << "  " << hex << setw(2) << setfill('0') << (int)cmd.aa
-             << setw(2) << (int)cmd.bb
-             << setw(2) << (int)cmd.cd
-             << setw(2) << (int)cmd.ee << "  ";
+        cout << "  " << hexB(cmd.aa) << hexB(cmd.bb) << hexB(cmd.cd) << hexB(cmd.ee) << "  ";
 #endif
         ubyte aaBak = cmd.aa;
         if (cmd.aa < 0xf0) {  // >= 0xf0 pattern state command

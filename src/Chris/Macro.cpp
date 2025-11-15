@@ -15,9 +15,6 @@
 
 #include "TFMXDecoder.h"
 
-#include "MyEndian.h"
-//#include "Debug.h"
-
 namespace tfmxaudiodecoder {
 
 udword TFMXDecoder::getMacroOffset(ubyte macro) {
@@ -63,15 +60,14 @@ void TFMXDecoder::dumpMacros() {
             continue;
         }
 
-        cout << "Macro 0x" << setw(2) << setfill('0') << hex << macro
-             << " at 0x" << (int)macroStart
-             << " to 0x" << (int)macroEnd << endl;
+        cout << "Macro 0x" << hexB(macro)
+             << " at 0x" << tohex(macroStart) << " to 0x" << tohex(macroEnd) << endl;
         int step = 0;
         while (macroStart < macroEnd) {
             int cmd = 0x3f & pBuf[macroStart];
-            cout << "  " << hex << setw(4) << setfill('0') << step
-                 << ' ' << setw(2) << cmd
-                 << ' ' << setw(6) << (int)(0x00ffffff&readBEudword(pBuf,macroStart))
+            cout << "  " << hexW(step)
+                 << ' ' << hexB(cmd)
+                 << ' ' << std::setw(6) << (int)(0x00ffffff&readBEudword(pBuf,macroStart))
                  << ' ' << MacroDefs[cmd]->text << endl;
             if (cmd == 7) {
                 break;
@@ -106,11 +102,11 @@ void TFMXDecoder::processMacroMain(VoiceVars& voice) {
         cmd.ee = pBuf[p+3];
 #if defined(DEBUG_RUN)
         // Dump the macro step BEFORE masking the command number!
-        cout << hex << setw(1) << '[' << (int)voice.voiceNum << "] "
-             << setw(4) << setfill('0') << (int)voice.macro.offset << '/'
-             << setw(4) << (int)voice.macro.step << ' '
-             << setw(2) << command << ' '
-             << setw(6) << (int)(0x00ffffff&makeDword(0,cmd.bb,cmd.cd,cmd.ee));
+        cout << std::hex << std::setw(1) << '[' << (int)voice.voiceNum << "] "
+             << tohex(voice.macro.offset) << '/'
+             << hexW(voice.macro.step) << ' '
+             << hexB(command) << ' '
+             << std::setw(6) << (int)(0x00ffffff&makeDword(0,cmd.bb,cmd.cd,cmd.ee));
 #endif
         macroCmdUsed[command&0x3f] = true;
         MacroDef* pM = MacroDefs[command&0x3f];

@@ -4,12 +4,26 @@
 // (at your option) any later version.
 
 #include "Dump.h"
-
-#include <iostream>
 #include <iomanip>
-using namespace std;
+#include <iostream>
+using std::cout;
+using std::endl;
+using std::dec;
+using std::hex;
+using std::setw;
+using std::setfill;
 
 namespace tfmxaudiodecoder {
+
+#if defined(DEBUG) || defined(DEBUG_RUN)
+std::string hexB( const ubyte& val ) {
+    return tohex( val );
+}
+
+std::string hexW( const uword& val ) {
+    return tohex( val );
+}
+#endif
 
 void dumpLines(smartPtr<ubyte>& fcBuf, udword startOffset, sdword length, int blockLen, int index) {
     int num = 0;
@@ -67,7 +81,9 @@ void dumpBytes(smartPtr<ubyte>& fcBuf, udword startOffset, int n) {
 }
 
 void dumpByte(int b) {
-    cout << hex << setw(2) << setfill('0') << (b&0xff) << ' ';
+#if defined(DEBUG) || defined(DEBUG_RUN)
+    cout << hexB(b&0xff) << ' ';
+#endif
 }
 
 void dumpTimestamp(udword ms) {

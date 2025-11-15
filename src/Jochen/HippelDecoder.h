@@ -20,6 +20,9 @@
 #include "Decoder.h"
 #include "SmartPtr.h"
 #include "PaulaVoice.h"
+#include "MyTypes.h"
+#include "MyEndian.h"
+#include "Dump.h"
 
 #include <string>
 #include <vector>

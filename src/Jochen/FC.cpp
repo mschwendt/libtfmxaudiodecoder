@@ -17,8 +17,6 @@
 #include <cstring>
 
 #include "HippelDecoder.h"
-#include "MyEndian.h"
-//#include "Debug.h"
 
 namespace tfmxaudiodecoder {
 
@@ -262,11 +260,11 @@ void HippelDecoder::FC_nextNote(VoiceVars& voiceX) {
     if (voiceX.voiceNum==0) {
         cout << endl;
         dumpTimestamp(songPosCurrent);
-        cout << "  Step = " << hex << setw(4) << setfill('0') << voiceX.trackPos/ trackStepLen;
-        cout << " | " << hex << setfill('0') << (int)(voiceX.trackStart+voiceX.trackPos) << " of " << (int)voiceX.trackStart << " to " << (int)voiceX.trackEnd << endl;
+        cout << "  Step = " << hexW(voiceX.trackPos/ trackStepLen);
+        cout << " | " << hexW(voiceX.trackStart+voiceX.trackPos) << " of " << hexW(voiceX.trackStart) << " to " << hexW(voiceX.trackEnd) << endl;
         udword tmp = voiceX.trackStart+voiceX.trackPos;
         for (int t = 0; t < trackStepLen; ++t)
-            cout << hex << setw(2) << setfill('0') << (int)fcBuf[tmp++] << ' ';
+            cout << hexB(fcBuf[tmp++]) << ' ';
         cout << endl;
         cout << endl;
     }

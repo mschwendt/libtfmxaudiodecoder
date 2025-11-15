@@ -14,9 +14,7 @@
 // with this program; if not, see <https://www.gnu.org/licenses/>.
 
 #include "HippelDecoder.h"
-#include "MyEndian.h"
 #include "Analyze.h"
-//#include "Debug.h"
 
 #include <cstring>
 
@@ -371,7 +369,7 @@ int HippelDecoder::run() {
                 (this->*pNextNoteFunc)(voiceVars[v]);
             }
 #if defined(DEBUG_RUN)
-            cout << endl << flush;
+            cout << endl << std::flush;
 #endif
         }  // songEnd flag may have changed after this
     }
@@ -496,13 +494,13 @@ void HippelDecoder::replacePattern(int n, const ubyte (&pattNew)[PATTERN_LENGTH]
 void HippelDecoder::dumpModule() {
 #if defined(DEBUG)
     cout << getFormatName() << endl;
-    cout << "Header at 0x" << hex << offsets.header << endl;
-    cout << "Sample headers at 0x" << hex << offsets.sampleHeaders << endl;
-    cout << "Sample data at 0x" << hex << offsets.sampleData << endl;
+    cout << "Header at 0x" << tohex(offsets.header) << endl;
+    cout << "Sample headers at 0x" << tohex(offsets.sampleHeaders) << endl;
+    cout << "Sample data at 0x" << tohex(offsets.sampleData) << endl;
     cout << "Songs: " << dec << (int)stats.songs << endl;
 
-    cout << "Volume modulation sequences: 0x" << hex << setfill('0') << stats.volSeqs
-         << " at 0x" << hex << setw(8) << offsets.volModSeqs << endl;
+    cout << "Volume modulation sequences: 0x" << hexB(stats.volSeqs)
+         << " at 0x" << tohex(offsets.volModSeqs) << endl;
     if ( !traits.compressed) {
         dumpBlocks(fcBuf,offsets.volModSeqs,stats.volSeqs*64,64);
     }
@@ -516,8 +514,8 @@ void HippelDecoder::dumpModule() {
         }
     }
 
-    cout << "Sound modulation sequences: 0x" << hex << setfill('0') << stats.sndSeqs
-         << " at 0x" << hex << setw(8) << offsets.sndModSeqs << endl;
+    cout << "Sound modulation sequences: 0x" << hexB(stats.sndSeqs)
+         << " at 0x" << tohex(offsets.sndModSeqs) << endl;
     if ( !traits.compressed) {
         dumpBlocks(fcBuf,offsets.sndModSeqs,stats.sndSeqs*64,64);
     }
@@ -531,11 +529,11 @@ void HippelDecoder::dumpModule() {
         }
     }
 
-    cout << "Track table (sequencer): at " << hex << setw(8) << setfill('0') << offsets.trackTable << endl;
+    cout << "Track table (sequencer): at 0x" << tohex(offsets.trackTable) << endl;
     dumpLines(fcBuf,offsets.trackTable,trackTabLen,trackStepLen);
     cout << endl;
 
-    cout << "Patterns: 0x" << hex << stats.patterns << " at 0x" << offsets.patterns << endl;
+    cout << "Patterns: 0x" << hexB(stats.patterns) << " at 0x" << tohex(offsets.patterns) << endl;
     if ( !traits.compressed ) {
         dumpBlocks(fcBuf,offsets.patterns,
                    stats.patterns*traits.patternSize,traits.patternSize);
@@ -547,14 +545,14 @@ void HippelDecoder::dumpModule() {
         }
     }
 
-    cout << "Samples/Waveforms: 0x" << hex << stats.samples << endl;
+    cout << "Samples/Waveforms: 0x" << hexB(stats.samples) << endl;
     for (int sam = 0; sam < stats.samples; sam++) {
         cout
-            << "0x" << hex << setw(2) << sam << ": "
-            << hex << setw(8) << setfill('0') << samples[sam].startOffs << " "
-            << hex << setw(4) << setfill('0') << samples[sam].len << " "
-            << hex << setw(4) << setfill('0') << samples[sam].repOffs << " "
-            << hex << setw(4) << setfill('0') << samples[sam].repLen << " "
+            << "0x" << hexB(sam) << ": "
+            << tohex(samples[sam].startOffs) << " "
+            << hexW(samples[sam].len) << " "
+            << hexW(samples[sam].repOffs) << " "
+            << hexW(samples[sam].repLen) << " "
             << endl;
     }
 #endif  // DEBUG

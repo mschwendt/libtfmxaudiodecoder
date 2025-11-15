@@ -15,7 +15,6 @@
 // with this program; if not, see <https://www.gnu.org/licenses/>.
 
 #include "HippelDecoder.h"
-#include "MyEndian.h"
 
 // File name extension: .mcmd
 // On AMIGA, file name prefix: MCMD.

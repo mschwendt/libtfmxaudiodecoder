@@ -156,7 +156,7 @@ bool tfmxaudiodecoder::TFMXDecoder::isMerged() {
                 }
                 break;
             case 2:
-                while (len-- > 0)
+                while (len-- > 0) {
                     ubyte c = pBuf[offs++];
                     if (c<128) {
                         game.push_back((char)c);
@@ -168,7 +168,7 @@ bool tfmxaudiodecoder::TFMXDecoder::isMerged() {
                 }
                 break;
             case 6:
-                while (len-- > 0)
+                while (len-- > 0) {
                     ubyte c = pBuf[offs++];
                     if (c<128) {
                         title.push_back((char)c);

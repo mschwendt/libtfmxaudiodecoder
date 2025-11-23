@@ -45,9 +45,9 @@ and consider adding a plug-in, if you like what you hear.
 Within music collections, the music data files recognized by this library
 usually use a file name extension from this list:
 
-    .tfmx, .tfx, .tfm, .mdat
+    .tfx, .tfm, .mdat, .tfmx
     .hip, .hipc, .hip7, .mcmd
-    .fc, .fc13, .fc14, .fc3, .fc4, .smod
+    .fc, .fc3, .fc4, .fc13, .fc14, .smod
 
 Some of the music comes as a pair of files (music data + separate samples file), if it has not been converted
 into a single-file format, e.g.:

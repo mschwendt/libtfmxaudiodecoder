@@ -106,6 +106,10 @@ class LamePaulaMixer
     ubyte emptySample[4];
 
     float basePeriod;
+
+    float f1C, f1Ci;
+    sword f1LastLw, f1LastRw;
+    sbyte f1LastLb, f1LastRb;
 };
 
 }  // namespace

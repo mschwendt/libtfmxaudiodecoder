@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License along
 // with this program; if not, see <https://www.gnu.org/licenses/>.
 
+#include <cmath>
+
 #include "LamePaulaMixer.h"
 #include "LamePaulaVoice.h"
 #include "Decoder.h"
@@ -27,6 +29,7 @@ LamePaulaMixer::LamePaulaMixer()
 {
     emptySample[0] = emptySample[1] = emptySample[2] = emptySample[3] = 0;
     panning = 50+25;
+    lowpass2 = false;
 
     // Fill clipping table needed for the four virtual voices.
     for (int i=0; i<0x180; i++) {
@@ -104,6 +107,10 @@ void LamePaulaMixer::setPanning(int p) {
     panning = p;
 }
 
+void LamePaulaMixer::setFiltering(int p) {
+    lowpass2 = (p == 1);
+}
+
 void LamePaulaMixer::init(Decoder *decoder) {
     if ( !decoder ) {
         return;
@@ -176,6 +183,9 @@ void LamePaulaMixer::init(udword freq, ubyte bits, ubyte chn, uword zero, ubyte 
     f1Ci = 1.0-((3.14159265*2*4420.97)/pcmFreq);
     f1LastLw = f1LastRw = 0;
     f1LastLb = f1LastRb = 0;
+
+    f2L.setup(3275.0,pcmFreq);
+    f2R.setup(3275.0,pcmFreq);
 }
 
 void LamePaulaMixer::initMixTables() {
@@ -358,9 +368,16 @@ void* LamePaulaMixer::fill8bitMono(void* buffer, udword numberOfSamples) {
 
  fill8bitMonoPost:
     buffer8bit = static_cast<sbyte*>(buffer);
-    for (udword n = numberOfSamples; n>0; n--) {
-        f1LastLb = (f1C * *buffer8bit + f1Ci*f1LastLb);
-        *buffer8bit++ = f1LastLb;
+    if (lowpass2) {
+        for (udword n = numberOfSamples; n>0; n--) {
+            *buffer8bit++ = 0x7f * f2L.process( *buffer8bit/128.0 );
+        }
+    }
+    else {
+        for (udword n = numberOfSamples; n>0; n--) {
+            f1LastLb = (f1C * *buffer8bit + f1Ci*f1LastLb);
+            *buffer8bit++ = f1LastLb;
+        }
     }
     if (zero8bit != 0) {  // want unsigned samples?
         ubyte *b = static_cast<ubyte*>(buffer);
@@ -427,11 +444,19 @@ void* LamePaulaMixer::fill8bitStereoPanning( void* buffer, udword numberOfSample
 
  fill8bitStereoPost:
     buffer8bit = static_cast<sbyte*>(buffer);
-    for (udword n = numberOfSamples; n>0; n--) {
-        f1LastLb = (f1C * *buffer8bit + f1Ci*f1LastLb);
-        *buffer8bit++ = f1LastLb;
-        f1LastRb = (f1C * *buffer8bit + f1Ci*f1LastRb);
-        *buffer8bit++ = f1LastRb;
+    if (lowpass2) {
+        for (udword n = numberOfSamples; n>0; n--) {
+            *buffer8bit++ = 0x7f * f2L.process( *buffer8bit/128.0 );
+            *buffer8bit++ = 0x7f * f2R.process( *buffer8bit/128.0 );
+        }
+    }
+    else {
+        for (udword n = numberOfSamples; n>0; n--) {
+            f1LastLb = (f1C * *buffer8bit + f1Ci*f1LastLb);
+            *buffer8bit++ = f1LastLb;
+            f1LastRb = (f1C * *buffer8bit + f1Ci*f1LastRb);
+            *buffer8bit++ = f1LastRb;
+        }
     }
     if (zero8bit != 0) {  // want unsigned samples?
         ubyte *b = static_cast<ubyte*>(buffer);
@@ -476,9 +501,16 @@ void* LamePaulaMixer::fill16bitMono( void* buffer, udword numberOfSamples ) {
 
  fill16bitMonoPost:
     buffer16bit = static_cast<sword*>(buffer);
-    for (udword n = numberOfSamples; n>0; n--) {
-        f1LastLw = (f1C * *buffer16bit + f1Ci*f1LastLw);
-        *buffer16bit++ = f1LastLw;
+    if (lowpass2) {
+        for (udword n = numberOfSamples; n>0; n--) {
+            *buffer16bit++ = 0x7fff * f2L.process( *buffer16bit/32768.0 );
+        }
+    }
+    else {
+        for (udword n = numberOfSamples; n>0; n--) {
+            f1LastLw = (f1C * *buffer16bit + f1Ci*f1LastLw);
+            *buffer16bit++ = f1LastLw;
+        }
     }
     if (zero16bit != 0) {  // want unsigned samples?
         uword *b = static_cast<uword*>(buffer);
@@ -546,11 +578,19 @@ void* LamePaulaMixer::fill16bitStereoPanning( void *buffer, udword numberOfSampl
 
  fill16bitStereoPost:
     buffer16bit = static_cast<sword*>(buffer);
-    for (udword n = numberOfSamples; n>0; n--) {
-        f1LastLw = (f1C * *buffer16bit + f1Ci*f1LastLw);
-        *buffer16bit++ = f1LastLw;
-        f1LastRw = (f1C * *buffer16bit + f1Ci*f1LastRw);
-        *buffer16bit++ = f1LastRw;
+    if (lowpass2) {
+        for (udword n = numberOfSamples; n>0; n--) {
+            *buffer16bit++ = 0x7fff * f2L.process( *buffer16bit/32768.0 );
+            *buffer16bit++ = 0x7fff * f2R.process( *buffer16bit/32768.0 );
+        }
+    }
+    else {
+        for (udword n = numberOfSamples; n>0; n--) {
+            f1LastLw = (f1C * *buffer16bit + f1Ci*f1LastLw);
+            *buffer16bit++ = f1LastLw;
+            f1LastRw = (f1C * *buffer16bit + f1Ci*f1LastRw);
+            *buffer16bit++ = f1LastRw;
+        }
     }
     if (zero16bit != 0) {  // want unsigned samples?
         uword *b = static_cast<uword*>(buffer);

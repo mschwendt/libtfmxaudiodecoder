@@ -14,6 +14,7 @@ Config.h \
 CRCLight.cpp CRCLight.h \
 Debug.h \
 Dump.h Dump.cpp \
+Filter.h Filter.cpp \
 PaulaVoice.h PaulaVoice.cpp \
 LamePaulaVoice.h LamePaulaVoice.cpp \
 LamePaulaMixer.h LamePaulaMixer.cpp \

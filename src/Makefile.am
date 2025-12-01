@@ -12,7 +12,6 @@ Decoder.cpp Decoder.h \
 DecoderProxy.cpp DecoderProxy.h \
 Config.h \
 CRCLight.cpp CRCLight.h \
-Debug.h \
 Dump.h Dump.cpp \
 Filter.h Filter.cpp \
 PaulaVoice.h PaulaVoice.cpp \

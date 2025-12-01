@@ -370,7 +370,8 @@ void* LamePaulaMixer::fill8bitMono(void* buffer, udword numberOfSamples) {
     buffer8bit = static_cast<sbyte*>(buffer);
     if (lowpass2) {
         for (udword n = numberOfSamples; n>0; n--) {
-            *buffer8bit++ = 0x7f * f2L.process( *buffer8bit/128.0 );
+            *buffer8bit = 0x7f * f2L.process( *buffer8bit/128.0 );
+            buffer8bit++;
         }
     }
     else {
@@ -446,8 +447,10 @@ void* LamePaulaMixer::fill8bitStereoPanning( void* buffer, udword numberOfSample
     buffer8bit = static_cast<sbyte*>(buffer);
     if (lowpass2) {
         for (udword n = numberOfSamples; n>0; n--) {
-            *buffer8bit++ = 0x7f * f2L.process( *buffer8bit/128.0 );
-            *buffer8bit++ = 0x7f * f2R.process( *buffer8bit/128.0 );
+            *buffer8bit = 0x7f * f2L.process( *buffer8bit/128.0 );
+            buffer8bit++;
+            *buffer8bit = 0x7f * f2R.process( *buffer8bit/128.0 );
+            buffer8bit++;
         }
     }
     else {
@@ -503,7 +506,8 @@ void* LamePaulaMixer::fill16bitMono( void* buffer, udword numberOfSamples ) {
     buffer16bit = static_cast<sword*>(buffer);
     if (lowpass2) {
         for (udword n = numberOfSamples; n>0; n--) {
-            *buffer16bit++ = 0x7fff * f2L.process( *buffer16bit/32768.0 );
+            *buffer16bit = 0x7fff * f2L.process( *buffer16bit/32768.0 );
+            buffer16bit++;
         }
     }
     else {
@@ -580,8 +584,10 @@ void* LamePaulaMixer::fill16bitStereoPanning( void *buffer, udword numberOfSampl
     buffer16bit = static_cast<sword*>(buffer);
     if (lowpass2) {
         for (udword n = numberOfSamples; n>0; n--) {
-            *buffer16bit++ = 0x7fff * f2L.process( *buffer16bit/32768.0 );
-            *buffer16bit++ = 0x7fff * f2R.process( *buffer16bit/32768.0 );
+            *buffer16bit = 0x7fff * f2L.process( *buffer16bit/32768.0 );
+            buffer16bit++;
+            *buffer16bit = 0x7fff * f2R.process( *buffer16bit/32768.0 );
+            buffer16bit++;
         }
     }
     else {

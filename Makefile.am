@@ -2,7 +2,7 @@ AUTOMAKE_OPTIONS = foreign
 
 ACLOCAL_AMFLAGS = -I m4
 
-EXTRA_DIST = m4 images
+EXTRA_DIST = m4 images README_BAD.md TFMX_HIP_FC.md TFMX.md
 
 SUBDIRS = src
 

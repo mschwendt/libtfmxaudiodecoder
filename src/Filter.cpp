@@ -19,7 +19,7 @@
 namespace tfmxaudiodecoder {
 
 void Filter::setup(float fc, udword freq) {
-    float oc = M_PI*3275.0/freq;
+    float oc = M_PI*fc/freq;
     float k = tan(oc);
     float d = 1.0 / (1.0 + sqrt(2.0) * k + k*k);
     a[0] = k*k*d;

@@ -11,7 +11,9 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
 #if defined(DEBUG)
     cout << "CRC = " << tohex(crc1) << "  " << input.path << endl;
 #endif
- 
+
+    // Gem'X. No checksum based adjustments required.
+
     // Danger Freak (1989) seems to be a special TFMX v1 variant.
     if (crc1 == 0x48960d8c || crc1 == 0x5dcd624f || crc1 == 0x3f0b151f) {
         setTFMXv1();

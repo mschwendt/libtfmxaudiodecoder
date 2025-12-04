@@ -5,14 +5,15 @@ and custom chips is performed. Potentially, versatile music player emulators
 like [UADE](https://www.exotica.org.uk/wiki/UADE), which utilize original
 and/or modified machine code player object files, are a good and promising
 approach to handling a multitude of music formats. However, the additional
-requirements to maintain player object files and a database of which
-custom player to choose for which input file is a major undertaking.
+requirements to maintain a variety of machine code player object files and
+a database of which custom player to choose for which input file is a major
+undertaking and error-prone, too.
 
 Secondly, this is not a complete implementation of the API of a typical
 TFMX player object file either. Features such as but not limited to sending
-signals to the API caller, playing sound effects, accepting master volume
-fading commands, playing note commands from the outside are not needed when
-only trying to replay a TFMX file.
+signals to the API caller, playing sound effects, accepting external master
+volume fading commands, playing note commands from the outside are not needed
+when only trying to replay a TFMX file.
 
 This is a barebone player that implements enough track commands, pattern
 commands and macro commands as needed to parse and play files in TFMX v1.x,

@@ -36,6 +36,8 @@ it's among my favourite TFMX modules), and heard ``Monster Time`` and
 The library has been tested with a large number of files from old
 and current major collections like [Modland](https://modland.com/) and
 [ExoticA](https://www.exotica.org.uk/wiki/Category:Amiga_Music_Formats).
+During pre-release testing, multiple issues reported in bug trackers of
+other music players have been reviewed, too.
 
 If you are an author of a music player, please give this library a try,
 and consider adding a plug-in, if you like what you hear.

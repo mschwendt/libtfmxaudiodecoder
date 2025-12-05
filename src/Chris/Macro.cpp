@@ -377,6 +377,7 @@ void TFMXDecoder::macroFunc_StopSample_sub(VoiceVars& voice) {
     voice.ch->off();
     macroEvalAgain = true;
 
+    // The variant that also does AddVolume/SetVolume.
     if (cmd.cd == 0) {
         if (cmd.ee == 0) {
             return;

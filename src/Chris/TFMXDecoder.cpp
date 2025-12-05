@@ -355,10 +355,13 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     MacroDefs[0x1e] = &macroDef_RandomMask;
     MacroDefs[0x1f] = &macroDef_SetPrevNote;
 
-    // Macro commands 1F AddChannel and 20 SubChannel are not implemented
-    // since no file seems to use them. Also, number 1F is occupied by
+    // Macro commands $1F AddChannel and $20 SubChannel are not implemented
+    // since no file seems to use them. Also, number $1F is occupied by
     // SetPrevNote already. which would cause a conlict that would need
     // to be detected and prevent somehow.
+    //
+    // Macro command $20 Signal and its external write-only registers
+    // as added by some TFMX variants is not needed either.
     MacroDefs[0x20] = &macroDef_UNDEF;
     
     MacroDefs[0x21] = &macroDef_PlayMacro;

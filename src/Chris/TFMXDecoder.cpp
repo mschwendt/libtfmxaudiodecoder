@@ -316,6 +316,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     TrackCmdFuncs[3] = &TFMXDecoder::trackCmd_7V;
     TrackCmdFuncs[4] = &TFMXDecoder::trackCmd_Fade;
 
+    // Start with mapping all undefined/unknown macro commands to NOP.
     for (ubyte m = 0; m<0x40; m++) {
         MacroDefs[m] = &macroDef_NOP;
     }
@@ -515,6 +516,10 @@ void TFMXDecoder::dumpModule() {
     }
     cout << endl;
 
+    // $00-$3f covers a larger range than defined by TFMX variants,
+    // so we can apply AND $3f elsewhere and at the same time also handle
+    // the few modules that specify a non-existant macro command like $31
+    // (which we replace with the NOP macro command).
     cout << "Macro Cmd used:" << endl
          << "0000000000000000111111111111111122222222222222223333333333333333" << endl
          << "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" << endl;

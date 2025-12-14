@@ -25,6 +25,7 @@ void TFMXDecoder::dumpMacros() {
     // Unfortunately, there is nothing like a TFMX structure field that
     // tells how many macros have been defined. So, if we want to dump all
     // macros, all that's there is the unterminated list of macro offsets.
+    // And some macros may hold data for random play.
 #if defined(DEBUG)  
     int macro = -1;
     udword prevMacroStart = 0;

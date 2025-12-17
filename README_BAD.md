@@ -1,6 +1,6 @@
 ### Faulty/damaged files (MD5 hash and filename)
 
-Music data file (size 7875) is one byte too short and thus is corrupting the
+Music data file (size 7875) is one byte too short (missing a 0x9C at the end) and thus is corrupting the
 last sound macro offset. As a result, an instrument is not played. Only obvious,
 if you know these ingame tunes from ``The Adventures of Quik & Silva``.
 

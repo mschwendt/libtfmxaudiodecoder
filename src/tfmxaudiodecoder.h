@@ -78,7 +78,7 @@ extern "C" {
 
     /* If planning to ignore a song's end as to loop to the beginning,
        call this with 1 = true. */
-    void tfmxdec_set_loop_mode(void* decoder, int loop);
+    void tfmxdec_set_loop_mode(void* decoder, int flag);
 
     /* Return 1 (true) if song end has been reached, else 0 (false). */
     int tfmxdec_song_end(void* decoder);

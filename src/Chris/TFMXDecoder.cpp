@@ -192,7 +192,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
         input.len = length;
         
         // Set up smart pointer for unsigned input buffer access.
-        pBuf.setBuffer((ubyte*)input.buf,input.bufLen);
+        pBuf.setBuffer(input.buf,input.bufLen);
 
         if ( !detect(input.buf,input.bufLen) ) {
             return false;

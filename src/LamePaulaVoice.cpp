@@ -11,7 +11,7 @@ namespace tfmxaudiodecoder {
 
 LamePaulaVoice::LamePaulaVoice() {
     looping = true;
-    off();
+    LamePaulaVoice::off();
     lastSample = 0;
     smoothUp = false;
     smoothCount = 0;

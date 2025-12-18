@@ -18,7 +18,7 @@ LamePaulaVoice::LamePaulaVoice() {
 }
 
 LamePaulaVoice::~LamePaulaVoice() {
-    off();
+    LamePaulaVoice::off();
 }
 
 void LamePaulaVoice::off() {

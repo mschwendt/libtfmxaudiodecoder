@@ -18,7 +18,7 @@
 #include "LamePaulaMixer.h"
 
 #define TFMX_DECLARE_DECODER \
-    tfmxdec *p = (tfmxdec*)decoder
+    tfmxdec *p = static_cast<tfmxdec*>(decoder)
 
 struct tfmxdec {
     tfmxaudiodecoder::DecoderProxy dec;

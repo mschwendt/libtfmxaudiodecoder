@@ -381,6 +381,8 @@ void TFMXDecoder::macroFunc_StopSample_sub(VoiceVars& voice) {
     macroEvalAgain = true;
 
     // TESTING... for some of the good ears out there.
+    // Rare variants of TFMX implement it as a count value, but no module
+    // sets the value to anything above 1.
     if (cmd.bb != 0) {
         voice.macro.extraWait = false;
     }

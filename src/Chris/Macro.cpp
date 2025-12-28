@@ -129,6 +129,8 @@ void TFMXDecoder::macroFunc_ExtraWait(VoiceVars& voice) {
         voice.macro.extraWait = true;
         macroEvalAgain = true;
     }
+    // Resetting the flag via DMAoff macro is extremely rare
+    // and potentially not needed with no hardware Paula.
 }
 
 void TFMXDecoder::macroFunc_NOP(VoiceVars& voice) {

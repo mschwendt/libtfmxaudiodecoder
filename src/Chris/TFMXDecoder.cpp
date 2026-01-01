@@ -753,7 +753,7 @@ uword TFMXDecoder::noteToPeriod(int note) {
 
 bool TFMXDecoder::detect(void* data, udword len) {
 #if defined(DEBUG)
-    cout << "TFMXlDecoder::detect()" << endl;
+    cout << "TFMXDecoder::detect()" << endl;
 #endif
     ubyte *d = static_cast<ubyte*>(data);
     bool maybe = false;

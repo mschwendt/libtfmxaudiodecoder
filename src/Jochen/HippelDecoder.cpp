@@ -633,7 +633,7 @@ const uword HippelDecoder::periods[0x80] = {
     //
     // End of TFMX/COSO period table. There may be some more 0x0071
     // values at the end, but not enough to cover also array index
-    // up to and including "note value && 0x7f".
+    // up to and including "note value & 0x7f".
     0x06b0, 0x0650, 0x05f4, 0x05a0, 0x054c, 0x0500, 0x04b8, 0x0474,
     0x0434, 0x03f8, 0x03c0, 0x038a,
     // +0x54 (*2 = byte-offset)

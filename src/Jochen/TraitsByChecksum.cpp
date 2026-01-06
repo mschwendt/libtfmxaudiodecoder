@@ -38,6 +38,9 @@ void tfmxaudiodecoder::HippelDecoder::traitsByChecksum() {
         if (r != pEnd) {
             udword silenceOffs = (r-sBuf.tellBegin());
             crc1 = crc.get(sBuf,0,silenceOffs);
+#if defined(DEBUG)
+            cout << "CRC = " << tohex(crc1) << endl;
+#endif
         }
             
         // Wings of Death  end, intro, outro, title
@@ -88,6 +91,38 @@ void tfmxaudiodecoder::HippelDecoder::traitsByChecksum() {
                 // Else it would be played as a looping ping by mistake.
                 fcBuf[0x2a02] = 0;
                 fcBuf[0x2a03] = 1;
+            }
+        }
+
+        // Wings of Death (Atari ST to Amiga conversion)
+        // published on the Wanted Team examples website as:
+        // SOG.WingsOfDeathST intro
+        //
+        // It is prepended with the machine code player from
+        // Wings of Death (Amiga). Hence this player checksum.
+        if (crc1 == 0x4c0a6454) {
+            udword crc2, crc3;
+            crc2 = crc.get(sBuf,0x4a3c,0x4cb2-0x4a3c);  // sample defs
+            crc3 = crc.get(sBuf,0x2ef4,64);  // pattern $40
+#if defined(DEBUG)
+            cout << "CRC (2) = " << tohex(crc2) << endl;
+            cout << "CRC (3) = " << tohex(crc3) << endl;
+#endif
+            if (crc2 == 0xed03955b) {
+                // Accept only the examined file with strong portamento.
+                if (crc3 == 0x96681dec) {
+                    traits.lowerPeriods = true;
+                    traits.periodMin = 0x002c;
+                    // TFMX-style portamento is too strong for the patterns
+                    // that are transposed by +3 octaves.
+                    traits.portaWeaker = true;
+                    // TFMX-style vibrato seems too strong.
+                    pVibratoFunc = &HippelDecoder::COSO_vibrato;
+                }
+                // Reject other/unknown releases.
+                else {
+                    traits.blacklisted = true;
+                }
             }
         }
     }  // offsets.header != 0

@@ -70,7 +70,27 @@ void tfmxaudiodecoder::HippelDecoder::traitsByChecksum() {
             TFMX_sndModFuncs[5] = &HippelDecoder::TFMX_sndSeq_E5_repOffs;  // NB: but not used by those modules!
             TFMX_sndModFuncs[7] = &HippelDecoder::TFMX_sndSeq_E7_setDiffWave;
         }
-    }
+
+        // Grand Monster Slam (Atari ST to Amiga conversion)
+        // published on the Wanted Team examples website as:
+        // SOG.GrandSlamMonsterST
+        //
+        // It is prepended with the machine code player from
+        // Wings of Death (Amiga). Hence this player checksum.
+        if (crc1 == 0x3bcb814b) {
+            udword crc2;
+            crc2 = crc.get(sBuf,0x2950,0x2a04-0x2950);  // sample defs
+#if defined(DEBUG)
+            cout << "CRC (2) = " << tohex(crc2) << endl;
+#endif
+            if (crc2 == 0x9c2feb18) {
+                // Make DIG-1:PING.DIK a one-shot sample.
+                // Else it would be played as a looping ping by mistake.
+                fcBuf[0x2a02] = 0;
+                fcBuf[0x2a03] = 1;
+            }
+        }
+    }  // offsets.header != 0
 
     if (traits.compressed) {
         udword crc2 = crc.get(sBuf,offsets.trackTable,trackTabLen);

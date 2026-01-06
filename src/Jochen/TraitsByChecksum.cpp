@@ -100,17 +100,21 @@ void tfmxaudiodecoder::HippelDecoder::traitsByChecksum() {
         //
         // It is prepended with the machine code player from
         // Wings of Death (Amiga). Hence this player checksum.
+        // That player is not the right one to play that module.
         if (crc1 == 0x4c0a6454) {
-            udword crc2, crc3;
+            udword crc2, crc3, crc4;
             crc2 = crc.get(sBuf,0x4a3c,0x4cb2-0x4a3c);  // sample defs
             crc3 = crc.get(sBuf,0x2ef4,64);  // pattern $40
+            crc4 = crc.get(sBuf,0x43f4,0x4a18-0x43f4);  // track table
 #if defined(DEBUG)
             cout << "CRC (2) = " << tohex(crc2) << endl;
             cout << "CRC (3) = " << tohex(crc3) << endl;
+            cout << "CRC (4) = " << tohex(crc4) << endl;
 #endif
             if (crc2 == 0xed03955b) {
-                // Accept only the examined file with strong portamento.
-                if (crc3 == 0x96681dec) {
+                // Accept only the examined file with high transpose from
+                // Atari ST and strong portamento parameters.
+                if (crc3 == 0x96681dec && crc4 == 0x43202c79) {
                     traits.lowerPeriods = true;
                     traits.periodMin = 0x002c;
                     // TFMX-style portamento is too strong for the patterns

@@ -1,5 +1,5 @@
-### Faulty/damaged files (MD5 hash and filename)
----
+# Faulty/damaged files (MD5 hash and filename)
+
 
 #### The Adventures of Quik & Silva
 
@@ -20,7 +20,7 @@ if you know these ingame tunes.
 
 ---
 
-### Apidya loader
+#### Apidya loader
 
 Header has been invalidated with a flood of 0x0d values, which breaks
 all TFMX players that expect the space character after the "TFMX-SONG" tag.
@@ -35,7 +35,7 @@ audible clicks:
 
 ---
 
-### Wings of Death ST
+#### Wings of Death ST
 
 The Atari ST to Amiga conversion of ``Wings of Death`` as found on the
 Wanted Team page of example files raises doubts. It is prepended with
@@ -64,7 +64,7 @@ TODO: Get the repaired file published somewhere.
 
 ---
 
-### Grand Monster Slam ST
+#### Grand Monster Slam ST
 
 The Atari ST to Amiga conversion of ``Grand Monster Slam`` as found on the
 Wanted Team page of example files plays one PING sound in a loop, which

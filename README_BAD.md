@@ -43,7 +43,7 @@ the original machine code player from Wings of Death on Amiga, which is
 not the right one to replay it, because higher Amiga Paula frequencies are
 needed than what is supported by the array of periods within that player.
 Furthermore, compared with the original Atari ST music data, the
-sequencer's track table has been modified to tranpose some patters by
+sequencer's track table has been modified to transpose some patters by
 three octaves, which sounds bad:
 
 ```

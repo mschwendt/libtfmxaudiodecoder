@@ -91,6 +91,13 @@ void tfmxaudiodecoder::HippelDecoder::traitsByChecksum() {
                 // Else it would be played as a looping ping by mistake.
                 fcBuf[0x2a02] = 0;
                 fcBuf[0x2a03] = 1;
+                // Just incase, do the same for
+                // DIG-1:TUSCH.DIK
+                fcBuf[0x296c] = 0;
+                fcBuf[0x296d] = 1;
+                // and DIG-1:BONGO.DIK
+                fcBuf[0x29e4] = 0;
+                fcBuf[0x29e5] = 1;
             }
         }
 

@@ -80,6 +80,6 @@ which fixes the PING sound on-the-fly while loading the music file. If
 reparing the file, its MD5 fingerprint becomes:
 
 ```
- 75683de3b5adf4c81e71de5cfb689c56  SOG.GrandSlamMonsterST - repaired
+ 3e44767bb77e309a328edcb482ee51b2  SOG.GrandSlamMonsterST_repaired
 ```
 TODO: Get the repaired file published somewhere.

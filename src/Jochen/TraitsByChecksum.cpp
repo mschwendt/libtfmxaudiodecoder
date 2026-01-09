@@ -87,15 +87,17 @@ void tfmxaudiodecoder::HippelDecoder::traitsByChecksum() {
             cout << "CRC (2) = " << tohex(crc2) << endl;
 #endif
             if (crc2 == 0x9c2feb18) {
-                // Make DIG-1:PING.DIK a one-shot sample.
-                // Else it would be played as a looping ping by mistake.
+                // By mistake, three samples are defined as looping,
+                // which causes audible side-effects e.g. for the PING sound.
+                // In the original Atari ST module, they have length 0
+                // and are played as one-shot samples.
+                // DIG-1:PING.DIK
                 fcBuf[0x2a02] = 0;
                 fcBuf[0x2a03] = 1;
-                // Just incase, do the same for
                 // DIG-1:TUSCH.DIK
                 fcBuf[0x296c] = 0;
                 fcBuf[0x296d] = 1;
-                // and DIG-1:BONGO.DIK
+                // DIG-1:BONGO.DIK
                 fcBuf[0x29e4] = 0;
                 fcBuf[0x29e5] = 1;
             }

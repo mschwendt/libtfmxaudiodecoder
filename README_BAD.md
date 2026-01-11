@@ -69,14 +69,15 @@ TODO: Get the repaired file published somewhere.
 The Atari ST to Amiga conversion of ``Grand Monster Slam`` as found on the
 Wanted Team page of example files plays one PING sound in a loop, which
 leads to a few erratic sounds during playback, and which is wrong compared
-with Chris Hülsbeck's original melody.
+with Chris Hülsbeck's original melody. Examining the Atari ST data, actually
+three samples with length null are meant to be played in one-shot mode.
 
 ```
  5051058f1d0d77db04bf86d65ebf738b  SOG.GrandSlamMonsterST
 ```
 
 There is special support for that file in libtfmxaudiodecoder **newer than 1.0.1**,
-which fixes the PING sound on-the-fly while loading the music file. If
+which fixes the PING and the two other sounds on-the-fly while loading the music file. If
 reparing the file, its MD5 fingerprint becomes:
 
 ```

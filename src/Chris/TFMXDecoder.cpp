@@ -228,6 +228,19 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
         o2 = 0x400;
         o3 = 0x600;
     }
+    // Check for out-of-bounds offsets. It may be the rare case of a TFMX PC
+    // module conversion like "Tony & Friends in Kellogg's Land", which uses
+    // little-endian offsets here.
+    if (o1 >= input.bufLen || o2 >= input.bufLen || o3 >= input.bufLen) {
+        // C++23 would have std::byteswap.
+        o1 = byteSwap(o1);
+        o2 = byteSwap(o2);
+        o3 = byteSwap(o3);
+        // If they are still out-of-bounds, reject the module.
+        if (o1 >= input.bufLen || o2 >= input.bufLen || o3 >= input.bufLen) {
+            return false;
+        }
+    }
     offsets.trackTable = h+o1;
     offsets.patterns = h+o2;  // offset to array of offsets
     offsets.macros = h+o3;  // offset to array of offsets

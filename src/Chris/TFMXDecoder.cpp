@@ -236,14 +236,14 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
         o1 = byteSwap(o1);
         o2 = byteSwap(o2);
         o3 = byteSwap(o3);
-        // If they are still out-of-bounds, reject the module.
-        if (o1 >= input.bufLen || o2 >= input.bufLen || o3 >= input.bufLen) {
-            return false;
-        }
     }
     offsets.trackTable = h+o1;
     offsets.patterns = h+o2;  // offset to array of offsets
     offsets.macros = h+o3;  // offset to array of offsets
+    // If they are out-of-bounds, reject the module.
+    if (offsets.trackTable >= input.bufLen || offsets.patterns >= input.bufLen || offsets.macros >= input.bufLen) {
+        return false;
+    }
     
     offsets.sampleData = h+input.mdatSize;
     // TFMX clears the first two words for one-shot samples.

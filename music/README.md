@@ -1,5 +1,5 @@
 This is just a dumping ground for modules that have been repaired.  
-More details in [README_BAD.md](README_BAD.md) and within the library's source code.
+More details in [README_BAD.md](../README_BAD.md) and within the library's source code.
 
 ---
 

@@ -58,9 +58,8 @@ support for the repaired file in libtfmxaudiodecoder **newer than 1.0.1** to
 play it without sounding bad. The repaired file's MD5 fingerprint is:
 
 ```
- 58c5a79885c1068e3e11e077491f0b1c  SOG.WingsOfDeathST intro - repaired
+ 58c5a79885c1068e3e11e077491f0b1c  SOG.WingsOfDeathST intro_repaired
 ```
-TODO: Get the repaired file published somewhere.
 
 ---
 
@@ -81,9 +80,8 @@ which fixes the PING and the two other sounds on-the-fly while loading the music
 reparing the file, its MD5 fingerprint becomes:
 
 ```
- 3e44767bb77e309a328edcb482ee51b2  SOG.GrandSlamMonsterST_repaired
+ 3e44767bb77e309a328edcb482ee51b2  SOG.GrandMonsterSlamST_repaired
 ```
-TODO: Get the repaired file published somewhere.
 
 ---
 

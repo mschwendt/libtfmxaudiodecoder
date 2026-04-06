@@ -31,13 +31,11 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     // in many videos.
     else if (crc1 == 0x27f8998c || crc1 == 0x26447707) {
         setTFMXv1();
-        variant.incompleteAddBegin = true;
         variant.portaUnscaled = true;
     }
     // R-Type (1989).
     else if (crc1 == 0x8ac70fc8) {
         setTFMXv1();
-        variant.incompleteAddBegin = true;
     }
     // Ooops Up by Peter Thierolf. First two sub-songs specify a BPM customization
     // that isn't compatible with the speed count value of default TFMX.

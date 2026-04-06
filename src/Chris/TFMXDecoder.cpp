@@ -302,7 +302,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     variant.portaOverride = false;
     variant.noNoteDetune = false;
     variant.bpmSpeed5 = false;
-    variant.incompleteAddBegin = false;
+    variant.noAddBeginCount = false;
     
     PattCmdFuncs[0] = &TFMXDecoder::pattCmd_End;
     PattCmdFuncs[1] = &TFMXDecoder::pattCmd_Loop;
@@ -469,6 +469,7 @@ void TFMXDecoder::restart() {
 
 void TFMXDecoder::setTFMXv1() {
     formatName = FORMAT_NAME;
+    variant.noAddBeginCount = true;
     variant.vibratoUnscaled = true;
     variant.finetuneUnscaled = true;
     variant.portaUnscaled = false;

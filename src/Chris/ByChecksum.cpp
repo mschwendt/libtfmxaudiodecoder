@@ -34,6 +34,11 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
         variant.incompleteAddBegin = true;
         variant.portaUnscaled = true;
     }
+    // R-Type (1989).
+    else if (crc1 == 0x8ac70fc8) {
+        setTFMXv1();
+        variant.incompleteAddBegin = true;
+    }
     // Ooops Up by Peter Thierolf. First two sub-songs specify a BPM customization
     // that isn't compatible with the speed count value of default TFMX.
     else if (crc1 == 0x76f8aa6e) {

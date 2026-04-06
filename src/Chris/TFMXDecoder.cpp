@@ -302,6 +302,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     variant.portaOverride = false;
     variant.noNoteDetune = false;
     variant.bpmSpeed5 = false;
+    variant.incompleteAddBegin = false;
     
     PattCmdFuncs[0] = &TFMXDecoder::pattCmd_End;
     PattCmdFuncs[1] = &TFMXDecoder::pattCmd_Loop;

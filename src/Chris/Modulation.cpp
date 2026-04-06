@@ -35,11 +35,15 @@ void TFMXDecoder::processModulation(VoiceVars& voice) {
 // ----------------------------------------------------------------------
 
 void TFMXDecoder::addBegin(VoiceVars& voice) {
+    if (variant.incompleteAddBegin) {
+        return;
+    }
     if (voice.addBeginCount == 0) {
         return;
     }
     voice.sample.start += voice.addBeginOffset;
     if (voice.sample.start < offsets.sampleData) {
+        // TODO
     }
     if (voice.sid.targetLength != 0) {
         voice.sid.sourceOffset = voice.sample.start;

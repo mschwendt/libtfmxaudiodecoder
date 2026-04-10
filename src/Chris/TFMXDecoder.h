@@ -72,7 +72,7 @@ class TFMXDecoder : public Decoder {
     std::vector<ubyte> vSongs;
     udword songPosCurrent;
     int voices;
-    bool loopMode, triggerRestart;
+    bool triggerRestart;
 
     struct ModuleOffsets {
         udword header;

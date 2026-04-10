@@ -46,6 +46,7 @@ class TFMXDecoder : public Decoder {
     void setPaulaVoice(ubyte,PaulaVoice*) override;
 
  private:
+    void softRestart();
     void reset();
     void adjustTraitsPost();
     void dumpMacros();

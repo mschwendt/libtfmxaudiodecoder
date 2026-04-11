@@ -41,7 +41,7 @@ void tfmxaudiodecoder::TFMXDecoder::findSongs() {
         // Skip invalid defs.
         if (s1>s2 || s1>=0x1ff || s2>=0x1ff) {
 #if defined(DEBUG)
-            cout << "WARNING: Skipping song " << so << ": " << s1 << " to " << s2 << " speed " << s3 << "  for " << input.path << endl;
+            cout << "WARNING: Skipping invalid song " << hexB(so) << ": " << hexW(s1) << " to " << hexW(s2) << " speed " << hexW(s3) << "  for " << input.path << endl;
 #endif
             continue;
         }
@@ -74,7 +74,7 @@ void tfmxaudiodecoder::TFMXDecoder::findSongs() {
             if ( std::get<0>(*it) == s1 && s2 == std::get<0>(*it) ) {
                 skipSong = true;
 #if defined(DEBUG)
-                cout << "WARNING: Skipping song fragment " << so << " (" << s1 << ',' << s2 << ',' << s3 << ')' << endl;
+                cout << "WARNING: Skipping song fragment " << hexB(so) << " (" << hexW(s1) << ',' << hexW(s2) << ',' << hexW(s3) << ')' << endl;
 #endif
                 break;
             }
@@ -83,7 +83,7 @@ void tfmxaudiodecoder::TFMXDecoder::findSongs() {
             vSongs.push_back(so);
             setSongArgs.insert(a);
 #if defined(DEBUG)
-            cout << "Song " << so << ": " << s1 << " to " << s2 << " speed " << s3 << endl;
+            cout << "Song " << hexB(so) << ": " << hexW(s1) << " to " << hexW(s2) << " speed " << hexW(s3) << endl;
 #endif
         }
     }

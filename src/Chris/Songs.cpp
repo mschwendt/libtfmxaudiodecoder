@@ -63,7 +63,11 @@ void tfmxaudiodecoder::TFMXDecoder::findSongs() {
             }
         }
         
-        // Avoid duplicates.
+        // Avoid two types of duplicates.
+        //
+        // 1: All like (0,0,5) and basically (X,X,SPEED) where
+        //    a previously accepted song had the same start step X already.
+        // 2: Exact dupes of (X,Y,SPEED) will be skipped, too.
         SongArgs a = std::make_tuple( s1, s2, s3 );
         bool skipSong = false;
         for ( SongArgsSet::iterator it = setSongArgs.begin(); it != setSongArgs.end(); ++it ) {

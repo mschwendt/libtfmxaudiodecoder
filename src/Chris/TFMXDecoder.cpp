@@ -587,6 +587,10 @@ void TFMXDecoder::processPTTR(Track& tr) {
     // PT >= 0x80 < 0x90 : continue pattern from previous step
     // PT >= 0x90 : track not used
     if (tr.PT < 0x90) {
+        if (tr.pattern.offset == 0) {  // track didn't set valid PT before
+            tr.PT = 0xff;
+            return;
+        }
         if (tr.pattern.wait == 0) {
             processPattern(tr);
         }

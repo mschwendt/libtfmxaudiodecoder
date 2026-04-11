@@ -39,7 +39,13 @@ void tfmxaudiodecoder::TFMXDecoder::findSongs() {
         int s2 = readBEuword(pBuf,offsets.header+0x140+(so<<1));
         int s3 = readBEuword(pBuf,offsets.header+0x180+(so<<1));
         // Skip invalid defs.
-        if (s1>s2 || s1>=0x1ff || s2>=0x1ff) {
+        // Largest track number $1ff is not invalid per se,
+        // but (1ff,1ff,0) was the dummy placeholder entry for song 32,
+        // and some files have changed it to (0,1ff,5).
+        // Yet we cannot reject (0,1ff,SPEED) entirely, since e.g.
+        // the composer Erno used that in the first song definition.
+        if (s1>s2 || s1>0x1ff || s2>0x1ff ||
+            (so>1 && (s1==0x1ff || s2==0x1ff)) ) {
 #if defined(DEBUG)
             cout << "WARNING: Skipping invalid song " << hexB(so) << ": " << hexW(s1) << " to " << hexW(s2) << " speed " << hexW(s3) << "  for " << input.path << endl;
 #endif

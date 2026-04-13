@@ -677,14 +677,13 @@ int TFMXDecoder::run() {
                         break;
                     }
                 }  // next track
-                // This is a state where track sequencer cannot advance.
-                if ( !sequencer.step.next && countInactive == sequencer.tracks) {
-                    songEnd = true;
-                    triggerRestart = true;
-                }
-                if ( !sequencer.step.next && (countInactive+countInfinite) == sequencer.tracks) {
-                    songEnd = true;
-                    triggerRestart = true;
+                // These are states where track sequencer cannot advance.
+                if ( !sequencer.step.next ) {
+                    if ( (countInactive == sequencer.tracks) ||
+                         (countInactive+countInfinite) == sequencer.tracks ) {
+                        songEnd = true;
+                        triggerRestart = true;
+                    }
                 }
             } while (sequencer.step.next);
         }

@@ -279,6 +279,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     variant.noNoteDetune = false;
     variant.bpmSpeed5 = false;
     variant.noAddBeginCount = false;
+    variant.noTrackMute = false;
     
     PattCmdFuncs[0] = &TFMXDecoder::pattCmd_End;
     PattCmdFuncs[1] = &TFMXDecoder::pattCmd_Loop;

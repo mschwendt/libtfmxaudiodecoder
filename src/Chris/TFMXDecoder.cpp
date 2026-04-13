@@ -685,13 +685,14 @@ int TFMXDecoder::run() {
                         triggerRestart = true;
                     }
                 }
+                // Loop on end?
+                if (songEnd && loopMode) {
+                    songEnd = false;
+                    if (triggerRestart) {
+                        softRestart();
+                    }
+                }
             } while (sequencer.step.next);
-        }
-    }
-    if (songEnd && loopMode) {
-        songEnd = false;
-        if (triggerRestart) {
-            softRestart();
         }
     }
     

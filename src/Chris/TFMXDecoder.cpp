@@ -438,8 +438,7 @@ void TFMXDecoder::softRestart() {
     }
     for (ubyte t=0; t<sequencer.tracks; t++) {
         Track& tr = track[t];
-        tr.on = true;
-        //tr.on = getTrackMute(t);
+        tr.on = getTrackMute(t);
         tr.PT = 0xff; tr.TR = 0;
         tr.pattern.offset = tr.pattern.step = 0;
         tr.pattern.wait = 0;
@@ -660,8 +659,7 @@ int TFMXDecoder::run() {
                 int countInfinite = 0;
                 for (ubyte t=0; t<sequencer.tracks; t++) {
                     Track& tr = track[t];
-                    tr.on = true;
-                    //tr.on = getTrackMute(t);
+                    tr.on = getTrackMute(t);
                     if (tr.PT >= 0x90) {
                         countInactive++;
                     }

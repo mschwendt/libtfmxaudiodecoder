@@ -446,6 +446,11 @@ void TFMXDecoder::softRestart() {
         tr.pattern.loops = -1;
     }
 
+    // Not all songs are designed for looping cleanly, so aid them.
+    for (ubyte v=0; v<voices; v++) {
+        VoiceVars& voice = voiceVars[v];
+        voice.keyUp = true;
+    }
     fade.active = false;
     fade.volume = fade.target = 64;
     fade.delta = 0;

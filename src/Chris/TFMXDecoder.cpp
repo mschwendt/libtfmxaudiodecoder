@@ -54,6 +54,14 @@ TFMXDecoder::~TFMXDecoder() {
 void TFMXDecoder::reset() {
     cmd.aa = cmd.bb = cmd.cd = cmd.ee = 0;
 
+    for (ubyte t=0; t<sequencer.tracks; t++) {
+        Track& tr = track[t];
+        tr.on = getTrackMute(t);
+        tr.PT = 0xff; tr.TR = 0;
+        tr.pattern.offset = tr.pattern.step = 0;
+        tr.pattern.wait = 0;
+        tr.pattern.loops = -1;
+    }
     for (ubyte v=0; v<voices; v++) {
         VoiceVars& voice = voiceVars[v];
         
@@ -437,19 +445,12 @@ void TFMXDecoder::softRestart() {
     for (int step = 0; step < TRACK_STEPS_MAX; step++ ) {
         sequencer.stepSeenBefore[step] = false;
     }
-    for (ubyte t=0; t<sequencer.tracks; t++) {
-        Track& tr = track[t];
-        tr.on = getTrackMute(t);
-        tr.PT = 0xff; tr.TR = 0;
-        tr.pattern.offset = tr.pattern.step = 0;
-        tr.pattern.wait = 0;
-        tr.pattern.loops = -1;
-    }
 
     // Not all songs are designed for looping cleanly, so aid them.
     for (ubyte v=0; v<voices; v++) {
         VoiceVars& voice = voiceVars[v];
         voice.keyUp = true;
+        voice.volume = voice.outputVolume = 0;
     }
     fade.active = false;
     fade.volume = fade.target = 64;

@@ -21,6 +21,12 @@
 //
 // Some modules use the LOOP command to escape from their initial start/end
 // range within the track table.
+//
+// The size of the track table (and thus the number of lines/steps within it)
+// cannot be determined reliably, unfortunately. In some files there are data
+// within track table range, which look like pattern data before the actual
+// beginning of the patterns. As such, not much can be done about figuring out
+// whether a song definition's track step number is valid.
 
 namespace tfmxaudiodecoder {
 

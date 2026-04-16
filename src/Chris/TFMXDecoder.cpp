@@ -518,7 +518,9 @@ void TFMXDecoder::dumpModule() {
     cout << getFormatName() << endl;
     cout << "Header at 0x" << tohex(offsets.header) << endl;
     cout << "Macro offsets at 0x" << tohex(offsets.macros) << endl;
+    cout << "1st macro at 0x" << tohex(getMacroOffset(0)) << endl;
     cout << "Pattern offsets at 0x" << tohex(offsets.patterns) << endl;
+    cout << "1st pattern at 0x" << tohex(getPattOffset(0)) << endl;
     cout << "Track table (sequencer) at 0x" << tohex(offsets.trackTable) << endl;
     cout << "Sample data at 0x" << tohex(offsets.sampleData) << endl;
     cout << "Songs: " << dec << getSongs() << endl;

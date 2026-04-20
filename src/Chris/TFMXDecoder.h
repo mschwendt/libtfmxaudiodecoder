@@ -154,6 +154,7 @@ class TFMXDecoder : public Decoder {
             sword wait;
             ubyte loop;
             bool skip, extraWait;
+            bool delayedOff;
         } macro;
         
         sword waitOnDMACount;

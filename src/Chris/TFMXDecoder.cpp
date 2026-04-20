@@ -88,6 +88,7 @@ void TFMXDecoder::reset() {
         voice.macro.skip = true;
         voice.macro.loop = 0xff;
         voice.macro.extraWait = true;
+        voice.macro.delayedOff = false;
         
         voice.sid.targetOffset = 0x100*v + 4;
         voice.sid.targetLength = 0;

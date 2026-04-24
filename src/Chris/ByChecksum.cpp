@@ -1,3 +1,8 @@
+// Since the TFMX header and data don't tell which specific version or
+// variant of TFMX are required, this function comes as a last resort.
+// It tries to recognize specific files via a checksum of a small portion
+// of the pattern data and then adjusts player traits.
+
 #include "TFMXDecoder.h"
 #include "CRCLight.h"
 

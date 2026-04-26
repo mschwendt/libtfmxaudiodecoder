@@ -46,7 +46,7 @@ void tfmxaudiodecoder::TFMXDecoder::findSongs() {
         // Yet we cannot reject (0,1ff,SPEED) entirely, since e.g.
         // the composer Erno used that in the first song definition.
         if (s1>s2 || s1>0x1ff || s2>0x1ff ||
-            (so>1 && (s1==0x1ff || s2==0x1ff)) ) {
+            (so>0 && (s1==0x1ff || s2==0x1ff)) ) {
 #if defined(DEBUG)
             cout << "WARNING: Skipping invalid song " << hexB(so) << ": " << hexW(s1) << " to " << hexW(s2) << " speed " << hexW(s3) << "  for " << input.path << endl;
 #endif

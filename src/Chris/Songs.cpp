@@ -49,7 +49,7 @@ void tfmxaudiodecoder::TFMXDecoder::findSongs() {
         int s1next = s1;
         uword stepMax = (offsets.trackTableEnd-offsets.trackTable)/0x10;
         // If the first song's track end is out of bounds, fix it.
-        if (so==0 and s2>=stepMax) {
+        if (so==0 and s2>stepMax) {
             s2 = stepMax;
         }
         // Skip invalid defs.

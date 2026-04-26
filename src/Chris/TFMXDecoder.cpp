@@ -267,6 +267,20 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     // TFMX clears the first dword here for one shot samples e.g.
     pBuf[offsets.silence] = pBuf[offsets.silence+1] = pBuf[offsets.silence+2] = pBuf[offsets.silence+3] = 0;
 
+    // Evaluate the compress identification fields at $0A and $0C.
+    // In rare cases that part of the header has been overwritten
+    // and is invalid.
+    udword compressHint = readBEudword(pBuf,h+0x0c);
+    if (compressHint!=0 && readBEuword(pBuf,h+0x0a)==1) {
+        offsets.trackTableEnd = offsets.trackTable + compressHint - (0x800-0x10);
+        if (offsets.trackTableEnd>getPattOffset(0)) {
+            offsets.trackTableEnd = getPattOffset(0);
+        }
+    }
+    else {
+        offsets.trackTableEnd = getPattOffset(0);
+    }
+
 // ----------
 
     // Defaults only. Detection further below.

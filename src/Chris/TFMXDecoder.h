@@ -82,6 +82,7 @@ class TFMXDecoder : public Decoder {
         udword macros;
         udword sampleData;
         udword silence;
+        udword trackTableEnd;
     } offsets;
 
     struct Admin {

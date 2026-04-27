@@ -1,3 +1,7 @@
+# Kickstarter campaign of "Wings of Death - Reworked Anthology" by the German Remix Group is live!
+* https://www.kickstarter.com/projects/drf/wings-of-death-reworked-anthology
+
+
 # C language wrapper library for TFMX audio decoding
 https://github.com/mschwendt/libtfmxaudiodecoder
 

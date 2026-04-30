@@ -33,7 +33,7 @@ other TFMX by Chris Hülsbeck which expands to ``The Final Musicsystem eXtended`
 and is vastly different, but both guys have known each other. There have been
 interviews with both confirming that Hippel's 7 Voices mode was adapted by
 Hülsbeck. But has an interviewer ever asked about using the same TFMX acronym
-for two vastly different music player systems?
+for two vastly different music player systems?)
 
 As a machine code programmer and pioneer of computer music, the features
 of Jochen Hippel's music player enabled him to create a unique chiptune

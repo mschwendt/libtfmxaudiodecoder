@@ -35,6 +35,11 @@ interviews with both confirming that Hippel's 7 Voices mode was adapted by
 Hülsbeck. But has an interviewer ever asked about using the same TFMX acronym
 for two vastly different music player systems?)
 
+```
+  $ hexdump -C -s 2446 -n 16 Astaroth.hip
+  0000098e  54 46 4d 58 00 10 00 18  00 5e 00 d5 00 40 00 04  |TFMX.....^...@..|
+```
+
 As a machine code programmer and pioneer of computer music, the features
 of Jochen Hippel's music player enabled him to create a unique chiptune
 sound that could hardly be recreated with the early publicly available

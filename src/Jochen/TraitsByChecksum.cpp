@@ -142,12 +142,15 @@ void tfmxaudiodecoder::HippelDecoder::traitsByChecksum() {
 
     if (traits.compressed) {
         udword crc2 = crc.get(sBuf,offsets.trackTable,trackTabLen);
+#if defined(DEBUG)
+            cout << "CRC2 = " << tohex(crc2) << endl;
+#endif
 
         // Astaroth
         // Chambers of Shaolin
         // Dragonflight (musf)
         if (crc2 == 0x5495cc19 || crc2 == 0x7866963a ||
-            crc2 == 0xc04a79a7 ||
+            crc2 == 0xc04a79a7 || crc2 == 0xc5ec120d ||
             crc2 == 0x2158d5fc || crc2 == 0x2518e0aa || crc2 == 0x3e8f7323 ) {
             pPortamentoFunc = &HippelDecoder::TFMX_portamento;
         }

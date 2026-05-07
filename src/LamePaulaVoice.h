@@ -50,6 +50,7 @@ class LamePaulaVoice : public PaulaVoice
     uword loopCount;
     
     sbyte lastSample;
+    // unused post 1.0.7, but kept here to not affect ABI
     bool smoothUp;
     int smoothCount;
 };

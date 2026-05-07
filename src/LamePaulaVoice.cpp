@@ -13,8 +13,6 @@ LamePaulaVoice::LamePaulaVoice() {
     looping = true;
     LamePaulaVoice::off();
     lastSample = 0;
-    smoothUp = false;
-    smoothCount = 0;
 }
 
 LamePaulaVoice::~LamePaulaVoice() {
@@ -30,18 +28,6 @@ void LamePaulaVoice::off() {
 
 void LamePaulaVoice::on() {
     takeNextBuf();
-    if (!isOn) {
-        if (start) {
-            if ((sbyte)*start < lastSample ) {
-                smoothUp = false;
-                smoothCount = (lastSample-*start)/4;
-            }
-            else {
-                smoothUp = true;
-                smoothCount = (*start-lastSample)/4;
-            }
-        }
-    }
     isOn = true;
 }
 
@@ -71,41 +57,19 @@ ubyte LamePaulaVoice::getSample() {
         lastSample = 0;
         return 0;
     }
-    if (smoothCount > 0) {
-        sbyte s;
-        if (smoothUp) {
-            s = lastSample + 3;
-            if (s >= (sbyte)*start) {
-                smoothCount = 0;
-                s = *start;
-            }
-        }
-        else {
-            s = lastSample - 3;
-            if (s <= (sbyte)*start) {
-                smoothCount = 0;
-                s = *start;
-            }
-        }
-        lastSample = s;
-        return s;
-    }
     stepSpeedAddPnt += stepSpeedPnt;
     start += ( stepSpeed + ( stepSpeedAddPnt > 65535 ) );
     stepSpeedAddPnt &= 65535;
 
     if ( start >= end && looping ) {
-        start = repeatStart;
+        start = repeatStart + ( stepSpeed + ( stepSpeedAddPnt > 65535 ) );
         end = repeatEnd;
         loopCount++;
     }
     if ( start < end ) {
         lastSample = *start;
-        return lastSample;
     }
-    else {
-        return 0;
-    }
+    return lastSample;
 }
 
 uword LamePaulaVoice::getLoopCount() {

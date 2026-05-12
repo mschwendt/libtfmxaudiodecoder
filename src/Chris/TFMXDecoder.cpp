@@ -633,6 +633,52 @@ void TFMXDecoder::handleWaitOnPaulaDone() {
     }  // voices
 }
 
+void TFMXDecoder::runMain() {
+    if (--admin.count < 0) {
+        admin.count = admin.speed;  // reload
+        do {
+            sequencer.step.next = false;
+            int countInactive = 0;
+            int countInfinite = 0;
+            for (ubyte t=0; t<sequencer.tracks; t++) {
+                Track& tr = track[t];
+                tr.on = getTrackMute(t);
+                if (tr.PT >= 0x90) {
+                    countInactive++;
+                }
+                else if (tr.pattern.infiniteLoop) {
+                    countInfinite++;
+                }
+#if defined(DEBUG_RUN)
+                cout << '[' << (int)t << "] ";
+#endif
+                processPTTR(tr);
+#if defined(DEBUG_RUN)
+                cout << endl;
+#endif
+                if (sequencer.step.next) {
+                    break;
+                }
+            }  // next track
+            // These are states where track sequencer cannot advance.
+            if ( !sequencer.step.next ) {
+                if ( (countInactive == sequencer.tracks) ||
+                     (countInactive+countInfinite) == sequencer.tracks ) {
+                    songEnd = true;
+                    triggerRestart = true;
+                }
+            }
+            // Loop on end?
+            if (songEnd && loopMode) {
+                songEnd = false;
+                if (triggerRestart) {
+                    softRestart();
+                }
+            }
+        } while (sequencer.step.next);
+    }
+}
+
 void TFMXDecoder::processPTTR(Track& tr) {
     // PT < 0x80 : current pattern
     // PT >= 0x80 < 0x90 : continue pattern from previous step
@@ -702,49 +748,7 @@ int TFMXDecoder::run() {
     }
     
     if ( !songEnd || loopMode ) {
-        if (--admin.count < 0) {
-            admin.count = admin.speed;  // reload
-            do {
-                sequencer.step.next = false;
-                int countInactive = 0;
-                int countInfinite = 0;
-                for (ubyte t=0; t<sequencer.tracks; t++) {
-                    Track& tr = track[t];
-                    tr.on = getTrackMute(t);
-                    if (tr.PT >= 0x90) {
-                        countInactive++;
-                    }
-                    else if (tr.pattern.infiniteLoop) {
-                        countInfinite++;
-                    }
-#if defined(DEBUG_RUN)
-                    cout << '[' << (int)t << "] ";
-#endif
-                    processPTTR(tr);
-#if defined(DEBUG_RUN)
-                    cout << endl;
-#endif
-                    if (sequencer.step.next) {
-                        break;
-                    }
-                }  // next track
-                // These are states where track sequencer cannot advance.
-                if ( !sequencer.step.next ) {
-                    if ( (countInactive == sequencer.tracks) ||
-                         (countInactive+countInfinite) == sequencer.tracks ) {
-                        songEnd = true;
-                        triggerRestart = true;
-                    }
-                }
-                // Loop on end?
-                if (songEnd && loopMode) {
-                    songEnd = false;
-                    if (triggerRestart) {
-                        softRestart();
-                    }
-                }
-            } while (sequencer.step.next);
-        }
+        runMain();
     }
     
     tickFPadd += tickFP;

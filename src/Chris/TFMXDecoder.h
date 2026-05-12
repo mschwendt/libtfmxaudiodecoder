@@ -243,6 +243,7 @@ class TFMXDecoder : public Decoder {
     void handleWaitOnPaulaDone();
     void noteCmd();
     uword noteToPeriod(int);
+    void runMain();
     void processPTTR(Track&);
 
     void processModulation(VoiceVars&);

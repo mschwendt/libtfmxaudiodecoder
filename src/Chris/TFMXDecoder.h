@@ -240,6 +240,7 @@ class TFMXDecoder : public Decoder {
     void toPaulaStart(VoiceVars&,udword);
     void toPaulaLength(VoiceVars&,uword);
     void takeNextBufChecked(VoiceVars&);
+    void handleWaitOnPaulaDone();
     void noteCmd();
     uword noteToPeriod(int);
     void processPTTR(Track&);

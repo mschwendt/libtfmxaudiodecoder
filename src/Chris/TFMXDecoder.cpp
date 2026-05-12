@@ -606,6 +606,33 @@ ubyte* TFMXDecoder::makeSamplePtr(udword offset) {
     return(pBuf.tellBegin() + offset);
 }
 
+void TFMXDecoder::handleWaitOnPaulaDone() {
+    // Pretend we have an interrupt handler that has evaluated
+    // Paula "audio channel 0-3 block finished" interrupts meanwhile.
+    for (ubyte v=0; v<voices; v++) {
+        VoiceVars& voice = voiceVars[v];
+        if (voice.waitOnDMACount >= 0) {  // 0 = wait once
+            uword x = voice.ch->getLoopCount();
+            uword y = voice.waitOnDMAPrevLoops;
+            int d;
+            if (x >= y) {
+                d = x-y;
+            }
+            else {
+                d = x+(0x10000-y);
+            }
+            if ( d > voice.waitOnDMACount ) {
+                voice.waitOnDMACount = -1;
+                voice.macro.skip = false;
+            }
+            else {
+                voice.waitOnDMACount -= d;
+                voice.waitOnDMAPrevLoops = voice.ch->getLoopCount();
+            }
+        }
+    }  // voices
+}
+
 void TFMXDecoder::processPTTR(Track& tr) {
     // PT < 0x80 : current pattern
     // PT >= 0x80 < 0x90 : continue pattern from previous step

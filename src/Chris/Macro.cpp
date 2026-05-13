@@ -83,6 +83,15 @@ void TFMXDecoder::dumpMacros() {
 
 // ----------------------------------------------------------------------
 
+void TFMXDecoder::initMacro(VoiceVars& voice) {
+    voice.macro.step = 0;
+    voice.macro.wait = 0;
+    voice.macro.loop = 0xff;
+    voice.macro.skip = false;
+    voice.waitOnDMACount = 0;
+    voice.effectsMode = 0;
+}
+
 void TFMXDecoder::processMacroMain(VoiceVars& voice) {
     if (voice.macro.skip) {
         return;

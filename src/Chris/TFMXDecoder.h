@@ -292,6 +292,7 @@ class TFMXDecoder : public Decoder {
     static const std::string TrackCmdInfo[TRACK_CMD_MAX+1];
     
     udword getMacroOffset(ubyte);
+    void initMacro(VoiceVars&);
     void processMacroMain(VoiceVars&);
 
     typedef void (TFMXDecoder::*MacroFuncPtr)(VoiceVars&);

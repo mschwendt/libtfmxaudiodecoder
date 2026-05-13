@@ -790,12 +790,7 @@ void TFMXDecoder::noteCmd() {
         v.note = cmd.aa;
         v.keyUp = false;
         v.macro.offset = getMacroOffset(cmd.bb & 0x7f);
-        v.macro.step = 0;
-        v.macro.wait = 0;
-        v.macro.loop = 0xff;
-        v.macro.skip = false;
-        v.effectsMode = 0;
-        v.waitOnDMACount = 0;
+        initMacro(v);
     }
     else {  // cmd.aa >= $c0   portamento note
         v.portamento.count = cmd.bb;

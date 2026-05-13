@@ -6,6 +6,8 @@
 #include "TFMXDecoder.h"
 #include "CRCLight.h"
 
+#include <set>
+
 using namespace tfmxaudiodecoder;
 
 void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
@@ -27,8 +29,23 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     // Rock'n'Roll (1989). No checksum based adjustments required, because
     // it uses the unique header tag that was specific to TFMX before v1.
 
+    // Turrican II (1991) ingame music requires a special player variant
+    // with different execution order of macros and effects.
+    std::set<udword> T2_checksums = {
+        0xe2d6b5e0,  // world 1
+        0x0bf41b64,  // world 2
+        0x19ac72c3,  // world 3
+        0x03854473,  // world 4
+        0x9430d9de,  // world 5
+        0xc1ac5e1c,  // loader
+        0xcbb842b0,  // loading
+        0x78cd70f9   // demo
+    };
+    if (T2_checksums.count(crc1) >= 1) {
+        variant.styleT2 = true;
+    }
     // Danger Freak (1989) seems to be a special TFMX v1 variant.
-    if (crc1 == 0x48960d8c || crc1 == 0x5dcd624f || crc1 == 0x3f0b151f) {
+    else if (crc1 == 0x48960d8c || crc1 == 0x5dcd624f || crc1 == 0x3f0b151f) {
         setTFMXv1();
         variant.noNoteDetune = true;
         variant.portaUnscaled = false;

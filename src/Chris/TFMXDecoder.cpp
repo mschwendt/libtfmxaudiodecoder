@@ -303,6 +303,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     variant.bpmSpeed5 = false;
     variant.noAddBeginCount = false;
     variant.noTrackMute = false;
+    variant.styleT2 = false;
     
     PattCmdFuncs[0] = &TFMXDecoder::pattCmd_End;
     PattCmdFuncs[1] = &TFMXDecoder::pattCmd_Loop;
@@ -735,24 +736,56 @@ int TFMXDecoder::run() {
     if (!admin.initialized) {
         return 0;
     }
-    if ( !songEnd || loopMode ) {
-        handleWaitOnPaulaDone();
-        handleDelayedDMAoff();
-        for (ubyte v=0; v<voices; v++) {
-            if ( !songEnd || loopMode ) {
-                VoiceVars& voice = voiceVars[v];
-                processMacroMain( voice );
-                processModulation( voice );
-                voice.ch->paula.period = voice.outputPeriod;
-            }
-        }
-        runMain();
+    if (variant.styleT2) {
+        playerStyleT2();
+    }
+    else {
+        playerCommon();
     }
     tickFPadd += tickFP;
     int tick = tickFPadd>>8;
     tickFPadd &= 0xff;
     songPosCurrent += tick;
     return tick;
+}
+
+void TFMXDecoder::playerCommon() {
+#if defined(DEBUG_RUN)
+    cout << "  playerCommon()" << endl;
+#endif
+    if ( !songEnd || loopMode ) {
+        handleWaitOnPaulaDone();
+        handleDelayedDMAoff();
+        for (ubyte v=0; v<voices; v++) {
+            VoiceVars& voice = voiceVars[v];
+            processMacroMain( voice );
+            processModulation( voice );
+            voice.ch->paula.period = voice.outputPeriod;
+        }
+        runMain();
+    }
+}
+
+void TFMXDecoder::playerStyleT2() {
+#if defined(DEBUG_RUN)
+    cout << "  playerStyleT2()" << endl;
+#endif
+        handleWaitOnPaulaDone();
+        handleDelayedDMAoff();
+        for (ubyte v=0; v<voices; v++) {
+            VoiceVars& voice = voiceVars[v];
+            if (voice.macro.state <= 0) {
+                processModulation( voice );
+                processMacroMain( voice );
+            }
+            else if (voice.macro.state > 0) {
+                processMacroMain( voice );
+            }
+            voice.ch->paula.period = voice.outputPeriod;
+        }
+        runMain();
+        handleDelayedDMAon();
+    }
 }
 
 void TFMXDecoder::noteCmd() {
@@ -792,7 +825,12 @@ void TFMXDecoder::noteCmd() {
         v.note = cmd.aa;
         v.keyUp = false;
         v.macro.offset = getMacroOffset(cmd.bb & 0x7f);
-        initMacro(v);
+        if (variant.styleT2) {
+            v.macro.state = 1;
+        }
+        else {
+            initMacro(v);
+        }
     }
     else {  // cmd.aa >= $c0   portamento note
         v.portamento.count = cmd.bb;

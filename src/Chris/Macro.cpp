@@ -89,7 +89,12 @@ void TFMXDecoder::initMacro(VoiceVars& voice) {
     voice.macro.loop = 0xff;
     voice.macro.state = -1;
     voice.waitOnDMACount = 0;
-    voice.effectsMode = 0;
+    if (variant.styleT2) {
+        voice.effectsMode = -1;
+    }
+    else {
+        voice.effectsMode = 0;
+    }
 }
 
 void TFMXDecoder::processMacroMain(VoiceVars& voice) {
@@ -166,7 +171,12 @@ void TFMXDecoder::macroFunc_StartSample(VoiceVars& voice) {
     // There are variants of the "DMAon" macro command, which
     // are not needed because we don't emulate access to Amiga
     // custom chip registers like DMACON, INTENA and INTREQ.
-    voice.ch->on();
+    if (variant.styleT2) {
+        voice.macro.delayedOn = true;
+    }
+    else {
+        voice.ch->on();
+    }
     voice.effectsMode = (sbyte)cmd.bb;
     voice.macro.step++;
     macroEvalAgain = true;

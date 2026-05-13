@@ -249,6 +249,8 @@ class TFMXDecoder : public Decoder {
     uword noteToPeriod(int);
     void runMain();
     void processPTTR(Track&);
+    void playerCommon();
+    void playerStyleT2();
 
     void processModulation(VoiceVars&);
     void addBegin(VoiceVars&);
@@ -552,6 +554,7 @@ class TFMXDecoder : public Decoder {
         bool bpmSpeed5;
         bool noAddBeginCount;
         bool noTrackMute;
+        bool styleT2;
     } variant;
 
     struct {

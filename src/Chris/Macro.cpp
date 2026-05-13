@@ -84,10 +84,6 @@ void TFMXDecoder::dumpMacros() {
 // ----------------------------------------------------------------------
 
 void TFMXDecoder::processMacroMain(VoiceVars& voice) {
-    if (voice.macro.delayedOff) {
-        voice.ch->off();
-        voice.macro.delayedOff = false;
-    }
     if (voice.macro.skip) {
         return;
     }

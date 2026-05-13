@@ -155,7 +155,7 @@ class TFMXDecoder : public Decoder {
             sword wait;
             ubyte loop;
             bool skip, extraWait;
-            bool delayedOff;
+            bool delayedOff, delayedOn;
         } macro;
         
         sword waitOnDMACount;
@@ -241,6 +241,8 @@ class TFMXDecoder : public Decoder {
     void toPaulaLength(VoiceVars&,uword);
     void takeNextBufChecked(VoiceVars&);
     void handleWaitOnPaulaDone();
+    void handleDelayedDMAoff();
+    void handleDelayedDMAon();
     void noteCmd();
     uword noteToPeriod(int);
     void runMain();

@@ -633,6 +633,26 @@ void TFMXDecoder::handleWaitOnPaulaDone() {
     }  // voices
 }
 
+void TFMXDecoder::handleDelayedDMAoff() {
+    for (ubyte v=0; v<voices; v++) {
+        VoiceVars& voice = voiceVars[v];
+        if (voice.macro.delayedOff) {
+            voice.macro.delayedOff = false;
+            voice.ch->off();
+        }
+    }
+}
+
+void TFMXDecoder::handleDelayedDMAon() {
+    for (ubyte v=0; v<voices; v++) {
+        VoiceVars& voice = voiceVars[v];
+        if (voice.macro.delayedOn) {
+            voice.macro.delayedOn = false;
+            voice.ch->on();
+        }
+    }
+}
+
 void TFMXDecoder::runMain() {
     if (--admin.count < 0) {
         admin.count = admin.speed;  // reload
@@ -715,6 +735,7 @@ int TFMXDecoder::run() {
     }
     if ( !songEnd || loopMode ) {
         handleWaitOnPaulaDone();
+        handleDelayedDMAoff();
         for (ubyte v=0; v<voices; v++) {
             if ( !songEnd || loopMode ) {
                 VoiceVars& voice = voiceVars[v];

@@ -770,6 +770,7 @@ void TFMXDecoder::playerStyleT2() {
 #if defined(DEBUG_RUN)
     cout << "  playerStyleT2()" << endl;
 #endif
+    if ( !songEnd || loopMode ) {
         handleWaitOnPaulaDone();
         handleDelayedDMAoff();
         for (ubyte v=0; v<voices; v++) {

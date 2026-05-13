@@ -21,8 +21,6 @@ LamePaulaVoice::~LamePaulaVoice() {
 
 void LamePaulaVoice::off() {
     isOn = false;
-    paula.period = 0;
-    paula.volume = 0;
     loopCount = 0;
 }
 

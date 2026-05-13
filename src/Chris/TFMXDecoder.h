@@ -154,7 +154,9 @@ class TFMXDecoder : public Decoder {
             udword step, stepSaved;
             sword wait;
             ubyte loop;
-            bool skip, extraWait;
+            // deliberately not using enum/const yet
+            sbyte state;  // -1 = enabled, 0 = skip, 1 = init
+            bool extraWait;
             bool delayedOff, delayedOn;
         } macro;
         

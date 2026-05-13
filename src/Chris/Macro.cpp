@@ -87,18 +87,23 @@ void TFMXDecoder::initMacro(VoiceVars& voice) {
     voice.macro.step = 0;
     voice.macro.wait = 0;
     voice.macro.loop = 0xff;
-    voice.macro.skip = false;
+    voice.macro.state = -1;
     voice.waitOnDMACount = 0;
     voice.effectsMode = 0;
 }
 
 void TFMXDecoder::processMacroMain(VoiceVars& voice) {
-    if (voice.macro.skip) {
+    if (voice.macro.state == 0) {
         return;
     }
-    if (voice.macro.wait>0 ) {
-        voice.macro.wait--;
-        return;
+    else if (voice.macro.state == 1) {
+        initMacro(voice);
+    }
+    else {
+        if (voice.macro.wait>0 ) {
+            voice.macro.wait--;
+            return;
+        }
     }
 
     int macroLen = 0;
@@ -228,7 +233,7 @@ void TFMXDecoder::macroFunc_Cont(VoiceVars& voice) {
 }
 
 void TFMXDecoder::macroFunc_Stop(VoiceVars& voice) {
-    voice.macro.skip = true;
+    voice.macro.state = 0;
 }
 
 void TFMXDecoder::macroFunc_AddNote(VoiceVars& voice) {
@@ -486,7 +491,7 @@ void TFMXDecoder::macroFunc_OneShot(VoiceVars& voice) {
 void TFMXDecoder::macroFunc_WaitOnDMA(VoiceVars& voice) {
     // The rarely used variant where 'cdee' arg is the number of waits.
     voice.waitOnDMACount = makeWord(cmd.cd,cmd.ee);
-    voice.macro.skip = true;
+    voice.macro.state = 0;
     voice.waitOnDMAPrevLoops = voice.ch->getLoopCount();
     macroFunc_ExtraWait(voice);
 }

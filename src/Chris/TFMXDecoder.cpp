@@ -85,7 +85,7 @@ void TFMXDecoder::reset() {
 
         voice.macro.wait = 1;
         voice.macro.step = 0;
-        voice.macro.skip = true;
+        voice.macro.state = 0;
         voice.macro.loop = 0xff;
         voice.macro.extraWait = true;
         voice.macro.delayedOff = voice.macro.delayedOn = false;
@@ -623,7 +623,9 @@ void TFMXDecoder::handleWaitOnPaulaDone() {
             }
             if ( d > voice.waitOnDMACount ) {
                 voice.waitOnDMACount = -1;
-                voice.macro.skip = false;
+                if (voice.macro.state == 0) {
+                    voice.macro.state = -1;
+                }
             }
             else {
                 voice.waitOnDMACount -= d;
@@ -723,7 +725,7 @@ void TFMXDecoder::processPTTR(Track& tr) {
             tr.PT = 0xff;
             ubyte vNum = channelToVoiceMap[tr.TR & (sizeof(channelToVoiceMap)-1)];
             VoiceVars& v = voiceVars[vNum];
-            v.macro.skip = true;
+            v.macro.state = 0;
             v.ch->off();
         }
     }

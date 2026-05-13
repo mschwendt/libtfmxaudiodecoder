@@ -713,44 +713,18 @@ int TFMXDecoder::run() {
     if (!admin.initialized) {
         return 0;
     }
-    for (ubyte v=0; v<voices; v++) {
-        if ( !songEnd || loopMode ) {
-            VoiceVars& voice = voiceVars[v];
-
-            // Pretend we have an interrupt handler that has evaluated
-            // Paula "audio channel 0-3 block finished" interrupts meanwhile.
-            if (voice.waitOnDMACount >= 0) {  // 0 = wait once
-                uword x = voice.ch->getLoopCount();
-                uword y = voice.waitOnDMAPrevLoops;
-                int d;
-                if (x >= y) {
-                    d = x-y;
-                }
-                else {
-                    d = x+(0x10000-y);
-                }
-                if ( d > voice.waitOnDMACount ) {
-                    voice.macro.skip = false;
-                    voice.waitOnDMACount = -1;
-                }
-                else {
-                    voice.waitOnDMACount -= d;
-                    voice.waitOnDMAPrevLoops = voice.ch->getLoopCount();
-                }
-            }
-
-            processMacroMain( voice );
-            processModulation( voice );
-
-            voice.ch->paula.period = voice.outputPeriod;
-
-        }
-    }
-    
     if ( !songEnd || loopMode ) {
+        handleWaitOnPaulaDone();
+        for (ubyte v=0; v<voices; v++) {
+            if ( !songEnd || loopMode ) {
+                VoiceVars& voice = voiceVars[v];
+                processMacroMain( voice );
+                processModulation( voice );
+                voice.ch->paula.period = voice.outputPeriod;
+            }
+        }
         runMain();
     }
-    
     tickFPadd += tickFP;
     int tick = tickFPadd>>8;
     tickFPadd &= 0xff;

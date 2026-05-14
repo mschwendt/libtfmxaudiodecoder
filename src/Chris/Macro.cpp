@@ -508,8 +508,8 @@ void TFMXDecoder::macroFunc_RandomPlay(VoiceVars& voice) {
     voice.rnd.mode = cmd.ee;
     voice.rnd.count = 1;
     voice.rnd.flag = 1;
-    voice.rnd.blockWait = true;
     randomPlay(voice);
+    voice.rnd.blockWait = true;
     voice.macro.step++;
     macroEvalAgain = true;
 }

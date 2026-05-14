@@ -736,6 +736,9 @@ int TFMXDecoder::run() {
     if (!admin.initialized) {
         return 0;
     }
+#if defined(DEBUG_RUN)
+    dumpTimestamp(songPosCurrent);
+#endif
     if (variant.styleT2) {
         playerStyleT2();
     }

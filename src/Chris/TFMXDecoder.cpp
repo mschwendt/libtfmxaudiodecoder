@@ -781,6 +781,7 @@ void TFMXDecoder::playerStyleT2() {
             }
             else if (voice.macro.state > 0) {
                 processMacroMain( voice );
+                voice.effectsMode = 1;  // force to ON for this player variant
             }
             voice.ch->paula.period = voice.outputPeriod;
         }

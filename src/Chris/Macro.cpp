@@ -172,8 +172,8 @@ void TFMXDecoder::macroFunc_StartSample(VoiceVars& voice) {
     }
     else {
         voice.ch->on();
+        voice.effectsMode = (sbyte)cmd.bb;
     }
-    voice.effectsMode = (sbyte)cmd.bb;
     voice.macro.step++;
     macroEvalAgain = true;
 }

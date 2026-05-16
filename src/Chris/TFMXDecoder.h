@@ -552,6 +552,7 @@ class TFMXDecoder : public Decoder {
         bool portaOverride;
         bool noNoteDetune;
         bool setNoteV1;
+        bool extraWaitV1;
         bool macroLoopExtraWait;
         bool bpmSpeed5;
         bool noAddBeginCount;

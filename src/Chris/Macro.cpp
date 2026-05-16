@@ -140,6 +140,10 @@ void TFMXDecoder::processMacroMain(VoiceVars& voice) {
 
 void TFMXDecoder::macroFunc_ExtraWait(VoiceVars& voice) {
     voice.macro.step++;
+    if ( variant.extraWaitV1 ) {
+        return;
+    }
+    // TBD
     if ( !voice.macro.extraWait ) {
         voice.macro.extraWait = true;
         macroEvalAgain = true;

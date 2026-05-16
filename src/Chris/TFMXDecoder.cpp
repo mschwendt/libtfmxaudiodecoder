@@ -301,6 +301,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     variant.portaOverride = false;
     variant.noNoteDetune = false;
     variant.setNoteV1 = false;
+    variant.extraWaitV1 = false;
     variant.macroLoopExtraWait = false;
     variant.bpmSpeed5 = false;
     variant.noAddBeginCount = false;
@@ -502,6 +503,7 @@ void TFMXDecoder::setTFMXv1() {
     variant.portaUnscaled = true;
     variant.portaOverride = true;
     variant.setNoteV1 = true;
+    variant.extraWaitV1 = true;
     MacroDefs[0xd] = &macroDef_AddVolume;
     // max. macro cmd = $19
     for (ubyte m = 0x1a; m<0x40; m++) {

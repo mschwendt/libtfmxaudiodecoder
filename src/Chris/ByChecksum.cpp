@@ -60,6 +60,7 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     // R-Type (1989).
     else if (crc1 == 0x8ac70fc8) {
         setTFMXv1();
+        variant.macroLoopExtraWait = true;
     }
     // Software Manager - Titel 2
     else if (crc1 == 0xa8566760) {

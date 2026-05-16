@@ -218,6 +218,11 @@ void TFMXDecoder::macroFunc_Loop(VoiceVars& voice) {
     if (voice.macro.loop == 0) {
         voice.macro.loop = 0xff;
         voice.macro.step++;
+        // Possibly unique to R-Type, which does an extra wait here
+        // unlike TFMX v1 and later.
+        if (variant.macroLoopExtraWait) {
+            return;
+        }
     }
     else {
         if (voice.macro.loop == 0xff) {

@@ -301,6 +301,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     variant.portaOverride = false;
     variant.noNoteDetune = false;
     variant.setNoteV1 = false;
+    variant.macroLoopExtraWait = false;
     variant.bpmSpeed5 = false;
     variant.noAddBeginCount = false;
     variant.noTrackMute = false;

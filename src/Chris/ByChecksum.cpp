@@ -76,4 +76,10 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     else if (crc1 == 0x76f8aa6e) {
         variant.bpmSpeed5 = true;
     }
+    // Danubius Replay (aka Gitar) by ern0 in its music demo is replayed
+    // with a TFMX v1 player.
+    else if (crc1 == 0x0eed9c91) {
+        setTFMXv1();
+        variant.portaUnscaled = true;
+    }
 }

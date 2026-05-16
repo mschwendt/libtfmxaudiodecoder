@@ -48,7 +48,6 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     else if (crc1 == 0x48960d8c || crc1 == 0x5dcd624f || crc1 == 0x3f0b151f) {
         setTFMXv1();
         variant.noNoteDetune = true;
-        variant.portaUnscaled = false;
     }
     // Hard'n'Heavy (1989) is a TFMX v1 variant with an AddBegin macro
     // that is missing the effect updates. The game soundtrack sounds wrong
@@ -57,8 +56,7 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
              // somebody compressed these files, they are not the originals!
              crc1 == 0xd404651b || crc1 == 0xb5348633 ) {
         setTFMXv1();
-        variant.portaUnscaled = true;
-    }
+     }
     // R-Type (1989).
     else if (crc1 == 0x8ac70fc8) {
         setTFMXv1();
@@ -80,6 +78,5 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     // with a TFMX v1 player.
     else if (crc1 == 0x0eed9c91) {
         setTFMXv1();
-        variant.portaUnscaled = true;
     }
 }

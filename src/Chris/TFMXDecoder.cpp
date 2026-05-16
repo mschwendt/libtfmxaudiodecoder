@@ -498,7 +498,7 @@ void TFMXDecoder::setTFMXv1() {
     variant.noAddBeginCount = true;
     variant.vibratoUnscaled = true;
     variant.finetuneUnscaled = true;
-    variant.portaUnscaled = false;
+    variant.portaUnscaled = true;
     variant.portaOverride = true;
     variant.setNoteV1 = true;
     MacroDefs[0xd] = &macroDef_AddVolume;

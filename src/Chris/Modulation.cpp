@@ -142,7 +142,9 @@ void TFMXDecoder::portamento(VoiceVars& voice) {
         if (variant.portaUnscaled) {
             current -= voice.portamento.speed;
         }
-        current = ((0x100-voice.portamento.speed)*current)>>8;
+        else {
+            current = ((0x100-voice.portamento.speed)*current)>>8;
+        }
         if (current > target) {
             goto set;
         }

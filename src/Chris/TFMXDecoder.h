@@ -361,7 +361,7 @@ class TFMXDecoder : public Decoder {
     };
     
     void macroFunc_AddNote(VoiceVars&);
-    void macroFunc_AddNote_sub(VoiceVars&,ubyte);
+    void macroFunc_AddNote_sub(VoiceVars&,ubyte,sword);
     MacroDef macroDef_AddNote = { "AddNote     xx/xxxx  note/detune",
                                   &TFMXDecoder::macroFunc_AddNote
     };
@@ -551,6 +551,7 @@ class TFMXDecoder : public Decoder {
         bool portaUnscaled;
         bool portaOverride;
         bool noNoteDetune;
+        bool setNoteV1;
         bool bpmSpeed5;
         bool noAddBeginCount;
         bool noTrackMute;

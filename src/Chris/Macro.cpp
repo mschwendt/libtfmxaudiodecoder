@@ -243,14 +243,14 @@ void TFMXDecoder::macroFunc_Stop(VoiceVars& voice) {
 }
 
 void TFMXDecoder::macroFunc_AddNote(VoiceVars& voice) {
-    macroFunc_AddNote_sub(voice,voice.note);
+    macroFunc_AddNote_sub(voice,voice.note,voice.detune);
     macroFunc_ExtraWait(voice);
 }
 
-void TFMXDecoder::macroFunc_AddNote_sub(VoiceVars& voice, ubyte noteAdd) {
+void TFMXDecoder::macroFunc_AddNote_sub(VoiceVars& voice, ubyte noteAdd, sword detuneAdd) {
     sbyte n = noteAdd+(sbyte)cmd.bb;
     uword p = noteToPeriod(n);
-    sword finetune = voice.detune + (sword)makeWord(cmd.cd,cmd.ee);
+    sword finetune = detuneAdd + (sword)makeWord(cmd.cd,cmd.ee);
     if (variant.finetuneUnscaled) {
         p += finetune;
     }
@@ -264,7 +264,12 @@ void TFMXDecoder::macroFunc_AddNote_sub(VoiceVars& voice, ubyte noteAdd) {
 }
 
 void TFMXDecoder::macroFunc_SetNote(VoiceVars& voice) {
-    macroFunc_AddNote_sub(voice,0);
+    sword detune = voice.detune;
+    // TFMX v1 SetNote ignores voice detune.
+    if (variant.setNoteV1) {
+        detune = 0;
+    }
+    macroFunc_AddNote_sub(voice,0,detune);
     macroFunc_ExtraWait(voice);
 }
 
@@ -312,7 +317,7 @@ void TFMXDecoder::macroFunc_AddVolNote(VoiceVars& voice) {
     if (cmd.cd == 0xfe) {
         ubyte ee = cmd.ee;
         cmd.cd = cmd.ee = 0;
-        macroFunc_AddNote_sub(voice,voice.note);
+        macroFunc_AddNote_sub(voice,voice.note,voice.detune);
         cmd.ee = ee;
     }
     ubyte vol = voice.noteVolume + voice.noteVolume + voice.noteVolume;
@@ -326,7 +331,7 @@ void TFMXDecoder::macroFunc_SetVolume(VoiceVars& voice) {
     if (cmd.cd == 0xfe) {  // +AddNote variant
         ubyte ee = cmd.ee;
         cmd.cd = cmd.ee = 0;
-        macroFunc_AddNote_sub(voice,voice.note);
+        macroFunc_AddNote_sub(voice,voice.note,voice.detune);
         cmd.ee = ee;
     }
     voice.volume = cmd.ee;
@@ -541,7 +546,8 @@ void TFMXDecoder::macroFunc_RandomMask(VoiceVars& voice) {
 }
 
 void TFMXDecoder::macroFunc_SetPrevNote(VoiceVars& voice) {
-    macroFunc_AddNote_sub(voice,voice.notePrevious);
+    // Non-existant in TFMX v1, so add voice detune by default.
+    macroFunc_AddNote_sub(voice,voice.notePrevious,voice.detune);
     macroFunc_ExtraWait(voice);
 }
 

@@ -87,6 +87,6 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     else if (crc1 == 0x5fb2f54e) {  // Puzzy
         setTFMXv1();
         // Fix second song's track end.
-        pBuf[0x143] = 0x6f;
+        pBuf[offsets.header+0x143] = 0x6f;
     }
 }

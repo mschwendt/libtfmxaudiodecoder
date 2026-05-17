@@ -89,4 +89,10 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
         // Fix second song's track end.
         pBuf[offsets.header+0x143] = 0x6f;
     }
+    else if (crc1 == 0xcb3c7113) {  // Sledge Hammer One (aka Hammer One)
+        setTFMXv1();
+        // Fix song start/end. Song table is wrecked.
+        pBuf[offsets.header+0x101] = 0x04;
+        pBuf[offsets.header+0x141] = 0x6b;
+    }
 }

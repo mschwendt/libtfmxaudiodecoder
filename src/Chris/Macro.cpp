@@ -90,7 +90,7 @@ void TFMXDecoder::initMacro(VoiceVars& voice) {
     voice.macro.state = -1;
     voice.waitOnDMACount = 0;
     voice.effectsMode = 0;
-    voice.macro.extraWait = false;
+    voice.macro.extraWait = true;
 }
 
 void TFMXDecoder::processMacroMain(VoiceVars& voice) {
@@ -138,18 +138,22 @@ void TFMXDecoder::processMacroMain(VoiceVars& voice) {
 
 // ----------------------------------------------------------------------
 
+// In the official TFMX v1.5 and v2.2 releases, an extra wait is
+// hardcoded in specific locations as an undocumented implementation
+// detail.
+//
+// Only variants of the player could set it to ON/OFF via the DMAoff
+// macro commands $00 and $13 in conjunction with delayed DMACON write.
+// By default, it is set to $ff (ON, true). Else >= 0 (OFF, false).
+// Only a very few TFMX files use customized DMAoff.
 void TFMXDecoder::macroFunc_ExtraWait(VoiceVars& voice) {
     voice.macro.step++;
-    if ( variant.extraWaitV1 ) {
+    if (voice.macro.extraWait || variant.extraWaitV1) {
         return;
     }
-    // TBD
-    if ( !voice.macro.extraWait ) {
-        voice.macro.extraWait = true;
-        macroEvalAgain = true;
-    }
-    // Resetting the flag via DMAoff macro is extremely rare
-    // and potentially not needed with no hardware Paula.
+    // No extra wait, but reset it to enabled.
+    voice.macro.extraWait = true;
+    macroEvalAgain = true;
 }
 
 void TFMXDecoder::macroFunc_NOP(VoiceVars& voice) {
@@ -420,6 +424,7 @@ void TFMXDecoder::macroFunc_StopSample_sub(VoiceVars& voice) {
     }
     else {
         voice.ch->off();
+        voice.macro.extraWait = true;
         macroEvalAgain = true;
     }
     // The variant that also does AddVolume/SetVolume.

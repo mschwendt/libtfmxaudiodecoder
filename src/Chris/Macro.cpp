@@ -308,6 +308,12 @@ void TFMXDecoder::macroFunc_Portamento(VoiceVars& voice) {
 
 void TFMXDecoder::macroFunc_Vibrato(VoiceVars& voice) {
     voice.vibrato.time = cmd.bb;
+    // Original v1 and v2 apply this bit mask here.
+    // Since a composer may have entered an uneven vibrato parameter,
+    // the masked value can affect vibrato amplitude.
+    if (variant.vibratoUnscaled) {
+        voice.vibrato.time &= 0xfe;
+    }
     voice.vibrato.count = cmd.bb>>1;
     voice.vibrato.intensity = cmd.ee;
     if (voice.portamento.speed == 0) {

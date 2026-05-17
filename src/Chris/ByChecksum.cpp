@@ -75,9 +75,14 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     else if (crc1 == 0x76f8aa6e) {
         variant.bpmSpeed5 = true;
     }
-    // Danubius Replay (aka Gitar) by ern0 in its music demo is replayed
-    // with a TFMX v1 player.
-    else if (crc1 == 0x0eed9c91) {
+    // TFMX music by ern0 in the music demo "Musication Vol. 1" are
+    // replayed with a TFMX v1 player.
+    else if (crc1 == 0x0eed9c91 ||  // Danubius Replay (aka Gitar)
+             crc1 == 0x1a5d2b53 ||  // Flying World
+             crc1 == 0x22a92c26 ||  // Armageddon
+             crc1 == 0xe60babf2 ||  // Magnetic Fields IV (aka Oxygen)
+             crc1 == 0x5fb2f54e     // Puzzy
+             ) {
         setTFMXv1();
     }
 }

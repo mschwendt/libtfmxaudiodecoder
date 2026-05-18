@@ -49,9 +49,10 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
         setTFMXv1();
         variant.noNoteDetune = true;
     }
-    // Hard'n'Heavy (1989) is a TFMX v1 variant with an AddBegin macro
-    // that is missing the effect updates. The game soundtrack sounds wrong
-    // in many videos.
+    // Hard'n'Heavy (1989) is a TFMX v1 variant. In particular, it strictly
+    // requires the old AddBegin macro that is missing the effect updates.
+    // Alternatively, the AddBegin count parameter must be ignored.
+    // The game's title soundtrack sounds wrong in many videos.
     else if (crc1 == 0x27f8998c || crc1 == 0x26447707 ||
              // somebody compressed these files, they are not the originals!
              crc1 == 0xd404651b || crc1 == 0xb5348633 ) {

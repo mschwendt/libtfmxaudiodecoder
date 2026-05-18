@@ -548,6 +548,7 @@ class TFMXDecoder : public Decoder {
         // player variants
         bool finetuneUnscaled;
         bool vibratoUnscaled;
+        bool vibratoTimeMask;
         bool portaUnscaled;
         bool portaOverride;
         bool noNoteDetune;

@@ -311,7 +311,7 @@ void TFMXDecoder::macroFunc_Vibrato(VoiceVars& voice) {
     // Original v1 and v2 apply this bit mask here.
     // Since a composer may have entered an uneven vibrato parameter,
     // the masked value can affect vibrato amplitude.
-    if (variant.vibratoUnscaled) {
+    if (variant.vibratoTimeMask) {
         voice.vibrato.time &= 0xfe;
     }
     voice.vibrato.count = cmd.bb>>1;

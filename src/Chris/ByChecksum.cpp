@@ -29,8 +29,19 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     // Rock'n'Roll (1989). No checksum based adjustments required, because
     // it uses the unique header tag that was specific to TFMX before v1.
 
-    // Turrican II (1991) ingame music requires a special player variant
-    // with different execution order of macros and effects.
+    // Turrican
+    std::set<udword> T1_checksums = {
+        0x73868fda,  // title, credits, highscore
+        0x93730029,  // title
+        0x6e799869,  // world 1
+        0x3d00fc52,  // world 2
+        0xd76d33ed,  // world 3
+        0xb989d570,  // world 4
+        0x8fa80b4e,  // world 5
+        0x88f7c34b,  // loader
+        0xb762f2dc   // bonus
+    };
+    // Turrican II
     std::set<udword> T2_checksums = {
         0xe2d6b5e0,  // world 1
         0x0bf41b64,  // world 2
@@ -41,8 +52,16 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
         0xcbb842b0,  // loading
         0x78cd70f9   // demo
     };
+    // Turrican II (1991) ingame music requires a special player variant
+    // with different execution order of macros and effects.
     if (T2_checksums.count(crc1) >= 1) {
         variant.styleT2 = true;
+    }
+    // Turrican (1990) is a TFMXv1 variant and strictly requires old
+    // features such as non-scaled vibrato/portamento.
+    else if (T1_checksums.count(crc1) >= 1) {
+        setTFMXv1();
+        variant.vibratoTimeMask = false;
     }
     // Danger Freak (1989) seems to be a special TFMX v1 variant.
     else if (crc1 == 0x48960d8c || crc1 == 0x5dcd624f || crc1 == 0x3f0b151f) {

@@ -546,6 +546,8 @@ class TFMXDecoder : public Decoder {
         // format
         bool compressed;
         // player variants
+        // Track individual differences for now.
+        // Eventually, some may be grouped together and eliminated.
         bool finetuneUnscaled;
         bool vibratoUnscaled;
         bool vibratoTimeMask;

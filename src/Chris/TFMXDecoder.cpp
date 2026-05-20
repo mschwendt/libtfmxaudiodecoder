@@ -231,6 +231,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     }
     
     offsets.sampleData = h+input.mdatSize;
+    offsets.silence = offsets.sampleData;
     // TFMX clears the first two words for one-shot samples.
     udword o = offsets.sampleData;
     pBuf[o] = pBuf[o+1] = pBuf[o+2] = pBuf[o+3] = 0;
@@ -262,10 +263,6 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
             return false;
         }            
     }
-
-    offsets.silence = offsets.sampleData;
-    // TFMX clears the first dword here for one shot samples e.g.
-    pBuf[offsets.silence] = pBuf[offsets.silence+1] = pBuf[offsets.silence+2] = pBuf[offsets.silence+3] = 0;
 
     // Evaluate the compress identification fields at $0A and $0C.
     // In rare cases that part of the header has been overwritten

@@ -119,4 +119,8 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
         pBuf[offsets.header+0x101] = 0x04;
         pBuf[offsets.header+0x141] = 0x6b;
     }
+    // File "mdat.blade of destiny - titel (7ch)" is bad/corrupted.
+    else if (crc1 == 0xc83b701b) {
+        blacklisted = true;
+    }
 }

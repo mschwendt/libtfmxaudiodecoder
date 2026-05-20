@@ -66,6 +66,7 @@ protected:
     udword duration;
     udword rate;
     udword tickFP, tickFPadd;
+    bool blacklisted;
 };
 
 }  // namespace

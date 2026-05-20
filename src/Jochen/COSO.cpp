@@ -131,7 +131,7 @@ bool HippelDecoder::COSO_init(int songNumber) {
     
     trackTabLen = stats.trackSteps*trackStepLen;
     traitsByChecksum();
-    if (traits.blacklisted) {
+    if (blacklisted) {
         return false;
     }
     

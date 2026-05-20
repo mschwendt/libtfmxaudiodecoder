@@ -134,7 +134,7 @@ void tfmxaudiodecoder::HippelDecoder::traitsByChecksum() {
                 }
                 // Reject other/unknown releases.
                 else {
-                    traits.blacklisted = true;
+                    blacklisted = true;
                 }
             }
         }

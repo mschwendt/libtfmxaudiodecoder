@@ -300,7 +300,6 @@ class HippelDecoder : public Decoder {
         uword periodMin, periodMax;
         bool lowerPeriods;
         bool portaWeaker;
-        bool blacklisted;
     } traits;
 
     void setTrackRange(int=-1,int=-1);

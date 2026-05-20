@@ -118,6 +118,7 @@ void HippelDecoder::clearFormat() {
     songEnd = false;
     songPosCurrent = 0;
     duration = 0;
+    blacklisted = false;
 
     pInitFunc = 0;
     
@@ -142,8 +143,7 @@ void HippelDecoder::clearFormat() {
         traits.porta80SetSnd =
         traits.isSMOD =
         traits.lowerPeriods =
-        traits.portaWeaker =
-        traits.blacklisted = false;
+        traits.portaWeaker = false;
     traits.periodMin = FC14_PERIOD_MIN;
     traits.periodMax = FC14_PERIOD_MAX;
 

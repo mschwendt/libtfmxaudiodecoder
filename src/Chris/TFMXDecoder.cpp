@@ -406,6 +406,9 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
 
     // Last the rare checksum adjustments.
     traitsByChecksum();
+    if (blacklisted) {
+        return false;
+    }
 
 // ----------
 

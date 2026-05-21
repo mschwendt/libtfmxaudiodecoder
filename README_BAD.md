@@ -85,6 +85,19 @@ reparing the file, its MD5 fingerprint becomes:
 
 ---
 
+#### R-Type
+
+This file in the Chris Huelsbeck folder on Modland is bad, because the sample
+data are not correct.
+
+```
+818990ee9936728321ed334654136d68  smpl.r-type
+```
+
+A good rip of the music is provided by the Wanted Team, for example.
+
+---
+
 #### Blade of Destiny - title (7ch)
 
 This file in the Rudolf Stember folder on Modland is invalid, because it's damaged

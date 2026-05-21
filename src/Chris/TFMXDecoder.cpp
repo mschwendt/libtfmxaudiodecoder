@@ -776,6 +776,9 @@ void TFMXDecoder::playerCommon() {
     }
 }
 
+// Note: This is not final yet. In variants of the TFMX player, order of
+// execution and usage of macro state/skip flag, effects mode flag and
+// extra wait is all over the place.
 void TFMXDecoder::playerStyleT2() {
 #if defined(DEBUG_RUN)
     cout << "  playerStyleT2()" << endl;

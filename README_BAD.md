@@ -85,6 +85,17 @@ reparing the file, its MD5 fingerprint becomes:
 
 ---
 
+#### Blade of Destiny - title (7ch)
+
+This file in the Rudolf Stember folder on Modland is invalid, because it's damaged
+beyond repair.
+
+```
+7e833022c3aa3c8072a9d930008b3558  mdat.blade of destiny - titel (7ch)
+```
+
+---
+
 #### Future Composer modules
 
  * The soundtrack modules from the game ``Chambers of Shaolin`` as included

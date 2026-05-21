@@ -393,9 +393,6 @@ class TFMXDecoder : public Decoder {
 
     void macroFunc_AddVolNote(VoiceVars&);  // actually $00-$40
     // +AddNote variant
-    // Replaces AddVolume by default. Potentially harmless,
-    // since 'bb' arg must be set to 0xfe in order to activate the
-    // extra behaviour, and AddVolume doesn't use 'bb' arg.
     MacroDef macroDef_AddVolNote = { "Addvol+note xx/fe/xx note/CONST./volume",
                                     &TFMXDecoder::macroFunc_AddVolNote
     };

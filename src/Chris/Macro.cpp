@@ -333,6 +333,10 @@ void TFMXDecoder::macroFunc_AddVolume(VoiceVars& voice) {
 }
 
 void TFMXDecoder::macroFunc_AddVolNote(VoiceVars& voice) {
+    // Replaces AddVolume by default. Potentially harmless,
+    // since 'bb' arg must be set to 0xfe in order to activate the
+    // extra behaviour, and AddVolume doesn't use 'bb' arg, so
+    // it's set to 0 in macro scripts.
     if (cmd.cd == 0xfe) {
         ubyte ee = cmd.ee;
         cmd.cd = cmd.ee = 0;

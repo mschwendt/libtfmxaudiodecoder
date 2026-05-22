@@ -26,9 +26,6 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     // 0123456789abcdef0123456789abcdef0123456789abcdef
     // XXXXX XXXX  XX X    X   XXX       XXXXXXXX      
 
-    // Rock'n'Roll (1989). No checksum based adjustments required, because
-    // it uses the unique header tag that was specific to TFMX before v1.
-
     // Turrican
     std::set<udword> T1_checksums = {
         0x73868fda,  // title, credits, highscore
@@ -85,6 +82,12 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     else if (crc1 == 0x8ac70fc8) {
         setTFMXv1();
         variant.macroLoopExtraWait = true;
+    }
+    // Rock'n'Roll (1989). No checksum based adjustments required, because
+    // it uses the unique header tag that was specific to TFMX before v1.
+    // Except for the intro.
+    else if (crc1 == 0xda279570) {  // intro
+        setTFMXv1();
     }
     // Software Manager - Titel 2
     else if (crc1 == 0xa8566760) {

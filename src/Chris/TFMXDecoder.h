@@ -85,6 +85,15 @@ class TFMXDecoder : public Decoder {
         udword trackTableEnd;
     } offsets;
 
+    enum ExecOrder {
+        // SEQ : sequencer
+        // MAC : macro processing
+        // MOD : modulation/effects processing
+        SEQ_MOD_MAC,
+        MOD_MAC_SEQ,
+        MAC_MOD_SEQ
+    };
+
     struct Admin {
         sword speed, count;  // speed and speed count
         int startSpeed, startSong;
@@ -250,7 +259,6 @@ class TFMXDecoder : public Decoder {
     void runMain();
     void processPTTR(Track&);
     void playerCommon();
-    void playerStyleT2();
 
     void processModulation(VoiceVars&);
     void addBegin(VoiceVars&);
@@ -556,8 +564,10 @@ class TFMXDecoder : public Decoder {
         bool macroLoopExtraWait;
         bool bpmSpeed5;
         bool noAddBeginCount;
+        bool noDelayedDMAon;
         bool noTrackMute;
-        bool styleT2;
+        // Main player order of execution.
+        ExecOrder execOrder;
     } variant;
 
     struct {

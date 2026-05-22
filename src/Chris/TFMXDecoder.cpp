@@ -303,8 +303,9 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     variant.macroLoopExtraWait = false;
     variant.bpmSpeed5 = false;
     variant.noAddBeginCount = false;
+    variant.noDelayedDMAon = false;
     variant.noTrackMute = false;
-    variant.styleT2 = false;
+    variant.execOrder = MAC_MOD_SEQ;
     
     PattCmdFuncs[0] = &TFMXDecoder::pattCmd_End;
     PattCmdFuncs[1] = &TFMXDecoder::pattCmd_Loop;
@@ -506,6 +507,8 @@ void TFMXDecoder::setTFMXv1() {
     variant.portaOverride = true;
     variant.setNoteV1 = true;
     variant.extraWaitV1 = true;
+    variant.noDelayedDMAon = true;
+    variant.execOrder = SEQ_MOD_MAC;
     MacroDefs[0xd] = &macroDef_AddVolume;
     // max. macro cmd = $19
     for (ubyte m = 0x1a; m<0x40; m++) {
@@ -746,12 +749,7 @@ int TFMXDecoder::run() {
 #if defined(DEBUG_RUN)
     dumpTimestamp(songPosCurrent);
 #endif
-    if (variant.styleT2) {
-        playerStyleT2();
-    }
-    else {
-        playerCommon();
-    }
+    playerCommon();
     tickFPadd += tickFP;
     int tick = tickFPadd>>8;
     tickFPadd &= 0xff;
@@ -766,39 +764,35 @@ void TFMXDecoder::playerCommon() {
     if ( !songEnd || loopMode ) {
         handleWaitOnPaulaDone();
         handleDelayedDMAoff();
-        for (ubyte v=0; v<voices; v++) {
-            VoiceVars& voice = voiceVars[v];
-            processMacroMain( voice );
-            processModulation( voice );
-            voice.ch->paula.period = voice.outputPeriod;
-        }
-        runMain();
-    }
-}
 
-// Note: This is not final yet. In variants of the TFMX player, order of
-// execution and usage of macro state/skip flag, effects mode flag and
-// extra wait is all over the place.
-void TFMXDecoder::playerStyleT2() {
-#if defined(DEBUG_RUN)
-    cout << "  playerStyleT2()" << endl;
-#endif
-    if ( !songEnd || loopMode ) {
-        handleWaitOnPaulaDone();
-        handleDelayedDMAoff();
-        for (ubyte v=0; v<voices; v++) {
-            VoiceVars& voice = voiceVars[v];
-            if (voice.macro.state <= 0) {
+        if (variant.execOrder == MOD_MAC_SEQ) {
+            for (ubyte v=0; v<voices; v++) {
+                VoiceVars& voice = voiceVars[v];
                 processModulation( voice );
                 processMacroMain( voice );
+                voice.ch->paula.period = voice.outputPeriod;
             }
-            else if (voice.macro.state > 0) {
-                processMacroMain( voice );
-                voice.effectsMode = 1;  // force to ON for this player variant
-            }
-            voice.ch->paula.period = voice.outputPeriod;
+            runMain();
         }
-        runMain();
+        else if (variant.execOrder == SEQ_MOD_MAC) {
+            runMain();
+            for (ubyte v=0; v<voices; v++) {
+                VoiceVars& voice = voiceVars[v];
+                processModulation( voice );
+                processMacroMain( voice );
+                voice.ch->paula.period = voice.outputPeriod;
+            }
+        }
+        else {  // if (variant.execOrder == MAC_MOD_SEQ) {
+            for (ubyte v=0; v<voices; v++) {
+                VoiceVars& voice = voiceVars[v];
+                processMacroMain( voice );
+                processModulation( voice );
+                voice.ch->paula.period = voice.outputPeriod;
+            }
+            runMain();
+        }
+
         handleDelayedDMAon();
     }
 }
@@ -840,12 +834,7 @@ void TFMXDecoder::noteCmd() {
         v.note = cmd.aa;
         v.keyUp = false;
         v.macro.offset = getMacroOffset(cmd.bb & 0x7f);
-        if (variant.styleT2) {
-            v.macro.state = 1;
-        }
-        else {
-            initMacro(v);
-        }
+        v.macro.state = 1;
     }
     else {  // cmd.aa >= $c0   portamento note
         v.portamento.count = cmd.bb;

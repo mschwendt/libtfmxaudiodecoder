@@ -52,7 +52,7 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     // Turrican II (1991) ingame music requires a special player variant
     // with different execution order of macros and effects.
     if (T2_checksums.count(crc1) >= 1) {
-        variant.styleT2 = true;
+        variant.execOrder = MOD_MAC_SEQ;
     }
     // Turrican (1990) is a TFMXv1 variant and strictly requires old
     // features such as non-scaled vibrato/portamento.
@@ -82,6 +82,10 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     else if (crc1 == 0x8ac70fc8) {
         setTFMXv1();
         variant.macroLoopExtraWait = true;
+    }
+    // The Adventures of Quik & Silva.
+    else if (crc1 == 0x04f469a6 || crc1 == 0xd37c9008 ) {
+        variant.execOrder = MAC_MOD_SEQ;
     }
     // Rock'n'Roll (1989). No checksum based adjustments required, because
     // it uses the unique header tag that was specific to TFMX before v1.

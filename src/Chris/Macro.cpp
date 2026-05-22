@@ -175,13 +175,34 @@ void TFMXDecoder::macroFunc_StartSample(VoiceVars& voice) {
     // There are variants of the "DMAon" macro command, which
     // are not needed because we don't emulate access to Amiga
     // custom chip registers like DMACON, INTENA and INTREQ.
-    if (variant.styleT2) {
-        voice.macro.delayedOn = true;
+    if ( variant.noDelayedDMAon ) {
+        voice.ch->on();
     }
     else {
-        voice.ch->on();
-        voice.effectsMode = (sbyte)cmd.bb;
+        voice.macro.delayedOn = true;
     }
+
+    // Variants of the player can set the macro wait value here.
+    // The high byte (in cmd.aa) is set to zero early, so only the
+    // low byte (in cmd.bb) would matter. However, as the low byte
+    // is 0 for all but a very few TFMX files, the resulting wait
+    // value would stay at 0, which would be pointless.
+    //
+    // Furthermore, of the existing files that run a subsequent Wait
+    // command, that wait value would take precedence. It can be
+    // assumed that setting the wait value here is not the real goal.
+    //
+    // Instead, of the few remaining files that set the first parameter
+    // to 1, they want the player to run sound synthesis via the effects
+    // processor a first time before turning on the audio channel.
+    if (cmd.bb != 0) {
+        voice.effectsMode = 1;
+        if (variant.execOrder == MOD_MAC_SEQ) {
+            processModulation(voice);
+            return;
+        }
+    }
+
     voice.macro.step++;
     macroEvalAgain = true;
 }

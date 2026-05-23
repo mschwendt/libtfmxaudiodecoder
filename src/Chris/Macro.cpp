@@ -89,7 +89,12 @@ void TFMXDecoder::initMacro(VoiceVars& voice) {
     voice.macro.loop = 0xff;
     voice.macro.state = -1;
     voice.waitOnDMACount = 0;
-    voice.effectsMode = 0;
+    if (variant.execOrder == MAC_MOD_SEQ) {
+        voice.effectsMode = 0;
+    }
+    else {
+        voice.effectsMode = 1;
+    }
     voice.macro.extraWait = true;
 }
 

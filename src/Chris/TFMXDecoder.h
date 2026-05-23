@@ -291,6 +291,8 @@ class TFMXDecoder : public Decoder {
     PattCmdFuncPtr PattCmdFuncs[(0xff-0xf0)+1] = { };
     
     bool getTrackMute(ubyte);
+    void resetSequencer();
+    void nextTrackStep();
     void processTrackStep();
     void trackCmd_Stop(udword);
     void trackCmd_Loop(udword);

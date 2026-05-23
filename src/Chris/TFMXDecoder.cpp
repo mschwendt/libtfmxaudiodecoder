@@ -441,6 +441,11 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
         duration += run();
     } while ( !songEnd && (duration<1000*60*59));
     loopMode = loopModeBak;
+#if defined(DEBUG)
+    cout << "Duration of " << input.path << "  #" << admin.startSong << "  ";
+    dumpTimestamp(duration);
+    cout << endl;
+#endif
 
     adjustTraitsPost();
     dumpModule();
@@ -452,30 +457,6 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
 // decoder currently chosen song.
 void TFMXDecoder::restart() {
     reset();
-    softRestart();
-}
-
-void TFMXDecoder::softRestart() {
-    songEnd = false;
-    songPosCurrent = 0;
-    tickFPadd = 0;
-    triggerRestart = false;
-
-    sequencer.step.next = false;
-    sequencer.loops = -1;
-    for (int step = 0; step < TRACK_STEPS_MAX; step++ ) {
-        sequencer.stepSeenBefore[step] = false;
-    }
-
-    // Not all songs are designed for looping cleanly, so aid them.
-    for (ubyte v=0; v<voices; v++) {
-        VoiceVars& voice = voiceVars[v];
-        voice.keyUp = true;
-        voice.volume = voice.outputVolume = 0;
-    }
-    fade.active = false;
-    fade.volume = fade.target = 64;
-    fade.delta = 0;
 
     uword so = vSongs[admin.startSong]<<1;
     sequencer.step.first = sequencer.step.current = readBEuword(pBuf,offsets.header+0x100+so);
@@ -494,6 +475,28 @@ void TFMXDecoder::softRestart() {
          << " to " << (int)sequencer.step.last
          << " / speed " << (int)admin.speed << endl;
 #endif
+    softRestart();
+}
+
+// The bits that also are needed when restarting songs that end
+// without looping.
+void TFMXDecoder::softRestart() {
+    songEnd = false;
+    songPosCurrent = 0;
+    tickFPadd = 0;
+    triggerRestart = false;
+
+    // Not all songs are designed for looping cleanly, so aid them.
+    for (ubyte v=0; v<voices; v++) {
+        VoiceVars& voice = voiceVars[v];
+        voice.keyUp = true;
+        voice.volume = voice.outputVolume = 0;
+    }
+    fade.active = false;
+    fade.volume = fade.target = 64;
+    fade.delta = 0;
+
+    resetSequencer();
     processTrackStep();
 }
 
@@ -706,6 +709,7 @@ void TFMXDecoder::runMain() {
                 songEnd = false;
                 if (triggerRestart) {
                     softRestart();
+                    processTrackStep();
                 }
             }
         } while (sequencer.step.next);

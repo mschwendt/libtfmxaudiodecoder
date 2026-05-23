@@ -813,6 +813,8 @@ void TFMXDecoder::noteCmd() {
         v.envelope.target = cmd.ee;
     }
     else if (cmd.aa == 0xf6) {  // vibrato
+        // Unlike the variants of the vibrato macro command,
+        // here the bitmask has never been dropped.
         ubyte tmp = cmd.bb&0xfe;
         v.vibrato.time = tmp;
         v.vibrato.count = tmp>>1;

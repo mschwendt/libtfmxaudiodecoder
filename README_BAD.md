@@ -88,7 +88,7 @@ reparing the file, its MD5 fingerprint becomes:
 #### R-Type
 
 This file in the Chris Huelsbeck folder on Modland is bad, because the sample
-data are not correct.
+data are not correct (the first 192 bytes are missing).
 
 ```
 818990ee9936728321ed334654136d68  smpl.r-type

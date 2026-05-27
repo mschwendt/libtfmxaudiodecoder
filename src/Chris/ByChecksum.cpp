@@ -84,7 +84,7 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
         variant.macroLoopExtraWait = true;
         // If it's the bad rip where the first 192 samples are missing,
         // blacklist it. See README_BAD.md file.
-        if (0xe8ff20f9 != readBEudword(sBuf,offsets.sampleData+4) &&
+        if (0xe8ff20f9 != readBEudword(sBuf,offsets.sampleData+4) ||
             0xe8f700fd != readBEudword(sBuf,offsets.sampleData+0xbc) ) {
             blacklisted = true;
         }

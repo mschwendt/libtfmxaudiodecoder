@@ -82,6 +82,10 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     else if (crc1 == 0x8ac70fc8) {
         setTFMXv1();
         variant.macroLoopExtraWait = true;
+        if (0xe8ff20f9 != readBEudword(sBuf,offsets.sampleData+4) &&
+            0xe8f700fd != readBEudword(sBuf,offsets.sampleData+0xbc) ) {
+            blacklisted = true;
+        }
     }
     // The Adventures of Quik & Silva.
     else if (crc1 == 0x04f469a6 || crc1 == 0xd37c9008 ) {

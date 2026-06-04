@@ -225,7 +225,7 @@ bool DNSDecoder::init(void *data, udword length, int songNumber) {
         offsets.songDefs = 0x1244;
         offsets.patterns = 0x1324;
         offsets.sampleHeaders = 0x1fd4;
-        admin.songs = 8;
+        admin.songs = 1;  // actually 8 at different start positions
         writeBEword(pBuf,offsets.sampleHeaders+0x2*0x60+8+6,0x7e2);
         writeBEword(pBuf,offsets.sampleHeaders+0xf*0x60+8+6,0x7e2);
         sequencer.tables = 1;

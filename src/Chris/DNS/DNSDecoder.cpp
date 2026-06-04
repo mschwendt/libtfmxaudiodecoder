@@ -472,7 +472,9 @@ void DNSDecoder::processSequencer() {
         cout << tohex(tr.PT) << ' ' << tohex((ubyte)(tr.TR&0xff)) << ' ' << tohex(tr.ST) << " | ";
 #endif
     }
+#if defined(DEBUG_RUN)
     cout << endl;
+#endif
     // Advance to next step.
     if (++sequencer.step.current < sequencer.step.last) {
         sequencer.step.currentOffset += sequencer.step.size;

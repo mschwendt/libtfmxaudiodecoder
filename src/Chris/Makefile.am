@@ -1,3 +1,5 @@
+SUBDIRS = DNS
+
 noinst_LTLIBRARIES = libtfmxch.la
 
 libtfmxch_la_SOURCES = \

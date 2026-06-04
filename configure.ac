@@ -39,5 +39,6 @@ LT_INIT([])
 AC_CONFIG_FILES([Makefile libtfmxaudiodecoder.pc \
 src/Makefile \
 src/Chris/Makefile \
+src/Chris/DNS/Makefile \
 src/Jochen/Makefile])
 AC_OUTPUT

@@ -128,3 +128,14 @@ is a duplicate of ``Amberstar (12).hipc``. Sometimes the samples are found
 in a separate file named "hipc.samp", in other cases the separate file is
 named "smp.set" but is stored in a different path. Searching for it and
 loading it would not be worthwhile. Especially not since it is a duplicate.
+
+---
+
+#### Hollywood Poker Pro
+
+Samples 2 and 15 of the title theme by mistake define repeat length in number
+of bytes instead of number of words, advancing into the next sample area
+and causing minor but audible artefacts. If loading the title theme into
+libtfmxaudiodecoder **newer than 1.0.9** those two sample definitions are
+fixed on-the-fly. Alternatively, a bsdiff file is provided in the source
+repository's music folder.

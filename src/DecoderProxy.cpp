@@ -16,6 +16,7 @@
 #include "DecoderProxy.h"
 #include "Chris/TFMXDecoder.h"
 #include "Jochen/HippelDecoder.h"
+#include "Chris/DNS/DNSDecoder.h"
 #include <fstream>
 
 namespace tfmxaudiodecoder {
@@ -101,6 +102,12 @@ bool DecoderProxy::maybeOurs(void *data, udword length) {
         goto foundSomething;
     }
 
+    pd = new DNSDecoder;  // For Huelsbeck's Dynamic Synthesizer.
+    maybe = pd->detect(data,length);
+    if (maybe) {
+        goto foundSomething;
+    }
+
     delete pd;
     pd = new Decoder;  // dummy
  foundSomething:
@@ -128,6 +135,12 @@ bool DecoderProxy::init(void *data, udword length, int songNumber) {
     }
     delete pDecoder;
     
+    pDecoder = new DNSDecoder;
+    if ( initDecoder(data,length,songNumber) ) {
+        return true;
+    }
+    delete pDecoder;
+
     pDecoder = new Decoder;
     return false;
 }

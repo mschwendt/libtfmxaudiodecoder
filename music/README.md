@@ -3,7 +3,7 @@ More details in [README_BAD.md](../README_BAD.md) and within the library's sourc
 
 ---
 
-Instructions to repair these two:
+Instructions to repair these:
 
 #### Wings of Death (ST)
 
@@ -32,4 +32,17 @@ $ md5sum SOG.GrandSlamMonsterST
 $ bspatch SOG.GrandSlamMonsterST SOG.GrandMonsterSlamST_repaired SOG.GrandSlamMonsterST.bsdiff
 $ md5sum SOG.GrandMonsterSlamST_repaired 
 3e44767bb77e309a328edcb482ee51b2  SOG.GrandMonsterSlamST_repaired
+```
+
+#### Hollywood Poker Pro
+
+```
+$ md5sum DNS_HollywoodPoker.lzx
+d46a10746a5b14e5f0a98812834f472d  DNS_HollywoodPoker.lzx
+...
+(run unlzx, unar or any tool to uncompress the .lzx archive)
+...
+$ bspatch DNS.HollywoodPokerPro\ title DNS.HollywoodPokerPro\ title_repaired DNS.HollywoodPokerPro\ title.bsdiff
+$ md5sum 'DNS.HollywoodPokerPro title_repaired'
+610c74d10a0a10029f281f03486516d2  DNS.HollywoodPokerPro title_repaired
 ```

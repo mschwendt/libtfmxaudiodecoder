@@ -77,7 +77,7 @@ bool DNSDecoder::detect(void* data, udword len) {
          d[1]==0 && d[5]==0 && d[9]==0 && d[13]==0 && d[17]==0 &&
          // Also check the branch offset to the "off" routine,
          // which is located fairly near the beginning for all modules.
-         d[6]==00 && d[7]<0x100) {
+         makeWord(d[6],d[7])<0x100) {
         maybe = true;
     }
     else {

@@ -357,7 +357,7 @@ void DNSDecoder::softRestart() {
     // Not set by any of the modules/songs.
     uword trackMute = readBEuword(pBuf,offsets.songDefs+0x80+so);
     for (ubyte t=0; t<sequencer.tracks; t++) {
-        track[t].off = (trackMute & (1<<t) != 0);
+        track[t].off = ((trackMute & (1<<t)) != 0);
     }
     // The others end a pattern with a special value.
     if (variant.starball) {

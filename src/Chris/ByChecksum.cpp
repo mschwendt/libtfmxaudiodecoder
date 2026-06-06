@@ -120,6 +120,19 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
              crc1 == 0xe60babf2     // Magnetic Fields IV (aka Oxygen)
              ) {
         setTFMXv1();
+        // Without summing up the findings in ticket #16 (like questionable
+        // start/end points), the three main guitar samples are shifted
+        // into only the positive side of value range of signed samples.
+        // That causes clicks also because it leads to three defective,
+        // negative peak values sticking out in each of them. It could be
+        // that with real Amiga hardware, those samples are less of an issue.
+        // The following centers the samples properly around zero,
+        // which reduces the primary problem with them.
+        if (crc1 == 0x0eed9c91) {  // Danubius Replay (aka Gitar)
+            for (int i=4; i<0x303e4; ++i) {
+                pBuf[offsets.sampleData+i] -= 0x38;
+            }
+        }
     }
     else if (crc1 == 0x5fb2f54e) {  // Puzzy
         setTFMXv1();

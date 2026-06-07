@@ -87,14 +87,17 @@ reparing the file, its MD5 fingerprint becomes:
 
 #### R-Type
 
-This file in the Chris Huelsbeck folder on Modland is bad, because the sample
-data are not correct (the first 192 bytes are missing).
+This file in the Chris Huelsbeck folder on Modland has been bad until
+2026-06-04, because the sample data are not correct (the first 192 bytes
+are missing).
 
 ```
 818990ee9936728321ed334654136d68  smpl.r-type
 ```
 
 A good rip of the music is provided by the Wanted Team, for example.
+On Modland, the file has been replaced, too, so redownload it if your
+copy is older.
 
 ---
 

@@ -42,3 +42,10 @@ And for Future Composer, it can be literally anything not limited to:
  - ``.fc``, ``.FC14``, ``.fc4``, ``.fc13``, ``.smod``
 
 It is highly recommended to prefer ``.fc`` for all FC files.
+
+Last but not least,
+
+ - ``DNS.``, ``dns.`` --> Dynamic Synthesizer music data
+ - ``SMP.``, ``smp.`` --> Dynamic Synthesizer sample data
+
+shows how inconsistent these naming schemes are.

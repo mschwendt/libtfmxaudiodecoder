@@ -8,7 +8,8 @@ Commodore Amiga era of computing:
 
  - TFMX by [Jochen Hippel](https://en.wikipedia.org/wiki/Jochen_Hippel) (incl. the ripoffs ``Future Composer`` and MCMD)
 
- - TFMX by [Chris Hülsbeck](https://www.huelsbeck.com) (``The Final Musicsystem eXtended``)
+ - TFMX by [Chris Hülsbeck](https://www.huelsbeck.com) (``The Final Musicsystem eXtended``)  
+   plus the earlier ``Dynamic Synthesizer``
 
  - file format modifications TFMXPACK, TFMX-MOD, TFHD + some unnamed modpacks
 

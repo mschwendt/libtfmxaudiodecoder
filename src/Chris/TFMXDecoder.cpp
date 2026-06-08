@@ -399,7 +399,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
          || (input.versionHint == 1) ) {  // from TFHD
         setTFMXv1();
     }
-    // TFMX v2.x / TFMX Professional
+    // aka TFMX Professional
     else {  // also  input.versionHint == 2   // from TFHD
         formatName = FORMAT_NAME_PRO;
     }
@@ -499,6 +499,10 @@ void TFMXDecoder::softRestart() {
     resetSequencer();
     processTrackStep();
 }
+
+// TFMX v2.2 is mostly like TFMX v1.x, but it adds macros 0x1a to 0x1e
+// and enhances a few (like Addvol -> Addvol+note). There is no setTFMXv2()
+// method, because it can be treated as a variant of v1.
 
 void TFMXDecoder::setTFMXv1() {
     formatName = FORMAT_NAME;

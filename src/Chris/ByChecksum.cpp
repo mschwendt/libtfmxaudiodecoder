@@ -54,7 +54,7 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     if (T2_checksums.count(crc1) >= 1) {
         variant.execOrder = MOD_MAC_SEQ;
     }
-    // Turrican (1990) is a TFMXv1 variant and strictly requires old
+    // Turrican (1990) is a TFMX v1/v2 variant and strictly requires old
     // features such as non-scaled vibrato/portamento.
     else if (T1_checksums.count(crc1) >= 1) {
         setTFMXv1();

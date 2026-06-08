@@ -99,6 +99,28 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     else if (crc1 == 0xda279570) {  // intro
         setTFMXv1();
     }
+    // Particularly non-scaled vibrato is required by these old TFMX v1
+    // modules.
+    //
+    // Grand Monster Slam
+    else if (crc1 == 0xb54457fc || crc1 == 0x97707404 ||
+             // Circus Attractions
+             crc1 == 0x5f04d9af || crc1 == 0x72ef7307 ||
+             // Oxxonian
+             crc1 == 0x0629665d ||
+             // X-Out
+             crc1 == 0x9264f036 ||  // title
+             crc1 == 0x22a86efb ||  // level 1
+             crc1 == 0x711d8520 ||  // level 2
+             crc1 == 0x2f525ee0 ||  // level 3
+             crc1 == 0x8412d8d5 ||  // level 4
+             crc1 == 0xc0376a19 ||  // level 5
+             crc1 == 0xade39424 ||  // end
+             crc1 == 0x2adbf5f9 ||  // high-scores
+             crc1 == 0x236d305d ||  // load
+             crc1 == 0x14adce8c) {  // shop (?)
+        setTFMXv1();
+    }
     // Software Manager - Titel 2
     else if (crc1 == 0xa8566760) {
         variant.noTrackMute = true;

@@ -125,11 +125,24 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
              crc1 == 0x14adce8c) {  // shop (?)
         setTFMXv1();
     }
-    // Z-Out. This fixes an uneven sample start address, which isn't illegal,
+    // Z-Out uses an unusual player variant newer than TFMX v2.2, which
+    // uses scaled vibrato/portamento already but not delayed channel on yet.
+    // The macro scripts of some instruments strictly require immediate
+    // channel on, or else sounds will stay silent.
+    //
+    // Alternative versions of the Z-Out soundtrack are not affected,
+    // and their checksums differ.
+    //
+    // This also fixes an uneven sample start address, which isn't illegal,
     // but an accident that causes audible side-effects. Also is the proper
     // fix for the Wanted Team's rip "Z-Out 5" where the sample file would be
     // one byte too short for the sample parameters in this macro.
-    else if (crc1 == 0x9d652521) {
+    else if (crc1 == 0x8648904b ||  // title
+             crc1 == 0xb7f700b2 || crc1 == 0x0eabbc61 ||  // ingame
+             crc1 == 0x999c8c6b || crc1 == 0xdb5e4afc ||  // ingame
+             crc1 == 0x9d652521 || crc1 == 0xa1dc3139) {  // ingame
+        variant.noDelayedDMAon = true;  // strictly required!
+        // Repair one instrument.
         udword mo = getMacroOffset(0x10);
         if (readBEudword(pBuf,mo+4) == 0x0200884f) {
             pBuf[mo+4+3] = 0x4e;  // set begin to 0x884e

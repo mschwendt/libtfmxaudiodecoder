@@ -46,3 +46,19 @@ $ bspatch DNS.HollywoodPokerPro\ title DNS.HollywoodPokerPro\ title_repaired DNS
 $ md5sum 'DNS.HollywoodPokerPro title_repaired'
 610c74d10a0a10029f281f03486516d2  DNS.HollywoodPokerPro title_repaired
 ```
+
+#### Z-Out (level 2)
+
+There are different rips of this with different file names, so this applies
+only to an MDAT file with the same MD5 checksum:
+
+```
+37b406445ed1eb805f152b8a690092c1  mdat.z-out level 2
+37b406445ed1eb805f152b8a690092c1  MDAT.Z-Out 5
+```
+
+After applying the bsdiff, the checksum of the repaired MDAT becomes:
+
+```
+64252c913897f0128806a7abc52b0ce5  mdat.z-out level 2_repaired
+```

@@ -125,6 +125,16 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
              crc1 == 0x14adce8c) {  // shop (?)
         setTFMXv1();
     }
+    // Z-Out. This fixes an uneven sample start address, which isn't illegal,
+    // but an accident that causes audible side-effects. Also is the proper
+    // fix for the Wanted Team's rip "Z-Out 5" where the sample file would be
+    // one byte too short for the sample parameters in this macro.
+    else if (crc1 == 0x9d652521) {
+        udword mo = getMacroOffset(0x10);
+        if (readBEudword(pBuf,mo+4) == 0x0200884f) {
+            pBuf[mo+4+3] = 0x4e;  // set begin to 0x884e
+        }
+    }
     // Software Manager - Titel 2
     else if (crc1 == 0xa8566760) {
         variant.noTrackMute = true;

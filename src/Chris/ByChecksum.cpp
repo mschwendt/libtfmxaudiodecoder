@@ -29,7 +29,7 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     // Turrican
     std::set<udword> T1_checksums = {
         0x73868fda,  // title, credits, highscore
-        0x93730029,  // title
+        0x93730029,  // title (old rips from 1990)
         0x6e799869,  // world 1
         0x3d00fc52,  // world 2
         0xd76d33ed,  // world 3
@@ -100,12 +100,16 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
         setTFMXv1();
     }
     // Particularly non-scaled vibrato is required by these old TFMX v1
-    // modules.
+    // modules. There may be a few more that could be set to v1, e.g.
+    // Wanted Team's EP_TFMX.lha mentions a list, but whether it would
+    // be audible remains to be investigated.
     //
     // Grand Monster Slam
     else if (crc1 == 0xb54457fc || crc1 == 0x97707404 ||
              // Circus Attractions
              crc1 == 0x5f04d9af || crc1 == 0x72ef7307 ||
+             // Gordian Tomb
+             crc1 == 0xf2292eae ||
              // Oxxonian
              crc1 == 0x0629665d ||
              // X-Out

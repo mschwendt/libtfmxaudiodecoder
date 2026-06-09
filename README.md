@@ -13,7 +13,7 @@ Commodore Amiga era of computing:
 
  - file format modifications TFMXPACK, TFMX-MOD, TFHD + some unnamed modpacks
 
-Despite sharing the name tag TFMX and the 7V feature, it's two music players
+Despite sharing the name tag TFMX and the 7V (seven voices) feature, it's two music players
 that are vastly different. Even simple concepts like ADSR volume envelopes
 are done differently.
 
@@ -83,6 +83,9 @@ collections either.
 * [Qmmp](https://qmmp.ylsoftware.com/) with [this input plugin](https://github.com/TTK-qmmp/qmmp-tfmx)
 * [rePlayer](https://github.com/arnaud-neny/rePlayer) includes a prebuilt plugin among a ton of others as to handle a high number of music file formats
 * [TTKMusicPlayer](https://github.com/Greedysky/TTKMusicPlayer) with [this input plugin](https://github.com/TTK-qmmp/qmmp-tfmx)
+* [NostalgicPlayer](https://nostalgicplayer.dk/) as of v3.4.0 includes a port/rewrite to C# of the TFMX/Huelsbeck decoder,
+so that's another option to check out
+
 * ...
 
 ## Links

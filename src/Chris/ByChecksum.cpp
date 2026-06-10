@@ -143,7 +143,9 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
              crc1 == 0x999c8c6b || crc1 == 0xdb5e4afc ||  // ingame
              crc1 == 0x9d652521 || crc1 == 0xa1dc3139) {  // ingame
         variant.noDelayedDMAon = true;  // strictly required!
-        // Repair one instrument.
+        // Repair one instrument. The preceding sample area (in macro 2)
+        // is from 0x789a to 0x884e, and there's no indication that it's
+        // not an off-by-one bug in macro 10.
         udword mo = getMacroOffset(0x10);
         if (readBEudword(pBuf,mo+4) == 0x0200884f) {
             pBuf[mo+4+3] = 0x4e;  // set begin to 0x884e

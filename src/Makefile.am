@@ -25,7 +25,8 @@ lib_LTLIBRARIES = libtfmxaudiodecoder.la
 
 libtfmxaudiodecoder_la_LIBADD = \
 Chris/libtfmxch.la \
-Jochen/libtfmxjh.la
+Jochen/libtfmxjh.la \
+Chris/DNS/libdns.la
 
 libtfmxaudiodecoder_la_LDFLAGS = -version-info @LIBVERSION@ -no-undefined
 

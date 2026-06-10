@@ -684,6 +684,7 @@ void TFMXDecoder::handleDelayedDMAon() {
 void TFMXDecoder::runMain() {
     if (--admin.count < 0) {
         admin.count = admin.speed;  // reload
+        int evalMaxLoops = RECURSE_LIMIT;
         do {
             sequencer.step.next = false;
             int countInactive = 0;
@@ -724,7 +725,7 @@ void TFMXDecoder::runMain() {
                     processTrackStep();
                 }
             }
-        } while (sequencer.step.next);
+        } while (sequencer.step.next && --evalMaxLoops>0 );
     }
 }
 

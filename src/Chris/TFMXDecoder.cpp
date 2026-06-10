@@ -393,6 +393,14 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     MacroDefs[0x28] = &macroDef_28;
     MacroDefs[0x29] = &macroDef_29;
 
+    // TFMX v1.x up to and including v2.2 cannot be distinguished from
+    // the later TFMX and/or variants. Unless the very rarely used old
+    // header tag is used. And since the old-style effects (particularly
+    // non-scaled vibrato and portamento) may be strictly required by
+    // music created with v1/v2, a checksum based detection of specific
+    // modules may be the only way. And the differences between v1 and v2
+    // are of little use when detecting file contents.
+
     // TFMX v1.x
     if ( ((readBEudword(pBuf,offsets.header) == TFMX_HEX) &&  // old header
           (pBuf[offsets.header+4] == 0x20))

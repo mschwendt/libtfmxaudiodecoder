@@ -196,6 +196,8 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
         // Fix song start/end. Song table is wrecked.
         pBuf[offsets.header+0x101] = 0x04;
         pBuf[offsets.header+0x141] = 0x6b;
+        // Invalidate track 0 of step 0 as to avoid subsongs starting at 0.
+        pBuf[offsets.trackTable] = 0xff;
     }
     // File "mdat.blade of destiny - titel (7ch)" is bad/corrupted.
     else if (crc1 == 0xc83b701b) {

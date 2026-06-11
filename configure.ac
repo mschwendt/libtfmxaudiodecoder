@@ -1,4 +1,4 @@
-AC_INIT([libtfmxaudiodecoder], [1.0.10])
+AC_INIT([libtfmxaudiodecoder], [1.0.11])
 AC_CONFIG_SRCDIR([src/Decoder.cpp])
 AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_HEADERS([src/Config.h])

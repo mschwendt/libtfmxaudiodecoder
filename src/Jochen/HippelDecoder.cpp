@@ -339,24 +339,6 @@ void HippelDecoder::prepareChannelUpdate(VoiceVars& voiceX) {
     voiceX.trigger = true;  // Enable channel later.
 }
 
-void HippelDecoder::takeNextBufChecked(VoiceVars& voiceX) {
-    // TODO
-    if (voiceX.ch->paula.start >= fcBuf.tellBegin()+input.len) {
-        voiceX.ch->paula.start = silentSample.pStart;
-        voiceX.ch->paula.length = 1;
-        voiceX.ch->takeNextBuf();
-        return;
-    }
-    if ( (voiceX.ch->paula.start+voiceX.ch->paula.length) > fcBuf.tellBegin()+input.len ) {
-        voiceX.ch->paula.length = (fcBuf.tellBegin()+input.len)-voiceX.ch->paula.start;
-    }
-    voiceX.ch->takeNextBuf();
-}
-
-ubyte* HippelDecoder::makeSamplePtr(udword offset) {
-    return(fcBuf.tellBegin() + offset);
-}
-
 int HippelDecoder::run() {
     if (!admin.initialized) {
         return 0;

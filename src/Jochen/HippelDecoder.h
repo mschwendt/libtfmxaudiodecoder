@@ -304,10 +304,8 @@ class HippelDecoder : public Decoder {
 
     void setTrackRange(int=-1,int=-1);
     void prepareChannelUpdate(VoiceVars&);
-    void takeNextBufChecked(VoiceVars&);
     void setInstrument(VoiceVars&, ubyte);
     void setWave(VoiceVars&, ubyte num);
-    ubyte* makeSamplePtr(udword offset);
     void killChannel(VoiceVars&);
 
     udword getPattOffs(VoiceVars&);

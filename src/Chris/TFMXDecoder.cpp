@@ -625,12 +625,16 @@ void TFMXDecoder::takeNextBufChecked(VoiceVars& v) {
         v.ch->paula.length = (input.len - v.paulaOrig.offset)>>1;
         v.ch->paula.start = makeSamplePtr( v.paulaOrig.offset );
     }
+    // an "else" case here (see DNSDecoder.cpp) is not needed by players
+    // that always set start before length
     v.ch->takeNextBuf();
 }
 
 ubyte* TFMXDecoder::makeSamplePtr(udword offset) {
     return(pBuf.tellBegin() + offset);
 }
+
+// ----------------------------------------------------------------------
 
 void TFMXDecoder::handleWaitOnPaulaDone() {
     // Pretend we have an interrupt handler that has evaluated

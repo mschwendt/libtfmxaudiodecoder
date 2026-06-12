@@ -66,6 +66,7 @@ void HippelDecoder::reset() {
             voiceVars[v].pitchBendTime =
             voiceVars[v].pitchBendDelayFlag = 0;
         voiceVars[v].transpose =
+            voiceVars[v].transposeNew =
             voiceVars[v].soundTranspose =
             voiceVars[v].seqTranspose = 0;
             voiceVars[v].portaSpeed =
@@ -143,6 +144,7 @@ void HippelDecoder::clearFormat() {
         traits.porta80SetSnd =
         traits.isSMOD =
         traits.lowerPeriods =
+        traits.avoidTRglitch =
         traits.portaWeaker = false;
     traits.periodMin = FC14_PERIOD_MIN;
     traits.periodMax = FC14_PERIOD_MAX;

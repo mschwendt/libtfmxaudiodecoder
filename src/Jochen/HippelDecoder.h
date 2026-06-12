@@ -242,6 +242,7 @@ class HippelDecoder : public Decoder {
         uword pattPos;
     
         sbyte transpose;       // TR
+        sbyte transposeNew;
         sbyte soundTranspose;  // ST
         sbyte seqTranspose;    // from sndModSeq
     
@@ -300,6 +301,7 @@ class HippelDecoder : public Decoder {
         uword periodMin, periodMax;
         bool lowerPeriods;
         bool portaWeaker;
+        bool avoidTRglitch;
     } traits;
 
     void setTrackRange(int=-1,int=-1);
@@ -392,6 +394,7 @@ class HippelDecoder : public Decoder {
     bool COSO_init(int songNumber);
     void COSO_nextNote(VoiceVars&);
     void COSO_processPattern(VoiceVars&);
+    int COSO_countPatternWait(VoiceVars&);
 
     bool TFMX_7V_findPlayer(const ubyte*, udword);
     bool TFMX_7V_maybe();

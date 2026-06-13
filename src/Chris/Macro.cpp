@@ -205,10 +205,8 @@ void TFMXDecoder::macroFunc_StartSample(VoiceVars& voice) {
         voice.effectsMode = 1;
         if (variant.execOrder == MOD_MAC_SEQ) {
             processModulation(voice);
-            return;
         }
     }
-
     macroEvalAgain = true;
 }
 

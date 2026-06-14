@@ -20,8 +20,14 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
 #endif
 
     // Gem'X. No checksum based adjustments required, but the soundtrack
-    // strictly requires a special variant of $00 DMAoff as well as the
-    // set of macro commands $22 to $29. Macro commands used:
+    // strictly requires a special variant of $00 DMAoff and $01 DMAon
+    // as well as the set of macro commands $22 to $29. The original machine
+    // code player seems to be unique and does funky (most likely experimental)
+    // things with its combination of variants of the macros $00 and $01.
+    // Such as optionally controlling delayed channel on after waiting for
+    // several vertical raster lines or setting Paula period 4 on channel off
+    // (with the result being hardware dependent and uncertain).
+    // Macro commands used:
     // 000000000000000011111111111111112222222222222222
     // 0123456789abcdef0123456789abcdef0123456789abcdef
     // XXXXX XXXX  XX X    X   XXX       XXXXXXXX      

@@ -146,8 +146,6 @@ bool DNSDecoder::init(void *data, udword length, int songNumber) {
         if (!admin.initialized) {
             return false;
         }
-        data = input.buf;
-        length = input.len;
     }
     else {  // invalidate what has been found out before
         input.smplLoaded = false;

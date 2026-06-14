@@ -153,6 +153,9 @@ bool DNSDecoder::init(void *data, udword length, int songNumber) {
         input.smplLoaded = false;
         input.mdatSize = input.smplSize = 0;
 
+        if ( !detect(data,length) ) {
+            return false;
+        }
         // If we still have a sufficiently large buffer, reuse it.
         udword newLen = length;
         if (newLen > input.bufLen) {
@@ -168,10 +171,6 @@ bool DNSDecoder::init(void *data, udword length, int songNumber) {
         
         // Set up smart pointer for unsigned input buffer access.
         pBuf.setBuffer(input.buf,input.bufLen);
-
-        if ( !detect(input.buf,input.bufLen) ) {
-            return false;
-        }
     }
 
     if ( loadSamplesFile() ) {

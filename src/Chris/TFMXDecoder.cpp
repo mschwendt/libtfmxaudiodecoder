@@ -126,7 +126,7 @@ void TFMXDecoder::setPaulaVoice(ubyte v, PaulaVoice* p) {
 void TFMXDecoder::setPath(std::string path) {
     input.path = path;
     // Since most modules in these formats don't store a title/name internally,
-    // this helper function contructs a name from the filename.
+    // this helper function constructs a name from the filename.
     name.clear();
     std::size_t found = path.find_last_of("/\\");
     if (found != std::string::npos) {

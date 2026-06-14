@@ -476,8 +476,8 @@ void TFMXDecoder::restart() {
     admin.startSpeed = admin.speed;
     admin.count = 0;  // quick start
 #if defined(DEBUG)
-    cout << "Sequencer: " << dec << (int)sequencer.step.first
-         << " to " << (int)sequencer.step.last
+    cout << "Sequencer: " << tohex((uword)sequencer.step.first)
+         << " to " << tohex((uword)sequencer.step.last)
          << " / speed " << (int)admin.speed << endl;
 #endif
     softRestart();

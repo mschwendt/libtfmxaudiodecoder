@@ -208,7 +208,6 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     else if (crc1 == 0x3c2eb450) {
         int song = 1;
         // Set start step to 0x1ff to make song invalid.
-        pBuf[offsets.header+0x100+(song<<1)] = 0x01;
-        pBuf[offsets.header+0x100+(song<<1)+1] = 0xff;
+        writeBEword(pBuf,offsets.header+0x100+(song<<1),0x1ff);
     }
 }

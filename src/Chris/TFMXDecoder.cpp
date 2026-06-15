@@ -281,6 +281,8 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     setRate(50<<8);
     voices = 4;
 
+    // Move these, if ever encapsulating sequencer.
+    // So far, they have been constant, btw.
     sequencer.tracks = 8;
     sequencer.step.size = 16;
 

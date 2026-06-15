@@ -447,7 +447,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     } while ( !songEnd && (duration<1000*60*59));
     loopMode = loopModeBak;
 #if defined(DEBUG)
-    cout << "Duration of " << input.path << "  #" << admin.startSong << "  ";
+    cout << "Duration of " << input.path << "  #" << dec << admin.startSong << "  ";
     dumpTimestamp(duration);
     cout << endl;
 #endif

@@ -54,15 +54,15 @@ TFMXDecoder::~TFMXDecoder() {
 void TFMXDecoder::reset() {
     cmd.aa = cmd.bb = cmd.cd = cmd.ee = 0;
 
-    for (ubyte t=0; t<sequencer.tracks; t++) {
+    for (ubyte t=0; t<TRACKS_MAX; t++) {
         Track& tr = track[t];
-        tr.on = getTrackMute(t);
+        tr.on = false;
         tr.PT = 0xff; tr.TR = 0;
         tr.pattern.offset = tr.pattern.step = 0;
         tr.pattern.wait = 0;
         tr.pattern.loops = -1;
     }
-    for (ubyte v=0; v<voices; v++) {
+    for (ubyte v=0; v<VOICES_MAX; v++) {
         VoiceVars& voice = voiceVars[v];
         
         voice.voiceNum = v;

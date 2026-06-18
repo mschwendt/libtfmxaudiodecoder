@@ -708,6 +708,8 @@ void TFMXDecoder::macroFunc_29(VoiceVars& voice) {  // SID stop
     macroEvalAgain = true;
 }
 
+// If this voice uses the same macro script since last note,
+// branch to specified macro position.
 void TFMXDecoder::macroFunc_BranchIfSame(VoiceVars& voice) {
     macroEvalAgain = true;
     if (voice.macro.branchIfSame) {

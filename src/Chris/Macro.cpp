@@ -272,6 +272,7 @@ void TFMXDecoder::macroFunc_Cont(VoiceVars& voice) {
     voice.macro.offset = getMacroOffset(cmd.bb&0x7f);
     voice.macro.step = makeWord(cmd.cd,cmd.ee);
     voice.macro.loop = 0xff;
+    voice.macro.branchIfSame = false;
     macroEvalAgain = true;
 }
 
@@ -705,6 +706,17 @@ void TFMXDecoder::macroFunc_29(VoiceVars& voice) {  // SID stop
         voice.sid.op3.delta = 0;
     }
     macroEvalAgain = true;
+}
+
+void TFMXDecoder::macroFunc_BranchIfSame(VoiceVars& voice) {
+    macroEvalAgain = true;
+    if (voice.macro.branchIfSame) {
+        voice.macro.step = makeWord(cmd.cd,cmd.ee);
+    }
+    else {
+        voice.macro.branchIfSame = true;
+        voice.macro.step++;
+    }
 }
 
 }  // namespace

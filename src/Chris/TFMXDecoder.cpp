@@ -89,6 +89,8 @@ void TFMXDecoder::reset() {
         voice.macro.loop = 0xff;
         voice.macro.extraWait = true;
         voice.macro.delayedOff = voice.macro.delayedOn = false;
+        voice.macro.offset = 0;
+        voice.macro.branchIfSame = false;
         
         voice.sid.targetOffset = 0x100*v + 4;
         voice.sid.targetLength = 0;
@@ -391,6 +393,8 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
 
     MacroDefs[0x28] = &macroDef_28;
     MacroDefs[0x29] = &macroDef_29;
+
+    MacroDefs[0x30] = &macroDef_BranchIfSame;
 
     // TFMX v1.x up to and including v2.2 cannot be distinguished from
     // the later TFMX and/or variants. Unless the very rarely used old
@@ -855,7 +859,11 @@ void TFMXDecoder::noteCmd() {
         v.notePrevious = v.note;
         v.note = cmd.aa;
         v.keyUp = false;
-        v.macro.offset = getMacroOffset(cmd.bb & 0x7f);
+        udword mo = getMacroOffset(cmd.bb & 0x7f);
+        if (mo != v.macro.offset) {
+            v.macro.branchIfSame = false;
+        }
+        v.macro.offset = mo;
         v.macro.state = 1;
     }
     else {  // cmd.aa >= $c0   portamento note

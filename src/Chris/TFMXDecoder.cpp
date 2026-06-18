@@ -822,12 +822,11 @@ void TFMXDecoder::playerCommon() {
 }
 
 void TFMXDecoder::noteCmd() {
-#if defined(DEBUG_RUN)
-    cout << "  ::noteCmd()" << endl;
-#endif
     ubyte vNum = channelToVoiceMap[cmd.cd & (sizeof(channelToVoiceMap)-1)];
     VoiceVars& v = voiceVars[vNum];
-
+#if defined(DEBUG_RUN)
+    cout << "  ::noteCmd()  v" << tohex(v.voiceNum) << endl;
+#endif
     if (cmd.aa == 0xfc) {  // lock note
     }
     else if (cmd.aa == 0xf7) {  // envelope

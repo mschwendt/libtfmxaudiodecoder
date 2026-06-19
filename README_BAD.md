@@ -101,6 +101,22 @@ copy is older.
 
 ---
 
+#### Turrican III
+
+A truncated rip of ``Turrican III - level 5`` (aka world 5) is offered for download
+in some places with varying file names, possibly as a copy from the so-called
+Sloppy collection. Several offsets to instrument macro scripts are missing, and
+while that isn't anything that crashes the decoder, those files are bad.
+
+```
+357dc0be804c7e97f35f2c1a0d24a821  mdat.t3-lvl5
+357dc0be804c7e97f35f2c1a0d24a821  T3-LVL5.TFX
+```
+
+Good rips of that are available on e.g. Modland, ExoticA, Wanted Team's page.
+
+---
+
 #### Blade of Destiny - title (7ch)
 
 This file in the Rudolf Stember folder on Modland is invalid, because it's damaged
@@ -108,6 +124,37 @@ beyond repair.
 
 ```
 7e833022c3aa3c8072a9d930008b3558  mdat.blade of destiny - titel (7ch)
+```
+
+---
+
+#### Hanse
+
+This file in the Rudolf Stember folder on Modland is invalid, because it's truncated and doesn't make any sense.
+
+```
+0346dbc2b5aef88598adca25c31b5c5c  mdat.hanse-ascon
+```
+
+Offsets to track table at 0x200, pattern offsets at 0x218 and macro offsets at 0x21c:
+
+```
+000001d0  00 00 02 00 00 00 02 18  00 00 02 1c 00 00 00 00  |................|
+                ^^ ^^       ^^ ^^        ^^ ^^
+```
+
+Yet the file is just 540 bytes short (= 0x21c), so the macro offsets at 0x21c
+are missing, and no macro scripts exist within the file. Furthermore,
+the track table points at a default TFMX **empty pattern** only:
+
+```
+Track step #0:
+00000200  00 00 ff 00 ff 00 ff 00  ff 00 ff 00 ff 00 ff 00  |................|
+          ^^
+
+Pattern #0:
+00000210  f4 00 00 00 f0 00 00 00  00 00 02 10              |............|
+          ^^ ^^ ^^ ^^ ^^ ^^ ^^ ^^
 ```
 
 ---

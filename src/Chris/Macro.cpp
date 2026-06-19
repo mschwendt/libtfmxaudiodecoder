@@ -731,6 +731,11 @@ void TFMXDecoder::macroFunc_29(VoiceVars& voice) {  // SID stop
     macroEvalAgain = true;
 }
 
+// Macro command $30. Available in e.g. Gem'Z and Turrican III players,
+// used also by Denny (unreleased game), but the way it's used, it only
+// triggers in Gem'Z soundtrack, because on new note and Cont/Goto the
+// boolean variable is reset.
+//
 // If this voice uses the same macro script since last note,
 // branch to specified macro position.
 void TFMXDecoder::macroFunc_BranchIfSame(VoiceVars& voice) {

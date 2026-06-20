@@ -117,6 +117,30 @@ Good rips of that are available on e.g. Modland, ExoticA, Wanted Team's page.
 
 ---
 
+#### MDAT.Factor5 / Turrican III
+
+Unmodified, it is not a valid TFMX song. Offset to patterns and offset to macros are the same, which makes no sense:
+
+```
+000001d0  00 00 02 18 00 00 04 20  00 00 04 20 00 00 00 00  |....... ... ....|
+                            ^^ ^^        ^^ ^^
+```
+
+Track table at 0x218 is empty:
+
+```
+00000218  ff 00 ff 00 ff 00 ff 00  ff 00 ff 00 ff 00 ff 00  |................|
+```
+
+There are some unreferenced bytes at 0x200-0x218, which may have been part
+of some pattern at some point, but it's not a complete pattern anymore. And
+instrument number 0x10 exceeds the total number of 8 macro scripts in the file.
+Conclusively, it is likely that external code run by the game while
+displaying the Factor 5 intro screen uses this pair of MDAT+SMPL to
+trigger SFX.
+
+---
+
 #### Blade of Destiny - title (7ch)
 
 This file in the Rudolf Stember folder on Modland is invalid, because it's damaged

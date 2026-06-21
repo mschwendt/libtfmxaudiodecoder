@@ -749,4 +749,13 @@ void TFMXDecoder::macroFunc_BranchIfSame(VoiceVars& voice) {
     }
 }
 
+// Macro command $31. Available in e.g. Gem'Z and Turrican III players,
+// but only used by T3 title.
+void TFMXDecoder::macroFunc_KeyUp(VoiceVars& voice) {
+    cmd.aa = 0xf5;  // key up command
+    noteCmd();      // with cmd.cd = channel number
+    voice.macro.step++;
+    macroEvalAgain = true;
+}
+
 }  // namespace

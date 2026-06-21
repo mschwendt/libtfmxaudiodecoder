@@ -553,6 +553,13 @@ class TFMXDecoder : public Decoder {
                                        &TFMXDecoder::macroFunc_BranchIfSame
     };
 
+    // NB! This macro command is not named anywhere. It's used only by
+    // Turrican III title.
+    void macroFunc_KeyUp(VoiceVars&);
+    MacroDef macroDef_KeyUp = { "Key up      ../.x/.. channel",
+                                &TFMXDecoder::macroFunc_KeyUp
+    };
+
     
     bool trackCmdUsed[TRACK_CMD_MAX+1];
     bool patternCmdUsed[16];

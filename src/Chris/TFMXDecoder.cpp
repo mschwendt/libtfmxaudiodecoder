@@ -395,6 +395,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     MacroDefs[0x29] = &macroDef_29;
 
     MacroDefs[0x30] = &macroDef_BranchIfSame;
+    MacroDefs[0x31] = &macroDef_KeyUp;
 
     // TFMX v1.x up to and including v2.2 cannot be distinguished from
     // the later TFMX and/or variants. Unless the very rarely used old
@@ -863,7 +864,7 @@ void TFMXDecoder::noteCmd() {
             v.macro.branchIfSame = false;
         }
         v.macro.offset = mo;
-        v.macro.state = 1;
+        v.macro.state = 1;  // delayed macro init
     }
     else {  // cmd.aa >= $c0   portamento note
         v.portamento.count = cmd.bb;

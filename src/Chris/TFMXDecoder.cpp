@@ -320,7 +320,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     PattCmdFuncs[9] = &TFMXDecoder::pattCmd_ReturnFromGoto;
     PattCmdFuncs[10] = &TFMXDecoder::pattCmd_Fade;
     PattCmdFuncs[11] = &TFMXDecoder::pattCmd_NOP;
-    PattCmdFuncs[12] = &TFMXDecoder::pattCmd_Note;
+    PattCmdFuncs[12] = &TFMXDecoder::pattCmd_NOP;  // FXPR not implemented
     PattCmdFuncs[13] = &TFMXDecoder::pattCmd_NOP;
     PattCmdFuncs[14] = &TFMXDecoder::pattCmd_Stop;
     PattCmdFuncs[15] = &TFMXDecoder::pattCmd_NOP;
@@ -828,9 +828,7 @@ void TFMXDecoder::noteCmd() {
 #if defined(DEBUG_RUN)
     cout << "  ::noteCmd()  v" << tohex(v.voiceNum) << endl;
 #endif
-    if (cmd.aa == 0xfc) {  // lock note
-    }
-    else if (cmd.aa == 0xf7) {  // envelope
+    if (cmd.aa == 0xf7) {  // envelope
         v.envelope.speed = cmd.bb;
         ubyte tmp = (cmd.cd>>4)+1;
         v.envelope.count = v.envelope.flag = tmp;

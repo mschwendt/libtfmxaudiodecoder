@@ -338,6 +338,8 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     for (ubyte m = 0; m<0x40; m++) {
         MacroDefs[m] = &macroDef_NOP;
     }
+    // Set up a default set of macro commands covering what is referred to
+    // as the "TFMX Pro" family of player features.
     MacroDefs[0] = &macroDef_StopSound;
     MacroDefs[1] = &macroDef_StartSample;
     MacroDefs[2] = &macroDef_SetBegin;
@@ -352,7 +354,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     MacroDefs[0xa] = &macroDef_Reset;
     MacroDefs[0xb] = &macroDef_Portamento;
     MacroDefs[0xc] = &macroDef_Vibrato;
-    MacroDefs[0xd] = &macroDef_AddVolNote;
+    MacroDefs[0xd] = &macroDef_AddVolNote;  // AddVolume in v1.5
     MacroDefs[0xe] = &macroDef_SetVolume;
     MacroDefs[0xf] = &macroDef_Envelope;
 
@@ -367,23 +369,28 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     
     MacroDefs[0x18] = &macroDef_SampleLoop;
     MacroDefs[0x19] = &macroDef_OneShot;
+    // New macro commands in variants and v2.2.
     MacroDefs[0x1a] = &macroDef_WaitOnDMA;
     MacroDefs[0x1b] = &macroDef_RandomPlay;
     MacroDefs[0x1c] = &macroDef_SplitKey;
     MacroDefs[0x1d] = &macroDef_SplitVolume;
-    MacroDefs[0x1e] = &macroDef_RandomMask;
+    MacroDefs[0x1e] = &macroDef_RandomMask;  // AddVolNote in v2.2
+    // Macro commands > $1E available only in variants.
     MacroDefs[0x1f] = &macroDef_SetPrevNote;
 
     // Macro commands $1F AddChannel and $20 SubChannel are not implemented
     // since no file seems to use them. Also, number $1F is occupied by
     // SetPrevNote already. which would cause a conlict that would need
-    // to be detected and prevent somehow.
+    // to be detected and prevented somehow.
     //
     // Macro command $20 Signal and its external write-only registers
     // as added by some TFMX variants is not needed either.
     MacroDefs[0x20] = &macroDef_UNDEF;
     
     MacroDefs[0x21] = &macroDef_PlayMacro;
+    // Although there are cryptic short names for the sound synthesis macro
+    // commands, such as in heavily modified versions of the TFMX-editor,
+    // here the functions are numbered only.
     MacroDefs[0x22] = &macroDef_22;
     MacroDefs[0x23] = &macroDef_23;
     MacroDefs[0x24] = &macroDef_24;
@@ -404,6 +411,10 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     // music created with v1/v2, a checksum based detection of specific
     // modules may be the only way. And the differences between v1 and v2
     // are of little use when detecting file contents.
+    //
+    // The compression fields cannot be relied on either, because although
+    // compression is not available in v1/v2, it is optional, and some
+    // v1 modules (like Hard'n'Heavy) exist also as compressed versions.
 
     // TFMX v1.x
     if ( ((readBEudword(pBuf,offsets.header) == TFMX_HEX) &&  // old header
@@ -528,6 +539,7 @@ void TFMXDecoder::setTFMXv1() {
     variant.extraWaitV1 = true;
     variant.noDelayedDMAon = true;
     variant.execOrder = SEQ_MOD_MAC;
+    // The newer AddVolNote should be compatible too.
     MacroDefs[0xd] = &macroDef_AddVolume;
     // max. macro cmd = $19
     for (ubyte m = 0x1a; m<0x40; m++) {

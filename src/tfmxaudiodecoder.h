@@ -109,7 +109,9 @@ extern "C" {
 
     /* Optional!
        Apply input format header check to a memory buffer containing
-       at least 0xb80 bytes (= HippelDecoder::TFMX_PROBE_SIZE).
+       at least 0xb80 bytes (= HippelDecoder::TFMX_PROBE_SIZE) unless the
+       file is shorter. Some Hippel TFMX files and derivatives like MCMD
+       start with machine code, so sufficient data must be provided.
        With a minimum of 5 bytes it can detect only some raw modules with
        a tag at the very beginning. And full init may reject such data
        later, if taking a closer look.

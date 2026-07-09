@@ -141,6 +141,9 @@ extern "C" {
     /* Returns: 0 to 100 */
     unsigned short int tfmxdec_get_voice_volume(void* decoder, unsigned int voice);
 
+    /* With the mixer initialized to stereo, change the panning level. */
+    void tfmxdec_set_panning(void* decoder, int panning);
+
     /* Not recommended and ought not be on by default, because Paula's
        external low-pass filter is applied to the whole output and creates
        an overall muffled sound, which had most users of Amiga looking into

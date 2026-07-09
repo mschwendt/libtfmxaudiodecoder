@@ -85,7 +85,7 @@ collections either.
 * [TTKMusicPlayer](https://github.com/Greedysky/TTKMusicPlayer) with [this input plugin](https://github.com/TTK-qmmp/qmmp-tfmx)
 * [NostalgicPlayer](https://nostalgicplayer.dk/) as of v3.4.0 includes a port/rewrite to C# of the TFMX/Huelsbeck decoder,
 so that's another option to check out
-
+* [CoolModFiles](https://mods.amiga.fans) web player has gained support for libtfmxaudiodecoder ( https://github.com/no42-org/CoolModFiles )
 * ...
 
 ## Links

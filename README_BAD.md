@@ -34,7 +34,7 @@ sound detuned.
  ac09636d5b7ee6814b47d7e0eaa05417  Apidya - Load.sam
 ```
 
-This different version on Modland since May-23 is truncated, too:
+This different version on Modland since 2026-05-23 is truncated, too:
 
 ```
 eabb805b0bb3e2a584f2ca27e2c16644  mdat.apidya(load)
@@ -45,7 +45,6 @@ Since macro instrument 0 executes an AddBegin loop, the sample data must
 be longer than 132 bytes. Wanted Team offers a better rip! Runtime
 debugger suggests that at least 144 bytes of sample data are used actually,
 but theoretically the macro script can shift sample begin further.
-(TODO: see what's found in memory)
 
 ```
 Macro 0x00 at 0x000004bc to 0x000004f0
@@ -63,6 +62,11 @@ Macro 0x00 at 0x000004bc to 0x000004f0
   000b 05 000009 Loop        xx/xxxx  count/step
   000c 07 000000 -------------STOP----------------------
 ```
+
+Taking a look at the original, sample data (at $4d8c0) have been copied over
+the TFMX header. Hence no more than 260 sample bytes
+are present before some zeroes and the song definition array.
+So, Wanted Team's rip of Apidya loader is good.
 
 ---
 

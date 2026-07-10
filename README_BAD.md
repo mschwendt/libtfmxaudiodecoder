@@ -25,12 +25,43 @@ if you know these ingame tunes.
 Header has been invalidated with a flood of 0x0d values, which breaks
 all TFMX players that expect the space character after the "TFMX-SONG" tag.
 The structure's two fields about compression have become invalid, too.
-The sample data possibly are shifted by four bytes, which causes clearly
-audible clicks:
+The sample data are shifted by one byte, which causes clearly
+audible clicks. With a size of only 132 the sample data are truncated and
+sound detuned.
 
 ```
  f46a01e4eae101d79af636a5b9015684  Apidya - Load.tfx
  ac09636d5b7ee6814b47d7e0eaa05417  Apidya - Load.sam
+```
+
+This different version on Modland since May-23 is truncated, too:
+
+```
+eabb805b0bb3e2a584f2ca27e2c16644  mdat.apidya(load)
+26db268ffc54ff10ad4ff88b45848d8e  smpl.apidya(load)
+```
+
+Since macro instrument 0 executes an AddBegin loop, the sample data must
+be longer than 132 bytes. Wanted Team offers a better rip! Runtime
+debugger suggests that at least 144 bytes of sample data are used actually,
+but theoretically the macro script can shift sample begin further.
+(TODO: see what's found in memory)
+
+```
+Macro 0x00 at 0x000004bc to 0x000004f0
+  0000 00 010000 DMAoff+Reset (stop sample & reset all)
+  0001 02 000004 SetBegin    xxxxxx   sample-startadress
+  0002 03 000040 SetLen      ..xxxx   sample-length
+  0003 0d 000014 Addvol+note xx/fe/xx note/CONST./volume
+  0004 08 fa0000 AddNote     xx/xxxx  note/detune
+  0005 01 000000 DMAon (start sample at selected begin)
+  0006 0f 020120 Envelope    xx/xx/xx speed/count/endvol
+  0007 04 000008 Wait        ..xxxx   count (VBI's)
+  0008 0c 04000a Vibrato     xx/../xx speed/intensity
+  0009 04 000002 Wait        ..xxxx   count (VBI's)
+  000a 11 000001 AddBegin    ..xxxx   add to startadress
+  000b 05 000009 Loop        xx/xxxx  count/step
+  000c 07 000000 -------------STOP----------------------
 ```
 
 ---

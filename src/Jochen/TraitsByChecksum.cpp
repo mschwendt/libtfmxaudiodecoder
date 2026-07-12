@@ -173,5 +173,11 @@ void tfmxaudiodecoder::HippelDecoder::traitsByChecksum() {
         else if (crc2 == 0x5cf7578f) {
             traits.avoidTRglitch = true;
         }
+        // Enchanted Land (3) song #2 is just the first three seconds of
+        // song #1.
+        else if (crc2 == 0xcb441135) {
+            vSongs.clear();
+            vSongs.push_back(0);
+        }
     }
 }

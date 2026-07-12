@@ -63,9 +63,10 @@ bool HippelDecoder::TFMX_init(int songNumber) {
     }
     stats.songs = readBEuword(fcBuf,h+0x10);
     stats.samples = readBEuword(fcBuf,h+0x12);
-    if (stats.samples > SAMPLES_MAX)
+    if (stats.samples > SAMPLES_MAX) {
         stats.samples = SAMPLES_MAX;
-    
+    }
+
     udword offs = h+0x20;  // this is constant
     offsets.sndModSeqs = offs;
     

@@ -114,8 +114,9 @@ bool HippelDecoder::COSO_init(int songNumber) {
     traits.patternSize = 0;  // fcBuf[ht+0xd];
 
     stats.samples = readBEuword(fcBuf,ht+0x12);  // not +1 like TFMX
-    if (stats.samples > SAMPLES_MAX)
+    if (stats.samples > SAMPLES_MAX) {
         stats.samples = SAMPLES_MAX;
+    }
 
     bool maybe4V = COSO_4V_maybe();
     bool maybe7V = COSO_7V_maybe();

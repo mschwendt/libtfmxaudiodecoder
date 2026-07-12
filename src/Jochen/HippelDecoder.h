@@ -44,7 +44,7 @@ class HippelDecoder : public Decoder {
     int run() override;
     void restart() override;
 
-    int getSongs() override { return stats.songs; }
+    int getSongs() override;
 
  private:
     friend class Analyze;
@@ -131,6 +131,7 @@ class HippelDecoder : public Decoder {
     smartPtr<ubyte> fcBuf;   // for safe unsigned access
     smartPtr<sbyte> fcBufS;  // for safe signed access
 
+    std::vector<ubyte> vSongs;
     udword songPosCurrent;
 
     Analyze *analyze;  // TODO
@@ -355,6 +356,7 @@ class HippelDecoder : public Decoder {
     bool TFMX_4V_maybe();
     bool TFMX_findPortamentoCode();
     bool TFMX_init(int songNumber);
+    void TFMX_findSongs(int songEntrySize);
     void TFMX_startSong();
     void TFMX_nextNote(VoiceVars&);
     void TFMX_processPattern(VoiceVars&);

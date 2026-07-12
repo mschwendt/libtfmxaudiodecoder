@@ -166,6 +166,10 @@ void HippelDecoder::clearFormat() {
     std::copy(std::begin(defaultSndModFuncs),std::end(defaultSndModFuncs),std::begin(TFMX_sndModFuncs));
 }
 
+int HippelDecoder::getSongs() {
+    return vSongs.size();
+}
+
 ubyte HippelDecoder::getVoices() {
     return stats.voices;
 }

@@ -81,14 +81,8 @@ bool HippelDecoder::COSO_init(int songNumber) {
 
     // NB! There may be invalid/silent songs, but the total number of songs
     // is needed when calculating the offset to sample headers.
+    // If it's a modpack, this is not the total number of songs yet.
     stats.songs = readBEuword(fcBuf,ht+0x10);
-    // Some precautions.
-    if (stats.songs > 32) {
-        return false;
-    }
-    if (admin.startSong >= stats.songs) {
-        admin.startSong = 0;
-    }
 
     offsets.sampleHeaders = h+readBEudword(fcBuf,h+0x18);
     offsets.sampleData = h+readBEudword(fcBuf,h+0x1c);
@@ -98,6 +92,13 @@ bool HippelDecoder::COSO_init(int songNumber) {
 
     bool reject = false;
     bool isModPack = COSO_isModPack(vHeaders,reject);
+    // Some precautions.
+    if (stats.songs > 32) {
+        return false;
+    }
+    if (admin.startSong >= stats.songs) {
+        admin.startSong = 0;
+    }
     if (isModPack) {
         if (reject) {
             return false;

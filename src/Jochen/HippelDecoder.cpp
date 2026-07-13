@@ -264,7 +264,12 @@ bool HippelDecoder::init(void *data, udword length, int songNumber) {
         duration += run();
     } while ( !songEnd && (duration<1000*60*59));
     loopMode = loopModeBak;
-    
+#if defined(DEBUG)
+    cout << "Duration of " << path << "  #" << dec << admin.startSong << "  ";
+    dumpTimestamp(duration);
+    cout << endl;
+#endif
+
     if (analyze->usesE7setDiffWave(this) ) {
         TFMX_sndModFuncs[7] = &HippelDecoder::TFMX_sndSeq_E7_setDiffWave;
     }

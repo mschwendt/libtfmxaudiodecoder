@@ -220,11 +220,15 @@ Pattern #0:
 
 #### Future Composer modules
 
- * The soundtrack modules from the game ``Chambers of Shaolin`` as included
+The soundtrack modules from the game ``Chambers of Shaolin`` as included
 with Future Composer v1.2 and v1.3 in SMOD format are broken (since their
 conversion from TFMX has introduced mistakes), but have been copied into
 many module collections. Repaired files have been merged at [Modland](https://modland.com/pub/modules/Future%20Composer%201.3/Jochen%20Hippel/).
 Alternatively prefer the original soundtrack in Hippel's TFMX format.
+
+---
+
+#### HIPC modules
 
  * ``wassermu.hipc`` (short for Wassermusik) in compressed TFMX format
 raises doubts. It is Chambers of Shaolin "ingame 1" aka "Test of Balance",
@@ -237,6 +241,10 @@ is a duplicate of ``Amberstar (12).hipc``. Sometimes the samples are found
 in a separate file named "hipc.samp", in other cases the separate file is
 named "smp.set" but is stored in a different path. Searching for it and
 loading it would not be worthwhile. Especially not since it is a duplicate.
+
+ * ``Testament - Sine Intro.hipc`` with a separate sample data file (with
+varying file name extensions) is just a duplicate of the famous intro theme
+from ``A Prehistoric Tale``.
 
 ---
 

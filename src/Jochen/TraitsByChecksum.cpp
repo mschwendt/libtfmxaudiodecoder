@@ -165,7 +165,7 @@ void tfmxaudiodecoder::HippelDecoder::traitsByChecksum() {
             pPortamentoFunc = &HippelDecoder::TFMX_portamento;
             pVibratoFunc = &HippelDecoder::TFMX_vibrato;
         }
-        // A Prehistoric Tale (music4). The original music in TFMX COSO
+        // A Prehistoric Tale (ingame3 aka music4). The original music in TFMX COSO
         // format glitches at 0:53 and 1:11 because pattern transpose is
         // to be applied immediately, and since it affects a currently
         // playing sound, in corner-cases the resulting transposition is

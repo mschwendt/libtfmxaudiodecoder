@@ -306,6 +306,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     variant.noAddBeginCount = false;
     variant.noDelayedDMAon = false;
     variant.noTrackMute = false;
+    variant.oldTrackCmds = false;
     variant.execOrder = MAC_MOD_SEQ;
     
     PattCmdFuncs[0] = &TFMXDecoder::pattCmd_End;

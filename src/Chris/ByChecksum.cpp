@@ -79,6 +79,8 @@ void tfmxaudiodecoder::TFMXDecoder::traitsByChecksum() {
     else if (crc1 == 0x48960d8c || crc1 == 0x5dcd624f || crc1 == 0x3f0b151f) {
         setTFMXv1();
         variant.noNoteDetune = true;
+        variant.oldTrackCmds = true;
+        TrackCmdFuncs[1] = &TFMXDecoder::trackCmd_Jump;
     }
     // Hard'n'Heavy (1989) is a TFMX v1 variant. In particular, it strictly
     // requires the old AddBegin macro that is missing the effect updates.

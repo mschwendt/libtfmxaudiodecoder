@@ -301,6 +301,7 @@ class TFMXDecoder : public Decoder {
     void trackCmd_Speed(udword);
     void trackCmd_7V(udword);
     void trackCmd_Fade(udword);
+    void trackCmd_Jump(udword);
 
     static const int TRACK_CMD_MAX = 4;
     typedef void (TFMXDecoder::*TrackCmdFuncPtr)(udword);
@@ -584,6 +585,7 @@ class TFMXDecoder : public Decoder {
         bool noAddBeginCount;
         bool noDelayedDMAon;
         bool noTrackMute;
+        bool oldTrackCmds;
         // Main player order of execution.
         ExecOrder execOrder;
     } variant;

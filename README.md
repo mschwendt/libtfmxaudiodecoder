@@ -96,3 +96,12 @@ so that's another option to check out
 * https://chrishuelsbeck.bandcamp.com/
 * http://thethalionsource.w4f.eu/Hippel/hippelm.htm
 * https://remix64.com/ as a hub for the C64 and Amiga remix community.
+
+## Security
+
+With security and convenience in mind, the main decoders for the low-level
+file formats supported by this library rely on a smart pointer implementation
+as to avoid the problem of out-of-bounds buffer access. Input files may be
+truncated or corrupted in subtle ways that could lead to undefined behaviour
+at player runtime, if not taking precautions. Additionally, the library tries
+to reject files that appear to be clearly invalid.

@@ -232,24 +232,6 @@ bool HippelDecoder::init(void *data, udword length, int songNumber) {
         samples[s] = silentSample;
     }
     
-    // (NOTE) Instead of addresses (pointers) use 32-bit offsets everywhere.
-    // This is just for added safety and convenience. One could range-check
-    // each pointer/offset where appropriate to avoid segmentation faults
-    // caused by damaged input data.
-    //
-    // Smart pointer usage avoids the problem of out-of-bounds access.
-    //
-    // On the topic of rejecting damaged/corrupted input data, over many
-    // years of browsing MOD collections containing Future Composer modules,
-    // no extremely corrupted modules have been found. Those with bad header
-    // data or truncated sample data have been replaced with the help of
-    // a module collection's maintainers. Bad/broken modules may still be
-    // encountered "in the wild" and as copies in private collections.
-    // So, if not implementing pedantic validation of all input data (such
-    // as via a dry-run through the player and watching out for problematic
-    // data), only checking that some offsets are within the module boundaries
-    // is not worthwhile. A broken module may sound broken in unknown ways.
-
  mainInit:
     admin.initialized = (this->*pInitFunc)(songNumber);
     if (!admin.initialized) {

@@ -1,5 +1,7 @@
 Trimmed release notes that mention specific soundtracks:
 
+- Support loading ``Amberstar`` with external sample pack files. Various releases.
+
 - Implement the very rare macro command $31 for ``Turrican III``.
 
 - Implement the very rare macro command $30 for ``Gem'Z``.

@@ -111,7 +111,7 @@ void HippelDecoder::TFMX_processSndModSustain(VoiceVars& voiceX) {
 void HippelDecoder::TFMX_processSndModSeq(VoiceVars& voiceX) {
     // Corner-case: Stop processing, if it advances beyond the last sequence.
     // Two FC14 mods and one SMOD have been found that are affected.
-    if (voiceX.currentSndSeq >= (stats.sndSeqs-1) && voiceX.sndSeqPos >= 64) {
+    if (voiceX.currentSndSeq == (stats.sndSeqs-1) && voiceX.sndSeqPos >= 64) {
         return;
     }
     udword seqOffs = voiceX.sndSeq+voiceX.sndSeqPos;

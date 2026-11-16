@@ -90,7 +90,7 @@ bool DNSDecoder::detect(void* data, udword len) {
         CRCLight crc;
         udword crc1 = crc.get(sBuf,0,0x100);
 #if defined(DEBUG)
-        cout << "CRC(1) = " << tohex(crc1) << "  " << input.path << endl;
+        cout << "CRC(1) = " << tohex(crc1) << "  " << path << endl;
 #endif
         std::set<udword> checksums1 = {
             0x4f593264,  // Hollywood Poker Pro title
@@ -112,7 +112,7 @@ bool DNSDecoder::detect(void* data, udword len) {
         CRCLight crc;
         udword crc2 = crc.get(sBuf,0x800-0x100,0x100);
 #if defined(DEBUG)
-        cout << "CRC(2) = " << tohex(crc2) << "  " << input.path << endl;
+        cout << "CRC(2) = " << tohex(crc2) << "  " << path << endl;
 #endif
         std::set<udword> checksums2 = {
             0x04ec1634,  // Hollywood Poker Pro title
@@ -150,6 +150,10 @@ bool DNSDecoder::init(void *data, udword length, int songNumber) {
     else {  // invalidate what has been found out before
         input.smplLoaded = false;
         input.mdatSize = input.smplSize = 0;
+        title.clear();
+        author.clear();
+        game.clear();
+        name.clear();
 
         if ( !detect(data,length) ) {
             return false;
@@ -281,6 +285,8 @@ bool DNSDecoder::init(void *data, udword length, int songNumber) {
 
     // ----------
 
+    setDefaultName();
+
     admin.startSong = (songNumber < 0) ? 0 : songNumber;
     restart();
 
@@ -293,7 +299,7 @@ bool DNSDecoder::init(void *data, udword length, int songNumber) {
     } while ( !songEnd && (duration<1000*60*59));
     loopMode = loopModeBak;
 #if defined(DEBUG)
-    cout << "Duration of " << input.path << "  #" << admin.startSong << "  ";
+    cout << "Duration of " << path << "  #" << admin.startSong << "  ";
     dumpTimestamp(duration);
     cout << endl;
 #endif
@@ -845,11 +851,9 @@ void DNSDecoder::setPaulaVoice(ubyte v, PaulaVoice* p) {
     voiceVars[v].ch = p;
 }
 
-void DNSDecoder::setPath(std::string path) {
-    input.path = path;
+void DNSDecoder::setDefaultName() {
     // Since most modules in these formats don't store a title/name internally,
-    // this helper function contructs a name from the filename.
-    name.clear();
+    // this helper function constructs a name from the filename.
     std::size_t found = path.find_last_of("/\\");
     if (found != std::string::npos) {
         std::string fname = path.substr(found+1);
@@ -864,6 +868,9 @@ void DNSDecoder::setPath(std::string path) {
             name = fname.substr(0, fname.rfind('.'));
         }
     }
+    else {
+        name.clear();
+    }
 }
 
 bool DNSDecoder::loadSamplesFile() {
@@ -873,7 +880,7 @@ bool DNSDecoder::loadSamplesFile() {
         input.smplSize = input.smplSizeCurrent;
         return true;
     }
-    if ( input.path.empty() ) {
+    if ( path.empty() ) {
         return false;
     }
 
@@ -885,7 +892,7 @@ bool DNSDecoder::loadSamplesFile() {
         { ".DNS", ".SMP" }
     };
     for ( std::vector<ExtPair>::iterator it = vExtPairs.begin(); it != vExtPairs.end(); ++it ) {
-        std::string pathSmpl = input.path;
+        std::string pathSmpl = path;
         std::size_t found = pathSmpl.rfind(it->first);
         if (found != std::string::npos) {
             pathSmpl.replace(found,it->first.length(),it->second);

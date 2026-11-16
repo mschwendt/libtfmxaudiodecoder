@@ -52,6 +52,7 @@ class HippelDecoder : public Decoder {
     void reset();
     void clearFormat();
     void dumpModule();
+    void setDefaultName();
 
     static const std::string FORMAT_NAME;
     static const std::string FORMAT_NAME_7V;

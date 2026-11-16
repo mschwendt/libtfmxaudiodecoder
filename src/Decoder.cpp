@@ -58,15 +58,6 @@ const char* Decoder::getInfoString(const std::string which) {
 
 void Decoder::setPath(std::string pathArg) {
     path = pathArg;
-    // Since most modules in these formats don't store a title/name internally,
-    // this helper function contructs a name from the filename.
-    name.clear();
-    std::size_t found = path.find_last_of("/\\");
-    if (found != std::string::npos) {
-        std::string fname = path.substr(found+1);
-        // Strip the filename extension.
-        name = fname.substr(0, fname.rfind('.'));
-    }
 }
 
 // For accuracy reasons, play speed cannot be specified as integral value,

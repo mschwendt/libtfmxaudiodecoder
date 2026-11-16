@@ -122,7 +122,7 @@ extern "C" {
     int tfmxdec_load(void* decoder, const char* path, int songNumber);
 
     /* Since most modules in these formats don't store a title/name internally,
-       this helper function contructs a name from the filename. */
+       this helper function constructs a name from the filename. */
     const char* tfmxdec_get_name(void* decoder);
     
     /* Not that useful, but some TFMX-MOD files provide content for them. */

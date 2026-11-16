@@ -33,8 +33,6 @@ class TFMXDecoder : public Decoder {
     TFMXDecoder();
     ~TFMXDecoder() override;
 
-    void setPath(std::string) override;
-
     bool init(void*, udword, int) override;
     bool detect(void*,udword) override;
     void restart() override;
@@ -51,6 +49,7 @@ class TFMXDecoder : public Decoder {
     void adjustTraitsPost();
     void dumpMacros();
     void dumpModule();
+    void setDefaultName();
     
     static const std::string FORMAT_NAME;
     static const std::string FORMAT_NAME_PRO;
@@ -595,8 +594,6 @@ class TFMXDecoder : public Decoder {
         udword bufLen;  // the allocated amount
         udword len;     // length of the data we copy
 
-        std::string path, ext;
-        
         unsigned int mdatSize, smplSize, mdatSizeCurrent, smplSizeCurrent;
         bool smplLoaded;
 

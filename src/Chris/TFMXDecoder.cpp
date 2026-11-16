@@ -50,6 +50,30 @@ TFMXDecoder::~TFMXDecoder() {
 
 // ----------------------------------------------------------------------
 
+// Since most modules in these formats don't store a title/name internally,
+// this helper function constructs a name from the filename.
+void TFMXDecoder::setDefaultName() {
+    std::vector<std::string> vPrefixNames = {
+        "MDAT.", "mdat."
+    };
+    // since C++17 could use std::filesystem::path::filename
+    std::size_t found = path.find_last_of("/\\");
+    if (found != std::string::npos) {
+        for ( std::vector<std::string>::iterator it = vPrefixNames.begin(); it != vPrefixNames.end(); ++it ) {
+            if ( *it == path.substr( found+1, it->size()) ) {
+                name = path.substr( found+1 + it->size());
+                return;
+            }
+        }
+        std::string fname = path.substr(found+1);
+        // Strip the filename extension.
+        name = fname.substr(0, fname.rfind('.'));
+    }
+    else {
+        name.clear();
+    }
+}
+
 // Assign default values to essential runtime variables.
 void TFMXDecoder::reset() {
     cmd.aa = cmd.bb = cmd.cd = cmd.ee = 0;
@@ -125,36 +149,12 @@ void TFMXDecoder::setPaulaVoice(ubyte v, PaulaVoice* p) {
     voiceVars[v].ch = p;
 }
 
-void TFMXDecoder::setPath(std::string path) {
-    input.path = path;
-    // Since most modules in these formats don't store a title/name internally,
-    // this helper function constructs a name from the filename.
-    name.clear();
-    std::size_t found = path.find_last_of("/\\");
-    if (found != std::string::npos) {
-        std::string fname = path.substr(found+1);
-        std::string mdatLC = "mdat.";
-        std::string mdatUC = "MDAT.";
-        if (fname.compare(0,mdatLC.length(),mdatLC) == 0 ||
-            fname.compare(0,mdatUC.length(),mdatUC) == 0) {
-            name = fname.substr( mdatLC.length() );
-        }
-        else {
-            // Strip the filename extension.
-            name = fname.substr(0, fname.rfind('.'));
-        }
-    }
-}
-
 // ----------------------------------------------------------------------
 
 bool TFMXDecoder::init(void *data, udword length, int songNumber) {
 #if defined(DEBUG)
     cout << "TFMXDecoder::init()" << endl;
 #endif
-    title.clear();
-    author.clear();
-    game.clear();
     duration = 0;
 
     if (data==0 || length==0 ) {  // re-init mode
@@ -165,6 +165,10 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     else {  // invalidate what has been found out before
         input.smplLoaded = false;
         input.mdatSize = input.smplSize = 0;
+        title.clear();
+        author.clear();
+        game.clear();
+        name.clear();
 
         if ( !detect(data,length) ) {
             return false;
@@ -260,7 +264,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
         };
         if (foundStop && foundHighMacroCmd) {
 #if defined(DEBUG)
-            cout << "WARNING: Rejecting Atari ST TFMX file!  " << input.path << endl;
+            cout << "WARNING: Rejecting Atari ST TFMX file!  " << path << endl;
 #endif
             return false;
         }            
@@ -460,6 +464,8 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     restart();
     admin.initialized = true;
 
+    setDefaultName();
+
     // Determine duration with a dry-run till song-end.
     duration = 0;
     bool loopModeBak = loopMode;
@@ -469,7 +475,7 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     } while ( !songEnd && (duration<1000*60*59));
     loopMode = loopModeBak;
 #if defined(DEBUG)
-    cout << "Duration of " << input.path << "  #" << dec << admin.startSong << "  ";
+    cout << "Duration of " << path << "  #" << dec << admin.startSong << "  ";
     dumpTimestamp(duration);
     cout << endl;
 #endif

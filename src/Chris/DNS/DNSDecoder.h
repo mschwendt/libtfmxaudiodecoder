@@ -35,7 +35,7 @@ class DNSDecoder : public Decoder {
     DNSDecoder();
     ~DNSDecoder() override;
 
-    void setPath(std::string) override;
+    void setDefaultName();
 
     bool init(void*, udword, int) override;
     bool detect(void*,udword) override;

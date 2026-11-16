@@ -30,7 +30,7 @@ bool tfmxaudiodecoder::TFMXDecoder::loadSamplesFile() {
         input.smplSize = input.smplSizeCurrent;
         return true;
     }
-    if ( input.path.empty() ) {
+    if ( path.empty() ) {
         return false;
     }
 
@@ -45,7 +45,7 @@ bool tfmxaudiodecoder::TFMXDecoder::loadSamplesFile() {
     };
     // since C++17 could use std::filesystem::path::replace_extension
     for ( std::vector<ExtPair>::iterator it = vExtPairs.begin(); it != vExtPairs.end(); ++it ) {
-        std::string pathSmpl = input.path;
+        std::string pathSmpl = path;
         std::size_t found = pathSmpl.rfind(it->first);
         if (found != std::string::npos) {
             pathSmpl.replace(found,it->first.length(),it->second);
@@ -67,7 +67,7 @@ bool tfmxaudiodecoder::TFMXDecoder::loadSamplesFile() {
         "SMPL.set"   // Wanted Team EaglePlayers EP_TFMX.readme
     };
     for ( std::vector<std::string>::iterator it = vSetNames.begin(); it != vSetNames.end(); ++it ) {
-        std::string pathSmpl = input.path;
+        std::string pathSmpl = path;
         // since C++17 could use std::filesystem::path::filename
         std::size_t found = pathSmpl.find_last_of("/\\");
         if (found != std::string::npos) {

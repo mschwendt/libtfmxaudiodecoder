@@ -44,6 +44,32 @@ HippelDecoder::~HippelDecoder() {
 
 // ----------------------------------------------------------------------
 
+// Since most modules in these formats don't store a title/name internally,
+// this helper function constructs a name from the filename.
+void HippelDecoder::setDefaultName() {
+    std::vector<std::string> vPrefixNames = {
+        "SOC.", "SOG.", "S7G.", "HIP.", "HIPC.",
+        "soc.", "sog.", "s7g.", "hip.", "hipc.",
+        "MCMD."
+    };
+    // since C++17 could use std::filesystem::path::filename
+    std::size_t found = path.find_last_of("/\\");
+    if (found != std::string::npos) {
+        for ( std::vector<std::string>::iterator it = vPrefixNames.begin(); it != vPrefixNames.end(); ++it ) {
+            if ( *it == path.substr( found+1, it->size()) ) {
+                name = path.substr( found+1 + it->size());
+                return;
+            }
+        }
+        std::string fname = path.substr(found+1);
+        // Strip the filename extension.
+        name = fname.substr(0, fname.rfind('.'));
+    }
+    else {
+        name.clear();
+    }
+}
+
 void HippelDecoder::reset() {
     songEnd = false;
     songPosCurrent = 0;
@@ -188,6 +214,10 @@ bool HippelDecoder::init(void *data, udword length, int songNumber) {
         goto mainInit;
     }
 
+    title.clear();
+    author.clear();
+    game.clear();
+    name.clear();
     analyze->clear();
     clearFormat();
     if ( !detect(data,length) || offsets.header==0xffffffff) {
@@ -237,6 +267,7 @@ bool HippelDecoder::init(void *data, udword length, int songNumber) {
     if (!admin.initialized) {
         return false;
     }
+    setDefaultName();
     
     // Determine duration with a dry-run till song-end.
     duration = 0;

@@ -87,7 +87,7 @@ bool tfmxaudiodecoder::TFMXDecoder::isMerged() {
         input.versionHint = pBuf[8];
         if (input.versionHint != 0) {
 #if defined(DEBUG)
-            cout << "TFHD version=" << input.versionHint << "  for  " << input.path << endl;
+            cout << "TFHD version=" << input.versionHint << "  for  " << path << endl;
 #endif
         }
         

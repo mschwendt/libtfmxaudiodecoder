@@ -11,6 +11,7 @@ MCMD.cpp \
 ModPack.cpp \
 Portamento.cpp \
 Probe.cpp \
+SampleSets.cpp \
 SMOD.cpp \
 TFMX7V.cpp \
 TFMX.cpp \

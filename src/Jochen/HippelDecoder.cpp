@@ -22,10 +22,6 @@ namespace tfmxaudiodecoder {
 
 HippelDecoder::HippelDecoder() {
     analyze = new Analyze;
-    
-    input.buf = 0;
-    input.bufLen = input.len = 0;
-
     admin.initialized = false;
     
     // Set up some dummy voices to decouple the decoder from the mixer.
@@ -38,7 +34,6 @@ HippelDecoder::HippelDecoder() {
 }
 
 HippelDecoder::~HippelDecoder() {
-    delete[] input.buf;
     delete analyze;
 }
 
@@ -67,6 +62,28 @@ void HippelDecoder::setDefaultName() {
     }
     else {
         name.clear();
+    }
+}
+
+// Set up smart pointers for signed and unsigned input buffer access.
+// Ought to be read-only (const), but this implementation appends
+// a few values to the end of the buffer (see further below) and
+// may repair some data, too.
+//
+// We also need this, if the buffer size changes, e.g. because of
+// appending data such as the contents of a separate samples file.
+void HippelDecoder::updateSmartBuffer() {
+    fcBufS.setBuffer(reinterpret_cast<sbyte*>(input.buf),input.bufLen);
+    fcBuf.setBuffer(input.buf,input.bufLen);
+
+    // (NOTE) This next bit is just for convenience.
+    //
+    // Copy ``silent'' modulation sequence to end of module buffer so it
+    // is in the address space of the module and thus allows using the
+    // same smart pointers as throughout the rest of the code.
+    offsets.silence = input.len;
+    for (ubyte i=0; i<sizeof(silenceData); i++) {
+        fcBuf[offsets.silence+i] = silenceData[i];
     }
 }
 
@@ -208,8 +225,6 @@ bool HippelDecoder::init(void *data, udword length, int songNumber) {
 #if defined(DEBUG)
     cout << "HippelDecoder::init()" << endl;
 #endif
-    udword newLen;
-    
     if ( (data==0 || length==0) && admin.initialized) {  // re-init mode
         goto mainInit;
     }
@@ -223,34 +238,10 @@ bool HippelDecoder::init(void *data, udword length, int songNumber) {
     if ( !detect(data,length) || offsets.header==0xffffffff) {
         return false;
     }
-    // If we still have a sufficiently large buffer, reuse it.
-    newLen = length+sizeof(silenceData);
-    if (newLen > input.bufLen) {
-        if (input.buf) {
-            delete[] input.buf;
-        }
-        input.bufLen = newLen;
-        input.buf = new ubyte[newLen];
-    }
-    memcpy(input.buf,data,length);
-    input.len = length;
-        
-    // Set up smart pointers for signed and unsigned input buffer access.
-    // Ought to be read-only (const), but this implementation appends
-    // a few values to the end of the buffer (see further below) and
-    // may repair some data, too.
-    fcBufS.setBuffer(reinterpret_cast<sbyte*>(input.buf),input.bufLen);
-    fcBuf.setBuffer(input.buf,input.bufLen);
-        
-    // (NOTE) This next bit is just for convenience.
-    //
-    // Copy ``silent'' modulation sequence to end of FC module buffer so it
-    // is in the address space of the FC module and thus allows using the
-    // same smart pointers as throughout the rest of the code.
-    offsets.silence = input.len;
-    for (ubyte i=0; i<sizeof(silenceData); i++) {
-        fcBuf[offsets.silence+i] = silenceData[i];
-    }
+    // Copy the data and append some space for the "silence data".
+    bufferInputData( data, length, sizeof(silenceData) );
+    // Update the smart pointers and helper contents.
+    updateSmartBuffer();
 
     // A short silent sample to use,
     // if sample definitions don't pass buffer range checks.

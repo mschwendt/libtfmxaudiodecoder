@@ -179,17 +179,6 @@ class DNSDecoder : public Decoder {
     void toPaulaStart(VoiceVars&,udword);
     void toPaulaLength(VoiceVars&,uword);
     void takeNextBufChecked(VoiceVars&);
-    
-    struct {
-        ubyte *buf;     // the allocated buffer
-        udword bufLen;  // the allocated amount
-        udword len;     // length of the data we copy
-
-        std::string path, ext;
-        
-        unsigned int mdatSize, smplSize, mdatSizeCurrent, smplSizeCurrent;
-        bool smplLoaded;
-    } input;
 };
 
 }  // namespace

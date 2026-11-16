@@ -87,6 +87,18 @@ bool HippelDecoder::COSO_init(int songNumber) {
     offsets.sampleHeaders = h+readBEudword(fcBuf,h+0x18);
     offsets.sampleData = h+readBEudword(fcBuf,h+0x1c);
 
+    if (offsets.sampleData >= input.len) {  // missing samples for sure!
+        if ( loadSamplesFile() ) {
+            // Update the smart pointers and the helper data at buffer end
+            // to match the changed buffer size.
+            updateSmartBuffer();
+        }
+        else {
+            // Can't proceed without samples data.
+            return false;
+        }
+    }
+
     // Vector that holds the valid song numbers.
     vSongs.clear();
 

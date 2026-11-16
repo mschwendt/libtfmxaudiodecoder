@@ -17,19 +17,13 @@
 
 // Support for loading the separate file containing the samples.
 // NB! There is some code duplication in the DNS decoder, but moving
-// it into the decoder base class is not worthwhile yet.
+// more into the decoder base class is not worthwhile yet.
 
 #include <cstring>
 #include <fstream>
 using namespace std;
 
 bool tfmxaudiodecoder::TFMXDecoder::loadSamplesFile() {
-    // Got both the MDAT and SMPL file?
-    if ( input.smplLoaded ) {  // if loaded before, reuse it
-        input.mdatSize = input.mdatSizeCurrent;
-        input.smplSize = input.smplSizeCurrent;
-        return true;
-    }
     if ( path.empty() ) {
         return false;
     }
@@ -49,7 +43,10 @@ bool tfmxaudiodecoder::TFMXDecoder::loadSamplesFile() {
         std::size_t found = pathSmpl.rfind(it->first);
         if (found != std::string::npos) {
             pathSmpl.replace(found,it->first.length(),it->second);
-            if (loadSamplesFile(pathSmpl)) {
+            if (appendSamplesFile( pathSmpl ) ) {
+#if defined(DEBUG)
+                cout << "Samples loaded: " << pathSmpl << endl;
+#endif
                 return true;
             }
         }
@@ -73,40 +70,13 @@ bool tfmxaudiodecoder::TFMXDecoder::loadSamplesFile() {
         if (found != std::string::npos) {
             pathSmpl.erase(found+1);
             pathSmpl.append(*it);
-            if (loadSamplesFile(pathSmpl)) {
+            if (appendSamplesFile( pathSmpl ) ) {
+#if defined(DEBUG)
+                cout << "Samples loaded: " << pathSmpl << endl;
+#endif
                 return true;
             }
         }
     }  // next sample set filename
     return false;
-}
-
-bool tfmxaudiodecoder::TFMXDecoder::loadSamplesFile(const std::string &pathSmpl) {
-    ifstream fIn( pathSmpl, ios::in|ios::binary|ios::ate );
-    if ( !fIn.is_open() ) {
-        return false;
-    }
-    //fIn.seekg(0,ios::end);
-    uint32_t fLen = fIn.tellg();
-    fIn.seekg(0,ios::beg);
-
-    char* newInputBuf = new char[fLen+input.bufLen];
-    memcpy(newInputBuf,input.buf,input.bufLen);
-    delete[] input.buf;
-    input.buf = reinterpret_cast<ubyte*>(newInputBuf);
-
-    fIn.read(newInputBuf+input.len,fLen);
-    if (fIn.bad()) {
-        return false;
-    }
-    fIn.close();
-    input.smplSize = fLen;
-    input.mdatSize = input.len - offsets.header;
-    offsets.sampleData = input.len;
-    input.bufLen += input.smplSize;
-    input.len += input.smplSize;
-
-    // Update smart pointers.
-    pBuf.setBuffer(input.buf,input.bufLen);
-    return true;
 }

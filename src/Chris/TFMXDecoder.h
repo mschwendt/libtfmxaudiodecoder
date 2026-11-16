@@ -243,7 +243,6 @@ class TFMXDecoder : public Decoder {
 
     bool isMerged();
     bool loadSamplesFile();
-    bool loadSamplesFile(const std::string &path);
     void setTFMXv1();
     void traitsByChecksum();  // final step after successful initialization
     void findSongs();
@@ -589,17 +588,8 @@ class TFMXDecoder : public Decoder {
         ExecOrder execOrder;
     } variant;
 
-    struct {
-        ubyte *buf;     // the allocated buffer
-        udword bufLen;  // the allocated amount
-        udword len;     // length of the data we copy
-
-        unsigned int mdatSize, smplSize, mdatSizeCurrent, smplSizeCurrent;
-        bool smplLoaded;
-
-        int versionHint;  // from TFHD flag
-        int startSongHint;  // from TFMX-MOD struct
-    } input;
+    int TFHDversionHint;  // from TFHD flag
+    int startSongHint;  // from TFMX-MOD struct
 };
 
 }  // namespace

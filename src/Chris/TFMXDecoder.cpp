@@ -29,10 +29,6 @@ const std::string TFMXDecoder::TAG_TFMXSONG = "TFMX-SONG ";
 const std::string TFMXDecoder::TAG_TFMXSONG_LC = "tfmxsong";
 
 TFMXDecoder::TFMXDecoder() {
-    input.buf = 0;
-    input.bufLen = input.len = 0;
-    input.smplLoaded = false;
-
     admin.initialized = false;
 
     // Set up some dummy voices to decouple the decoder from the mixer.
@@ -45,7 +41,6 @@ TFMXDecoder::TFMXDecoder() {
 }
 
 TFMXDecoder::~TFMXDecoder() {
-    delete[] input.buf;
 }
 
 // ----------------------------------------------------------------------
@@ -163,7 +158,6 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
         }
     }
     else {  // invalidate what has been found out before
-        input.smplLoaded = false;
         input.mdatSize = input.smplSize = 0;
         title.clear();
         author.clear();
@@ -173,34 +167,25 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
         if ( !detect(data,length) ) {
             return false;
         }
-        // If we still have a sufficiently large buffer, reuse it.
-        udword newLen = length;
-        if (newLen > input.bufLen) {
-            if (input.buf) {
-                delete[] input.buf;
-            }
-            input.bufLen = 0;
-            input.buf = new ubyte[newLen];
-        }
-        memcpy(input.buf,data,length);
-        input.bufLen = newLen;
-        input.len = length;
-        
+        bufferInputData(data,length);
+        input.mdatSize = input.len-offsets.header;
         // Set up smart pointer for unsigned input buffer access.
         pBuf.setBuffer(input.buf,input.bufLen);
-    }
 
-    // Check whether it's a single-file format.
-    // If it is, this method defines various variables.
-    if ( isMerged() || loadSamplesFile() ) {
-        input.smplLoaded = true;
-        // Make these the current ones.
-        input.mdatSizeCurrent = input.mdatSize;
-        input.smplSizeCurrent = input.smplSize;
-    }
-    else {
-        // Can't proceed without samples data.
-        return false;
+        // Check whether it's a single-file format.
+        // If it is, this method defines various variables.
+        // Else search for second file.
+        if ( !isMerged() ) {
+            offsets.sampleData = input.len;
+            if ( loadSamplesFile() ) {
+                // Update the smart pointer for changed buffer size.
+                pBuf.setBuffer(input.buf,input.bufLen);
+            }
+            else {
+                // Can't proceed without samples data.
+                return false;
+            }
+        }
     }
 
 // --------
@@ -427,11 +412,11 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     // TFMX v1.x
     if ( ((readBEudword(pBuf,offsets.header) == TFMX_HEX) &&  // old header
           (pBuf[offsets.header+4] == 0x20))
-         || (input.versionHint == 1) ) {  // from TFHD
+         || (TFHDversionHint == 1) ) {  // from TFHD
         setTFMXv1();
     }
     // aka TFMX Professional
-    else {  // also  input.versionHint == 2   // from TFHD
+    else {  // also  TFHDversionHint == 2   // from TFHD
         formatName = FORMAT_NAME_PRO;
     }
     // TFMX 7V is checked and set by adjustTraitsPost()
@@ -451,10 +436,10 @@ bool TFMXDecoder::init(void *data, udword length, int songNumber) {
     }
     // If the file specifies a default start song (like TFMX-MOD does),
     // assume it's a single-song file format, and reduce number of songs to 1.
-    if (input.startSongHint >= 0) {
-        //cout << "MODSONG = " << input.startSongHint << endl;
+    if (startSongHint >= 0) {
+        //cout << "MODSONG = " << startSongHint << endl;
         vSongs.clear();
-        vSongs.push_back(input.startSongHint);
+        vSongs.push_back(startSongHint);
     }
     
     admin.startSong = (songNumber < 0) ? 0 : songNumber;
@@ -563,7 +548,7 @@ void TFMXDecoder::adjustTraitsPost() {
     // to Amiga Paula using a logical AND 3, we cannot rely on
     // searching for the highest channel number.
     if (trackCmdUsed[3] ||
-        input.versionHint==3 ) {  // from TFHD
+        TFHDversionHint==3 ) {  // from TFHD
         voices = 8;
         formatName = FORMAT_NAME_7V;
         // Hippel TFMX7V is 7 voices, mapping 3,4,5,6 to 3

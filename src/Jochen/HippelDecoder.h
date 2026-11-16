@@ -49,9 +49,11 @@ class HippelDecoder : public Decoder {
  private:
     friend class Analyze;
 
+    void updateSmartBuffer();
     void reset();
     void clearFormat();
     void dumpModule();
+    bool loadSamplesFile();
     void setDefaultName();
 
     static const std::string FORMAT_NAME;
@@ -327,13 +329,6 @@ class HippelDecoder : public Decoder {
     bool findTag(const ubyte*, udword, const std::string, udword&);  // generic
     void traitsByChecksum();
 
-
-    struct {
-        ubyte *buf;     // the allocated buffer
-        udword bufLen;  // the allocated amount
-        udword len;     // length of the data we copy
-    } input;
-    
     uword FC_portamento_pitchbend(VoiceVars&, uword period);
     void FC_volSlide(VoiceVars&);
 

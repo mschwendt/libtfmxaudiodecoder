@@ -149,6 +149,9 @@ void TFMXDecoder::setPath(std::string path) {
 // ----------------------------------------------------------------------
 
 bool TFMXDecoder::init(void *data, udword length, int songNumber) {
+#if defined(DEBUG)
+    cout << "TFMXDecoder::init()" << endl;
+#endif
     title.clear();
     author.clear();
     game.clear();

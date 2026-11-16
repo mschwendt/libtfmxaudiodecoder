@@ -68,7 +68,9 @@ class HippelDecoder : public Decoder {
     static const uword SMOD_SMPHEADERS_OFFSET = 0x0028;   // 40
     static const uword SMOD_TRACKTAB_OFFSET = 0x0064;     // 100
     static const uword SMOD_PERIOD_MIN = 0x0071;
-    static const uword SMOD_PERIOD_MAX = 0x06b0;
+    // (NOTE) Tons of SMOD player source files on the Amiga
+    // apply 0x06b0, which is wrong.
+    static const uword SMOD_PERIOD_MAX = 0xd60;
 
     static const std::string FC14_TAG;
     static const uword FC14_WAVEHEADERS_OFFSET = 0x0064;  // 100

@@ -114,6 +114,9 @@ void HippelDecoder::TFMX_processSndModSeq(VoiceVars& voiceX) {
     if (voiceX.currentSndSeq == (stats.sndSeqs-1) && voiceX.sndSeqPos >= 64) {
         return;
     }
+    // Undefined sequences get redirected to the silent sequence
+    // by getSndSeq() already.
+
     udword seqOffs = voiceX.sndSeq+voiceX.sndSeqPos;
     ubyte f = fcBuf[seqOffs];
     // Commands are E0 to EA. Positive bytes are transpose values,

@@ -258,6 +258,12 @@ bool HippelDecoder::init(void *data, udword length, int songNumber) {
     if (!admin.initialized) {
         return false;
     }
+    // Reject modules that don't pass these strict plausibility checks.
+    if (stats.patterns == 0 || stats.sndSeqs == 0 || stats.volSeqs == 0 ||
+       offsets.sndModSeqs >= input.len || offsets.volModSeqs >= input.len ||
+       offsets.patterns >= input.len ) {
+        return false;
+    }
     setDefaultName();
     
     // Determine duration with a dry-run till song-end.

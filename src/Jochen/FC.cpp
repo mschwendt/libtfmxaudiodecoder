@@ -74,13 +74,6 @@ bool HippelDecoder::FC_init(int songNumber) {
     // Each sequence is 64 bytes long.
     stats.volSeqs = readBEudword(fcBuf,28)/64;
 
-    // Reject modules that don't pass these plausibility checks already.
-    if (stats.patterns == 0 || stats.sndSeqs == 0 || stats.volSeqs == 0 ||
-       offsets.sndModSeqs >= input.len || offsets.volModSeqs >= input.len ||
-       offsets.patterns >= input.len ) {
-        return false;
-    }
-
     pStartSongFunc = &HippelDecoder::FC_startSong;
     pNextNoteFunc = &HippelDecoder::FC_nextNote;
     pSoundFunc = &HippelDecoder::TFMX_soundModulation;
